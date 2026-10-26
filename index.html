@@ -3,103 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم الذيب والخروف</title>
-    
-    <!-- أيقونة الموقع (صورتك الشخصية) -->
-    <link rel="icon" type="image/jpeg" href="profile.jpg">
-
+    <title>عالم الذيب والخروف - 50 قصة كوميدية</title>
     <style>
         :root {
-            --primary-dark: #1b4332;
-            --accent-gold: #d4a373;
-            --bg-light: #f4f6f7;
-            --text-main: #2d3748;
-            --text-muted: #6c757d;
+            --primary-color: #1b4d3e;
+            --secondary-color: #f4f6f5;
+            --accent-color: #e67e22;
+            --text-color: #333;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Tahoma, sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; }
-        header { background-color: var(--primary-dark); color: #fff; padding: 20px; text-align: center; }
-        .hero { text-align: center; padding: 50px 20px; background: #fff; margin-bottom: 20px; border-bottom: 4px solid var(--accent-gold); }
-        .hero h1 { color: var(--primary-dark); font-size: 28px; margin-bottom: 15px; }
-        .hero p { color: var(--text-muted); font-size: 16px; max-width: 600px; margin: 0 auto 20px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            flex: 1;
+            box-sizing: border-box;
+        }
+        .story-counter {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .story-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+        .story-content {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            white-space: pre-line;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            border-right: 4px solid var(--accent-color);
+        }
+        .buttons-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.1s;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .btn-next {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-next:hover {
+            background-color: #14382d;
+        }
+        .btn-whatsapp-share {
+            background-color: #25d366;
+            color: white;
+        }
+        .btn-whatsapp-share:hover {
+            background-color: #1ebe5d;
+        }
         
-        .section { max-width: 800px; margin: 30px auto; padding: 0 20px; }
-        .section-heading { text-align: center; margin-bottom: 25px; }
-        .section-heading h2 { color: var(--primary-dark); font-size: 24px; }
-        
-        .cards { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .card h3 { color: var(--primary-dark); margin-bottom: 10px; }
-        .card p { margin-bottom: 8px; font-size: 15px; }
-        
-        /* قسم الفيديوهات والتيك توك */
-        .video-section { background: #fff; padding: 30px 20px; text-align: center; border-radius: 15px; box-shadow: 0 6px 15px rgba(0,0,0,0.08); margin: 30px auto; max-width: 800px; }
-        .tiktok-btn { display: inline-block; background-color: #000; color: #fff; padding: 14px 30px; font-size: 18px; font-weight: bold; text-decoration: none; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-top: 15px; transition: 0.3s; }
-        .tiktok-btn:hover { background-color: #333; }
-        
-        footer { background-color: var(--primary-dark); color: #fff; text-align: center; padding: 20px; margin-top: 40px; font-size: 14px; }
+        .social-links {
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 15px;
+            text-align: center;
+        }
+        .social-links h3 {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .tg-btn { background-color: #0088cc; }
+        .wa-btn { background-color: #25d366; }
+        .tt-btn { background-color: #010101; }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #e2e8f0;
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🐺🐑 عالم الذيب والخروف</h1>
+        <h1>عالم الذيب والخروف 🐺🐑</h1>
+        <p>رفقات... ولو واحد ذيب والتاني خروف!</p>
     </header>
 
-    <main>
-        <!-- القسم الرئيسي -->
-        <section class="hero" id="home">
-            <h1>عالم الذيب والخروف<br><span style="color: var(--accent-gold); font-size: 20px;">رفقات... ولو واحد ذيب والتاني خروف!</span></h1>
-            <p>موقع خفيف ولطيف لعشاق القصص الكوميدية والشخصيات الطريفة باللهجة الشامية السورية.</p>
-        </section>
+    <div class="container">
+        <div class="story-counter" id="storyCounter">القصة رقم 1 من 50</div>
+        <div class="story-title" id="storyTitle">عنوان القصة</div>
+        <div class="story-content" id="storyContent">نص القصة سيظهر هنا...</div>
+        
+        <div class="buttons-group">
+            <button class="btn-next" onclick="nextStory()">القصة التالية ➡️</button>
+            <button class="btn-whatsapp-share" onclick="shareOnWhatsApp()">مشاركة القصة ع واتساب 📱</button>
+        </div>
 
-        <!-- قسم الحكايات -->
-        <section class="section" id="stories">
-            <div class="section-heading">
-                <h2>حوارات بتضحك 🎭</h2>
+        <div class="social-links">
+            <h3>تابعني وتواصل معي عبر:</h3>
+            <div class="social-buttons">
+                <!-- رابط التلجرام -->
+                <a href="https://t.me/abod5_11" target="_blank" class="social-btn tg-btn">قناة التليجرام 📢</a>
+                <!-- رقم الواتساب -->
+                <a href="https://wa.me/96399250470" target="_blank" class="social-btn wa-btn">راسلني واتساب 💬</a>
+                <!-- حساب التيك توك -->
+                <a href="https://www.tiktok.com/@abod5_11" target="_blank" class="social-btn tt-btn">تيك توك 🎬</a>
             </div>
-            <div class="cards">
-                <article class="card">
-                    <h3>🃏 الذيب ع طاولة البوكر</h3>
-                    <p><b>🐺 الذيب:</b> مرة رح أربح كل المصاري!</p>
-                    <p><b>🐑 الخروف:</b> بس لا تبكي لما تخسر...</p>
-                    <p><b>🐺 الذيب:</b> أنا ما بخسر أبداً!</p>
-                </article>
-
-                <article class="card">
-                    <h3>📸 الصورة التذكارية</h3>
-                    <p><b>🐺 الذيب:</b> تعال لهون، بدنا ناخد سيلفي!</p>
-                    <p><b>🐑 الخروف:</b> ولك، مو خايف تقعد جنبي؟</p>
-                    <p><b>🐺 الذيب:</b> ليش خاف؟ إنت رفيقي!</p>
-                </article>
-
-                <article class="card">
-                    <div class="card-emoji" style="font-size: 24px; margin-bottom: 5px;">☕</div>
-                    <h3>قعدة قهوة رايقة</h3>
-                    <p><b>🐺 الذيب:</b> شايف هالقعدة؟ رايقة ومية مية... لولا إنك قاعد قدامي عم تحاسب بنظراتك.</p>
-                    <p><b>🐑 الخروف:</b> أنا؟ بالعكس! عم بفكر بس، القهوة عليك ولا ع حساب صداقتنا؟</p>
-                    <p><b>🐺 الذيب:</b> خليني السكاكين بعيدة اليوم، القهوة مني إشادة بصداقتنا!</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- قسم تيك توك والفيديوهات -->
-        <section class="video-section">
-            <h2 style="color: var(--primary-dark); margin-bottom: 10px;">🎬 فيديوهات عالم الذيب والخروف</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">تابعونا على تيك توك للمزيد من القصص والمقاطع المضحكة!</p>
-            
-            <a href="https://www.tiktok.com/@abod5_11" target="_blank" class="tiktok-btn">
-                🎵 شاهد الفيديوهات على تيك توك
-            </a>
-            
-            <p style="margin-top: 20px; font-weight: bold; color: var(--text-main);">لا تنسَ تشارك الضحكة مع أصحابك! 🐺🐑</p>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <footer>
-        <p>🐺🐑 عالم الذيب والخروف – الضحكة أحلى لما نتشاركها</p>
+        جميع الحقوق محفوظة - عالم الذيب والخروف &copy; 2026
     </footer>
 
+    <script>
+        const stories = [
+            { title: "الذيب ع طاولة البوكر", text: "🐺 الذيب: مرة رح أربح كل المصاري!\n🐑 الخروف: بس لا تبكي لما تخسر...\n🐺 الذيب: أنا ما بخسر أبداً!" },
+            { title: "الصورة التذكارية", text: "🐺 الذيب: وقف بدي آخد معك سيلفي. اسحب وجهك لورا شوي!\n🐑 الخروف: ليش لوراء؟ ما شاء الله الخشوم واضحة بالصورة اتنيناتها!" },
+            { title: "الرجيم القاسي", text: "🐑 الخروف: مقرر أعمل رجيم قاسي وأخسر وزن.\n🐺 الذيب بابتسامة خبيثة: فكرة ممتازة! كل ما ضعفت، كل ما كنت أسهل... قصدي أسرع بالحركة!" },
+            { title: "منزل الأحلام", text: "🐺 الذيب: عم فكر ابني بيت جديد، شو رأيك بالديكورات الحديثة؟\n🐑 الخروف: أهم شي يكون باب البيت من برة عريض، لانو اذا هجمت عليك شي مرة أعرف هرب بسرعة!" },
+            { title: "فحص العقل", text: "🐑 الخروف: رحت عند حكيم العيون وقلي نظرك ضعيف.\n🐺 الذيب: عادي، مو غريب عليك... طول عمرك ماشي ورا القطيع بدون ما تشوف وين رايح!" },
+            { title: "مسابقة الأكل", text: "🐺 الذيب: شرايك ندخل مسابقة أكل ونقسم الجائزة بالنص؟\n🐑 الخروف: خايف آكل كتير وتخلص الجائزة وتعتبرني أنا الوجبة الرئيسية!" },
+            { title: "تأمين السيارات", text: "🐑 الخروف: سجلت سيارتي بتأمين شامل ضد الحوادث.\n🐺 الذيب: خطوة موفقة، بس نسيت تضمن حالك من غدر الذيب بالطريق السريع!" },
+            { title: "ساعة الصباح", text: "🐺 الذيب: ليش دايماً بتفيق بكير وبتعمل رياضة الصبح؟\n🐑 الخروف: عشان أكون بنشاطي ولياقتي لما أحتاج أركض منك!" },
+            { title: "رحلة الصيد", text: "🐑 الخروف: شرايك نطلع نطلع رحلة صيد بالغابة؟\n🐺 الذيب: بلا ما نروح صيد... خلص، اعتبر حالك صتني وأنا صتك وخلصنا!" },
+            { title: "الحظ السيء", text: "🐺 الذيب: يا زلمة حظي نحس، كل ما خطط لشغلة بتخرب!\n🐑 الخروف: اتذكر دائماً أنك ذيب، يعني النحس حرام بحقك، اترك النحس لأمثالي!" },
+            { title: "موقع العمل", text: "🐑 الخروف: عم افتش على شغلة جديدة بمجال الإدارة.\n🐺 الذيب: في شواغر عندي، بس الدوام بيكون بطوننا... قصدي بكتيبة الحراسة!" },
+            { title: "كورس اللغات", text: "🐺 الذيب: عم اتعلم لغة جديدة لأحكي مع كل حيوانات الغابة.\n🐑 الخروف: علمنا لغة الخرفان، مشان نفهم شو عم تحكي علينا من وراء ظهرنا!" },
+            { title: "عزيمة العشاء", text: "🐑 الخروف: عازمك عشاء اليوم عندي بالحظيرة.\n🐺 الذيب: كفؤ! بس جيب معك صحن كبير، لانو شهيتي اليوم مفتوحة على الآخر." },
+            { title: "الاستثمار بالأسهم", text: "🐺 الذيب: شو رأيك ندخل سوق الأسهم نعمل ملايين؟\n🐑 الخروف: أخاف أشتري أسهم وتنزل، متل ما بينزل سعر الخروف قبل العيد تماماً!" },
+            { title: "شارب الذيب", text: "🐑 الخروف: ليش شاربك دايماً مجدول وطويل؟\n🐺 الذيب: هيبة يا صاحبي، هيبة! مو مثلك شاربك دوبو طالع." },
+            { title: "اختبار الذكاء", text: "🐺 الذيب: عملت اختبار ذكاء وطلعت عبقري.\n🐑 الخروف: الأختبار كان اختياري ولا صح وغلط؟ لأنك لوحدك باللجنة أكيد رح تنجح!" },
+            { title: "السرعة القصوى", text: "🐑 الخروف: قدرت أركض مسافة كيلومتر بدقيقة واحدة!\n🐺 الذيب: عظيم! بس لما أركض وراك رح تقطع نفس المسافة بثانية وحدة." },
+            { title: "موضة الصيف", text: "🐺 الذيب: صوفك سميك كتير، ما بتحس بالحر بهالصيف؟\n🐑 الخروف: صوفي طبيعي، مو مثلك جلدك سميك وما بتحس بغلطاتك!" },
+            { title: "فتح مشروع", text: "🐑 الخروف: بدي افتح محل لحوم ومشاوي.\n🐺 الذيب: مشروع ناجح مليون بالمية! وأنا مستعد أكون الشريك والمشرف العام عالتذوق." },
+            { title: "درس الحكمة", text: "🐺 الذيب: اسمع مني الحكمة: الغبي من صدق كلام الناس.\n🐑 الخروف: والحكمة الأكبر هي إنو الذيب ما بيترك طبعو ولو طال شعرو!" },
+            { title: "بطارية الهاتف", text: "🐑 الخروف: تلفوني فصل بطارية وما عاد يفتح.\n🐺 الذيب: اشحنو بحرارتك.. آه سوري، أنت أصلاً دمك بارد دايماً!" },
+            { title: "طريقة السشوار", text: "🐺 الذيب: كيف بترتب شعرك وصوفك ليطلعوا بهذا الشكل المنفوش؟\n🐑 الخروف: هاد اسمه ستايل طبيعي، مو مثلك شعرك منكد وواقف لحالو رعب!" },
+            { title: "لعبة الشطرنج", text: "🐑 الخروف: العب معي شطرنج لنشوف مين أذكى.\n🐺 الذيب: لا تحرج حالك، أنت من أول نقلة بتضحي بحالك." },
+            { title: "موعد النوم", text: "🐺 الذيب: أنا ما بنام غير متأخر، سهران لحراسة الغابة.\n🐑 الخروف: وأنا بنام من وقت العصر، لأني بعرف ورايي يوم شاق معك!" },
+            { title: "سهرة الغابة", text: "🐑 الخروف: شرايك نسهر الليلة تحت ضوء القمر؟\n🐺 الذيب: فكرة حلوة، بس بشرط.. أنت تكون الضيف الرئيسي عالعشاء." },
+            { title: "مباراة كرة قدم", text: "🐺 الذيب: أنا بلعب هجوم وبسجل أهداف خارقة.\n🐑 الخروف: وأنا بكون حارس مرمى، وكل ما شفتك جياتني بركض بترك المرمى وبشرد!" },
+            { title: "فقدان الذاكرة", text: "🐑 الخروف: تصدق نسيت وين حطيت أكلي اليوم؟\n🐺 الذيب: مو غريب عليك، طول عمرك ماشي بالدنيا غايب عن القضايا." },
+            { title: "مشاكل النت", text: "🐺 الذيب: شبكة الإنترنت عندك بطيئة كتير.\n🐑 الخروف: لأن الراوتر بعيد، مو مثلك شبكتك قوية لأنك بتلقط أي شي عالتطير!" },
+            { title: "الطقس الجميل", text: "🐑 الخروف: الجو اليوم رومنسي وهادي.\n🐺 الذيب: هاد الجو بساعدني أركض وراك بدون ما أتعب من الحر!" },
+            { title: "شراء سيارة", text: "🐺 الذيب: ناوي أشتري سيارة دفع رباعي جبّار.\n🐑 الخروف: اشتري اللي بدك ياها، بس لا تركض فيا جنبي لانو فراملي ضعيفة." },
+            { title: "حلم الليل", text: "🐑 الخروف: حلمت البارحة أني صرت ذيب وقوي.\n🐺 الذيب: أحلام اليقظة حلوة، بس اصحى على ريحة الواقع عاد!" },
+            { title: "صوت العاصفة", text: "🐺 الذيب: عواء الذئب بالليل بيبعث الرعب بالقلوب.\n🐑 الخروف: وصوت صياحك لما تنقرص بيبعث الضحكة بالقلوب!" },
+            { title: "نصيحة مالية", text: "🐑 الخروف: كيف أجمع ثروة وأصير غني؟\n🐺 الذيب: اترك المصاري عندي وأنا بحفظلك ياها لآخر العمر!" },
+            { title: "رحلة البحر", text: "🐺 الذيب: شرايك ننزل نسبح بالبحر؟\n🐑 الخروف: بتعرف إني ما بعوم، وبعدين البحر مليان أسماك وأنت مليان طماعي!" },
+            { title: "أكلة المنسف", text: "🐑 الخروف: مين بيعرف يطبخ منسف أطيب شي؟\n🐺 الذيب: ما بيعني مين بيعرف يطبخ، بيعني مين بيكون هو اللحمة الأساسية بالمنسف!" },
+            { title: "نظارات شمسية", text: "🐺 الذيب: شايفني بهذا اللوك؟ لابس نظارات شمسية وطالع مهيب.\n🐑 الخروف: صاير تشبه عصابات المافيا اللي ما بيرحموا حدا." },
+            { title: "طريقة المشي", text: "🐑 الخروف: ليش بتمشي بهدوء وأنا بمشي بخوف؟\n🐺 الذيب: لأنك بتعرف وراك مصدر إزعاج دائم اسمه أنا!" },
+            { title: "مسابقة الجري", text: "🐺 الذيب: شرايك نتسابق لنشوف مين الأسرع؟\n🐑 الخروف: إما أني بربح وبأخد الجائزة، أو أنك بتربح وبتاخدني أنا.. بلاها أحسن!" },
+            { title: "بناء المستقبل", text: "🐑 الخروف: لازم نفكر بمستقبلنا ونخطط لقدام.\n🐺 الذيب: مستقبلنا مرتبط ببعض.. أنت الخطط وأنا التنفيذ!" },
+            { title: "زيارة الطبيب", text: "🐺 الذيب: عندي ألم خفيف بأنيابي من كثر ما قرمشت جوز.\n🐑 الخروف: أنا عندي ألم بقلبي من كثر ما بتخوفني كل ما شفتك!" },
+            { title: "عزيمة الحقل", text: "🐑 الخروف: العشب هالسنة طالع أخضر وطري كتير.\n🐺 الذيب: صحة وهنا على قلبك، كل وشد حيلك.. لانو التسمين إله دور كبير عندي!" },
+            { title: "فكرة تجارية", text: "🐺 الذيب: بدي أعمل صالون حلاقة للحيوانات.\n🐑 الخروف: أول زبون عندك أنا، بس بشرط ممنوع تقترب من رقبتي بالموس!" },
+            { title: "قصة الشجاعة", text: "🐑 الخروف: أنا مرة وقفت بوجه أسد وما خفت منه.\n🐺 الذيب: غريب! خفت مني وأنا ذيب، وما خفت من الأسد؟ شكله الكذب ماله رجول!" },
+            { title: "الأكلة المفضلة", text: "🐺 الذيب: شو أكلتك المفضلة بالدنيا؟\n🐑 الخروف بارتجاف: العشب الأخضر.. وأنت شو أكلتك؟\n🐺 الذيب: الشغلات اللي فيها لحم طري وناعم!" },
+            { title: "موقف ضايع", text: "🐑 الخروف: ضاع طريقي وما عم أعرف ارجع عالحظيرة.\n🐺 الذيب: لا تخاف، أنا بَدليك الطريق.. تعقّل وامشي قدامي بس!" },
+            { title: "موسم الصوف", text: "🐺 الذيب: شو رح تعمل بموسم قص الصوف؟\n🐑 الخروف: رح أبكي، لانو رح أبين عريان قدام الكل.\n🐺 الذيب: ولا تقلق، أنا بغطيك.. بجلدي! (قصدي بصداقتي)." },
+            { title: "سر السعادة", text: "🐑 الخروف: شو سر السعادة والروقان بحياتك؟\n🐺 الذيب: إنو ما في حدا طمعان فيني، وكل الحيوانات بتهابني!" },
+            { title: "الأصحاب الوفيين", text: "🐺 الذيب: ما في أوفى مني كصديق بيحميك من الغربان.\n🐑 الخروف: صحيح، بتحميني من الغربان لتاكلني أنت برواق!" },
+            { title: "نهاية المطاف", text: "🐑 الخروف: يا ذيب، معقول نبقى أصحاب للأبد هيك؟\n🐺 الذيب يضحك: للأبد يا صاحبي.. للأبد!" }
+        ];
+
+        let currentIndex = 0;
+
+        function updateStory() {
+            const current = stories[currentIndex];
+            document.getElementById("storyCounter").innerText = `القصة رقم ${currentIndex + 1} من ${stories.length}`;
+            document.getElementById("storyTitle").innerText = current.title;
+            document.getElementById("storyContent").innerText = current.text;
+        }
+
+        function nextStory() {
+            currentIndex = (currentIndex + 1) % stories.length;
+            updateStory();
+        }
+
+        function shareOnWhatsApp() {
+            const current = stories[currentIndex];
+            const textToShare = `😂 *عالم الذيب والخروف* 🐺🐑\n\n*${current.title}*\n${current.text}\n\n📲 اقرأ المزيد من القصص الشامية المضحكة!`;
+            const encodedText = encodeURIComponent(textToShare);
+            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+        }
+
+        updateStory();
+    </script>
 </body>
 </html>
-
