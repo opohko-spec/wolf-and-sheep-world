@@ -1,913 +1,790 @@
-```html
+
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Super-App Pro (TikTok + WhatsApp + Telegram + Groups)</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome 6 Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts (Cairo & Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            tiktok: '#FE2C55',
-                            tiktokCyan: '#25F4EE',
-                            whatsapp: '#25D366',
-                            telegram: '#0088cc',
-                            primary: '#6366f1',
-                            darkBg: '#0f172a',
-                            darkCard: '#1e293b'
-                        }
-                    },
-                    fontFamily: {
-                        cairo: ['Cairo', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif']
-                    }
-                }
+    <title>OmniHub Super-App | لوحة التحكم</title>
+    <!-- Google Font: Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: #161e2e;
+            --border-color: #232d3f;
+            --accent-purple: #6366f1;
+            --accent-purple-hover: #4f46e5;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --whatsapp-green: #25d366;
+            --telegram-blue: #229ed9;
+            --tiktok-pink: #fe2c55;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* Layout Architecture */
+        .app-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #0f172a;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-purple);
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .version-tag {
+            font-size: 10px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-purple);
+            padding: 2px 6px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .close-sidebar-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .sidebar-menu {
+            padding: 20px 12px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .menu-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            padding: 0 12px 8px 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: var(--accent-purple);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* Mobile Overlay Backdrop */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Main Content Wrapper */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: var(--sidebar-width);
+            min-width: 0;
+            transition: margin 0.3s ease;
+        }
+
+        /* Top Header */
+        .top-header {
+            height: 64px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hamburger-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            background: rgba(37, 211, 102, 0.1);
+            color: var(--whatsapp-green);
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+        }
+
+        /* Dashboard Content Container */
+        .dashboard-content {
+            padding: 28px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .stat-value-container {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-tag {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* Table Card Section */
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .table-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-title-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .table-title-box p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            background: #0b0f19;
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            gap: 4px;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--accent-purple);
+            color: #fff;
+        }
+
+        /* Custom Data Table */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(35, 45, 63, 0.5);
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .channel-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-active {
+            background: rgba(37, 211, 102, 0.1);
+            color: var(--whatsapp-green);
+        }
+
+        .badge-inactive {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--text-muted);
+        }
+
+        .action-btn {
+            background: #232d3f;
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #334155;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-right: 0;
+            }
+
+            .hamburger-btn, .close-sidebar-btn {
+                display: flex;
             }
         }
-    </script>
-    <style>
-        body {
-            font-family: 'Cairo', 'Inter', sans-serif;
-            user-select: none;
-        }
-        /* Glassmorphism */
-        .glass {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.5);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(99, 102, 241, 0.3);
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(99, 102, 241, 0.6);
-        }
-        /* Animations */
-        @keyframes heartPulse {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.3); opacity: 1; }
-            100% { transform: scale(1); opacity: 0; }
-        }
-        .animate-heart {
-            animation: heartPulse 0.8s ease-out forwards;
-        }
-        @keyframes spinSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-            animation: spinSlow 5s linear infinite;
+
+        @media (max-width: 576px) {
+            .dashboard-content {
+                padding: 16px;
+            }
+
+            .top-header {
+                padding: 0 16px;
+            }
+
+            .status-badge span {
+                display: none;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-tabs {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .filter-btn {
+                flex: 1;
+            }
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 h-screen overflow-hidden flex flex-col font-cairo">
+<body>
 
-    <!-- Top Navigation Bar -->
-    <header class="h-16 border-b border-slate-800/80 bg-slate-900/90 glass px-4 flex items-center justify-between z-30 shrink-0">
-        <!-- Logo & Branding -->
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white p-2 text-lg">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-pink-500 to-amber-400 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-indigo-500/20">
-                <i class="fa-solid fa-shapes"></i>
-            </div>
-            <div>
-                <div class="flex items-center space-x-2 space-x-reverse">
-                    <h1 class="text-base font-extrabold tracking-wide bg-gradient-to-r from-indigo-400 via-pink-400 to-emerald-400 bg-clip-text text-transparent">
-                        OmniHub Super-App
-                    </h1>
-                    <span class="text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-semibold">Pro v3.0</span>
+    <div class="app-container">
+
+        <!-- Mobile Overlay -->
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">OH</div>
+                    <div>
+                        <div class="logo-title">OmniHub</div>
+                        <span class="version-tag">Pro v3.0</span>
+                    </div>
                 </div>
-                <p class="text-[11px] text-slate-400">تيك توك • واتساب • تلغرام • إدارة المجتمعات</p>
+                <button id="close-sidebar-btn" class="close-sidebar-btn">✕</button>
             </div>
-        </div>
 
-        <!-- Global Search -->
-        <div class="hidden md:flex items-center relative w-1/3 max-w-lg">
-            <i class="fa-solid fa-magnifying-glass absolute right-3.5 text-slate-400 text-xs"></i>
-            <input type="text" placeholder="بحث موحد في القنوات، المجموعات، والمحادثات..." class="w-full pl-4 pr-10 py-2 rounded-xl border border-slate-700/60 bg-slate-800/60 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-slate-200 placeholder-slate-400 transition">
-        </div>
-
-        <!-- Action Controls -->
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <!-- Telegram Direct Channel Button -->
-            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 space-x-reverse shadow-lg shadow-sky-500/20 transition animate-pulse">
-                <i class="fa-brands fa-telegram text-sm"></i>
-                <span class="hidden sm:inline">انضم للقناة الرسمية</span>
-            </a>
-            <button onclick="openModal('createGroupModal')" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 space-x-reverse shadow-lg shadow-indigo-500/20 transition">
-                <i class="fa-solid fa-plus-circle text-sm"></i>
-                <span class="hidden sm:inline">مجموعة / قناة جديدة</span>
-            </button>
-            <div class="h-6 w-px bg-slate-800 mx-1"></div>
-            <!-- Profile Avatar -->
-            <div class="relative group cursor-pointer" onclick="showToast('حساب المسؤول النشط: أحمد القحطاني')">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Avatar" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/40">
-                <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content App Wrapper -->
-    <div class="flex flex-1 overflow-hidden relative">
-
-        <!-- Collapsible Navigation Sidebar -->
-        <aside id="appSidebar" class="absolute lg:relative z-20 w-64 h-full border-l border-slate-800/80 bg-slate-900/95 lg:bg-slate-900/60 glass flex flex-col justify-between shrink-0 transition-all duration-300 transform -translate-x-full lg:translate-x-0">
-            <div class="p-3 space-y-1">
-                <div class="px-3 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">الأقسام الرئيسية</div>
+            <nav class="sidebar-menu">
+                <div class="menu-label">الأقسام الرئيسية</div>
                 
-                <!-- Unified Dashboard Tab -->
-                <button onclick="switchTab('community')" id="nav-community" class="nav-tab active w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-indigo-400 bg-indigo-950/60 border border-indigo-800/40">
-                    <i class="fa-solid fa-chart-line text-base w-6 text-center text-indigo-400"></i>
-                    <span class="flex-1 text-right">إدارة المجموعات الشاملة</span>
-                    <span class="bg-indigo-500/20 text-indigo-300 text-[10px] px-2 py-0.5 rounded-full font-bold">12</span>
-                </button>
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    <span>إدارة المجموعات الشاملة</span>
+                </a>
 
-                <!-- TikTok Reels Tab -->
-                <button onclick="switchTab('tiktok')" id="nav-tiktok" class="nav-tab w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-slate-400 hover:text-white hover:bg-slate-800/50">
-                    <i class="fa-brands fa-tiktok text-base w-6 text-center text-pink-500"></i>
-                    <span class="flex-1 text-right">خلاصة TikTok / Reels</span>
-                    <span class="bg-pink-500/20 text-pink-400 text-[10px] px-2 py-0.5 rounded-full font-bold">HOT</span>
-                </button>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🎵</span>
+                    <span>خلاصة TikTok / Reels</span>
+                </a>
 
-                <!-- WhatsApp Chats Tab -->
-                <button onclick="switchTab('whatsapp')" id="nav-whatsapp" class="nav-tab w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-slate-400 hover:text-white hover:bg-slate-800/50">
-                    <i class="fa-brands fa-whatsapp text-base w-6 text-center text-emerald-400"></i>
-                    <span class="flex-1 text-right">محادثات WhatsApp</span>
-                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">5</span>
-                </button>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span>محادثات WhatsApp</span>
+                </a>
 
-                <!-- Telegram Channels Tab -->
-                <button onclick="switchTab('telegram')" id="nav-telegram" class="nav-tab w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-slate-400 hover:text-white hover:bg-slate-800/50">
-                    <i class="fa-brands fa-telegram text-base w-6 text-center text-sky-400"></i>
-                    <span class="flex-1 text-right">قنوات Telegram والمجموعات</span>
-                    <span class="bg-sky-500/20 text-sky-400 text-[10px] px-2 py-0.5 rounded-full font-bold">34K</span>
-                </button>
-            </div>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📢</span>
+                    <span>قنوات Telegram</span>
+                </a>
 
-            <!-- Quick Stats & System Status -->
-            <div class="p-3 border-t border-slate-800/80">
-                <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/40 space-y-2">
-                    <div class="flex justify-between items-center text-[11px]">
-                        <span class="text-slate-400">معدل التفاعل الكلي</span>
-                        <span class="text-emerald-400 font-bold">94.8%</span>
-                    </div>
-                    <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
-                        <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full w-[94%]"></div>
-                    </div>
-                    <p class="text-[10px] text-slate-400">جميع القنوات ومحادثات البوت متصلة بنجاح.</p>
-                </div>
-            </div>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span>معدل التفاعل الكلي</span>
+                </a>
+            </nav>
         </aside>
 
-        <!-- Main Dynamic View Container -->
-        <main class="flex-1 overflow-y-auto bg-slate-950 p-3 sm:p-6 relative" id="mainContainer">
-
-            <!-- ================= VIEW 1: UNIFIED GROUPS & COMMUNITY DASHBOARD ================= -->
-            <div id="view-community" class="view-panel space-y-6">
-                <!-- Banner Stats -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Stat Card 1 -->
-                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-indigo-500/50 transition">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-400">إجمالي المجموعات المربوطة</p>
-                                <h3 class="text-2xl font-black mt-1 text-white">12 مجموعة</h3>
-                                <p class="text-[11px] text-emerald-400 mt-2 font-medium"><i class="fa-solid fa-arrow-trend-up ml-1"></i> +3 المجموعات هذا الشهر</p>
-                            </div>
-                            <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-layer-group"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Stat Card 2 -->
-                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-emerald-500/50 transition">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-400">أعضاء WhatsApp</p>
-                                <h3 class="text-2xl font-black mt-1 text-white">3,840</h3>
-                                <p class="text-[11px] text-emerald-400 mt-2 font-medium"><i class="fa-solid fa-circle-check ml-1"></i> 8 مجموعات نشطة</p>
-                            </div>
-                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg">
-                                <i class="fa-brands fa-whatsapp"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Stat Card 3 -->
-                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-sky-500/50 transition">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-400">مشتركي Telegram</p>
-                                <h3 class="text-2xl font-black mt-1 text-white">45,210</h3>
-                                <p class="text-[11px] text-sky-400 mt-2 font-medium"><i class="fa-solid fa-bolt ml-1"></i> 4 قنوات رسمية</p>
-                            </div>
-                            <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 text-sky-400 flex items-center justify-center text-lg">
-                                <i class="fa-brands fa-telegram"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Stat Card 4 -->
-                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-pink-500/50 transition">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-400">مشاهدات TikTok الموجهة</p>
-                                <h3 class="text-2xl font-black mt-1 text-white">1.8M</h3>
-                                <p class="text-[11px] text-pink-400 mt-2 font-medium"><i class="fa-solid fa-fire ml-1"></i> أعلى معدل تحويل</p>
-                            </div>
-                            <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500/30 text-pink-400 flex items-center justify-center text-lg">
-                                <i class="fa-brands fa-tiktok"></i>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="hamburger-btn" class="hamburger-btn">☰</button>
+                    <h2 class="page-title">لوحة التحكم الإحصائية</h2>
                 </div>
 
-                <!-- Unified Group Management & Link Generator -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Active Groups Table & Management -->
-                    <div class="lg:col-span-2 glass-card p-5 rounded-2xl space-y-4">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                            <h2 class="text-sm font-extrabold text-white flex items-center space-x-2 space-x-reverse">
-                                <i class="fa-solid fa-users-gear text-indigo-400"></i>
-                                <span>قائمة المجموعات والقنوات النشطة</span>
-                            </h2>
-                            <div class="flex space-x-2 space-x-reverse">
-                                <button onclick="filterGroups('all')" class="group-tab-btn active px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white">الكل</button>
-                                <button onclick="filterGroups('whatsapp')" class="group-tab-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">واتساب</button>
-                                <button onclick="filterGroups('telegram')" class="group-tab-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">تلغرام</button>
-                            </div>
-                        </div>
-
-                        <!-- Groups Table Container -->
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-right text-xs text-slate-300">
-                                <thead class="bg-slate-800/60 text-slate-400 font-bold uppercase border-b border-slate-700/60">
-                                    <tr>
-                                        <th class="p-3">اسم المجموعة / القناة</th>
-                                        <th class="p-3">المنصة</th>
-                                        <th class="p-3">الأعضاء</th>
-                                        <th class="p-3">الدور / الصلاحية</th>
-                                        <th class="p-3 text-center">الإجراءات</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-800/60" id="communityGroupsList">
-                                    <tr class="group-row whatsapp hover:bg-slate-800/30 transition">
-                                        <td class="p-3 flex items-center space-x-3 space-x-reverse font-bold text-white">
-                                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                                                <i class="fa-brands fa-whatsapp"></i>
-                                            </div>
-                                            <span>مجتمع النخبة التقني VIP</span>
-                                        </td>
-                                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-semibold">WhatsApp</span></td>
-                                        <td class="p-3 font-bold">1,024 عضو</td>
-                                        <td class="p-3 text-amber-400 font-semibold"><i class="fa-solid fa-crown text-[10px] ml-1"></i> مالك المجموعة</td>
-                                        <td class="p-3 text-center">
-                                            <button onclick="switchTab('whatsapp')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition">دخول</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="group-row telegram hover:bg-slate-800/30 transition">
-                                        <td class="p-3 flex items-center space-x-3 space-x-reverse font-bold text-white">
-                                            <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
-                                                <i class="fa-brands fa-telegram"></i>
-                                            </div>
-                                            <span>القناة الرسمية الموثقة</span>
-                                        </td>
-                                        <td class="p-3"><span class="px-2 py-0.5 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded font-semibold">Telegram</span></td>
-                                        <td class="p-3 font-bold">34,100 مشترك</td>
-                                        <td class="p-3 text-indigo-400 font-semibold"><i class="fa-solid fa-shield-halved text-[10px] ml-1"></i> قناة رسمية</td>
-                                        <td class="p-3 text-center">
-                                            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="inline-block bg-sky-600 hover:bg-sky-500 text-white px-3 py-1 rounded-lg text-[11px] font-bold transition">انضمام <i class="fa-solid fa-arrow-up-right-from-square text-[9px] mr-1"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="group-row whatsapp hover:bg-slate-800/30 transition">
-                                        <td class="p-3 flex items-center space-x-3 space-x-reverse font-bold text-white">
-                                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                                                <i class="fa-brands fa-whatsapp"></i>
-                                            </div>
-                                            <span>فريق الدعم الفني المباشر</span>
-                                        </td>
-                                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-semibold">WhatsApp</span></td>
-                                        <td class="p-3 font-bold">450 عضو</td>
-                                        <td class="p-3 text-emerald-400 font-semibold">مشرف دائم</td>
-                                        <td class="p-3 text-center">
-                                            <button onclick="switchTab('whatsapp')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition">دخول</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Join Link Generator & Bot Shortcuts -->
-                    <div class="space-y-4">
-                        <!-- Join Link Tool -->
-                        <div class="glass-card p-5 rounded-2xl space-y-3">
-                            <h3 class="text-xs font-extrabold text-white flex items-center space-x-2 space-x-reverse">
-                                <i class="fa-solid fa-link text-indigo-400"></i>
-                                <span>مولد روابط الانضمام السريعة</span>
-                            </h3>
-                            <p class="text-[11px] text-slate-400">قم بتوليد رابط انضمام مخصص بدعوة مشفرة مع تتبع النقرات.</p>
-                            <select id="linkPlatform" class="w-full text-xs p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500" onchange="updateLinkView(this.value)">
-                                <option value="telegram">تلغرام - القناة الرسمية M9 VIP</option>
-                                <option value="whatsapp">واتساب - مجتمع النخبة التقني</option>
-                            </select>
-                            <div class="flex space-x-2 space-x-reverse">
-                                <input type="text" id="generatedLink" readonly value="https://t.me/+7qI8F19y45EzZjU8" class="flex-1 text-xs p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sky-300 font-mono">
-                                <button onclick="copyGeneratedLink()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2.5 rounded-xl text-xs font-bold transition">نسخ</button>
-                            </div>
-                            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="w-full mt-2 py-2 bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 space-x-reverse transition">
-                                <i class="fa-brands fa-telegram"></i>
-                                <span>فتح رابط القناة مباشرة</span>
-                            </a>
-                        </div>
-                        </div>
-
-                        <!-- Bot Action Shortcuts -->
-                        <div class="glass-card p-5 rounded-2xl space-y-3">
-                            <h3 class="text-xs font-extrabold text-white flex items-center space-x-2 space-x-reverse">
-                                <i class="fa-solid fa-robot text-sky-400"></i>
-                                <span>اختصارات أوتوماتيكية (Auto Bots)</span>
-                            </h3>
-                            <div class="space-y-2 text-xs">
-                                <button onclick="showToast('تم تفعيل الترحيب التلقائي بالأعضاء الجدد!')" class="w-full text-right p-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 flex items-center justify-between transition">
-                                    <span><i class="fa-solid fa-hand-wave text-amber-400 ml-2"></i> ترحيب تلقائي بالعضو الجديد</span>
-                                    <i class="fa-solid fa-toggle-on text-emerald-400 text-base"></i>
-                                </button>
-                                <button onclick="showToast('تم تفعيل فلتيرة الكلمات المحظورة!')" class="w-full text-right p-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 flex items-center justify-between transition">
-                                    <span><i class="fa-solid fa-shield-virus text-pink-400 ml-2"></i> حظر السبام والروابط العشوائية</span>
-                                    <i class="fa-solid fa-toggle-on text-emerald-400 text-base"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="status-badge">
+                    <div class="status-dot"></div>
+                    <span>النظام يعمل بكفاءة</span>
                 </div>
-            </div>
+            </header>
 
-            <!-- ================= VIEW 2: TIKTOK REELS / SHORT VIDEOS ================= -->
-            <div id="view-tiktok" class="view-panel hidden h-[calc(100vh-6.5rem)] flex items-center justify-center">
-                <div class="relative w-full max-w-sm h-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col justify-between">
-                    <!-- Video Background Overlay Visual Mockup -->
-                    <div class="absolute inset-0 bg-cover bg-center" id="tiktokBg" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800');">
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/90"></div>
-                    </div>
+            <!-- Main Dashboard Area -->
+            <main class="dashboard-content">
 
-                    <!-- Heart Click Animation Overlay -->
-                    <div id="heartAnimationContainer" class="absolute inset-0 pointer-events-none flex items-center justify-center"></div>
-
-                    <!-- Top Stream Overlay Controls -->
-                    <div class="relative z-10 p-4 flex justify-between items-center text-white">
-                        <div class="flex items-center space-x-2 space-x-reverse bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold border border-white/10">
-                            <span class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span>
-                            <span>TikTok Reel Live</span>
+                <!-- Stats Overview Grid -->
+                <div class="stats-grid">
+                    
+                    <!-- Card 1 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">إجمالي المجموعات المربوطة</span>
+                            <div class="stat-icon" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-purple);">🔗</div>
                         </div>
-                        <button onclick="switchTikTokVideo()" class="bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 transition">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                        </button>
-                    </div>
-
-                    <!-- Right Side Action Bar -->
-                    <div class="relative z-10 p-4 flex flex-col items-center space-y-5 mr-auto text-white">
-                        <!-- Creator Profile Avatar -->
-                        <div class="relative group cursor-pointer">
-                            <img id="tiktokAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" class="w-11 h-11 rounded-full border-2 border-pink-500 object-cover shadow-lg">
-                            <button class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-pink-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold">+</button>
-                        </div>
-
-                        <!-- Like Button -->
-                        <button onclick="toggleTikTokLike()" class="flex flex-col items-center group">
-                            <div id="tiktokLikeBtn" class="w-11 h-11 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
-                                <i class="fa-solid fa-heart"></i>
-                            </div>
-                            <span id="tiktokLikesCount" class="text-[11px] font-bold mt-1 text-slate-200">142.5K</span>
-                        </button>
-
-                        <!-- Comments Button -->
-                        <button onclick="openModal('tiktokCommentsModal')" class="flex flex-col items-center group">
-                            <div class="w-11 h-11 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
-                                <i class="fa-solid fa-comment-dots"></i>
-                            </div>
-                            <span class="text-[11px] font-bold mt-1 text-slate-200">1,820</span>
-                        </button>
-
-                        <!-- Share Button -->
-                        <button onclick="shareTikTokToGroup()" class="flex flex-col items-center group">
-                            <div class="w-11 h-11 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
-                                <i class="fa-solid fa-share"></i>
-                            </div>
-                            <span class="text-[11px] font-bold mt-1 text-slate-200">مشاركة</span>
-                        </button>
-
-                        <!-- Audio Spinning Disk -->
-                        <div class="w-9 h-9 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center overflow-hidden animate-spin-slow">
-                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=80" class="w-full h-full object-cover">
+                        <div class="stat-value-container">
+                            <span class="stat-value">12</span>
+                            <span class="stat-tag" style="background: rgba(37, 211, 102, 0.1); color: var(--whatsapp-green);">+3 هذا الشهر</span>
                         </div>
                     </div>
 
-                    <!-- Bottom Info Box -->
-                    <div class="relative z-10 p-4 space-y-2 text-white">
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <h4 id="tiktokAuthor" class="font-bold text-sm">@TechInnovator</h4>
-                            <span class="bg-pink-500/80 text-[9px] px-1.5 py-0.5 rounded font-bold">مُوثق</span>
+                    <!-- Card 2 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">أعضاء WhatsApp</span>
+                            <div class="stat-icon" style="background: rgba(37, 211, 102, 0.15); color: var(--whatsapp-green);">💬</div>
                         </div>
-                        <p id="tiktokCaption" class="text-xs text-slate-200 line-clamp-2 leading-relaxed">تجرية بناء واجهات متطورة تجمع بين جميع شبكات التواصل الاجتماعي في مكان واحد! 🚀🔥 #tech #coding #superapp</p>
-                        
-                        <!-- Sound Details -->
-                        <div class="flex items-center space-x-2 space-x-reverse text-[11px] text-slate-300">
-                            <i class="fa-solid fa-music text-pink-400 animate-pulse"></i>
-                            <span id="tiktokAudio" class="truncate max-w-[200px]">الصوت الأصلي - أحدث التقنيات 2026</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================= VIEW 3: WHATSAPP CHATS & VOICENOTES ================= -->
-            <div id="view-whatsapp" class="view-panel hidden h-[calc(100vh-6.5rem)] glass-card rounded-2xl flex overflow-hidden border border-slate-800">
-                <!-- Chats Sidebar -->
-                <div class="w-full md:w-80 border-l border-slate-800 flex flex-col shrink-0 bg-slate-900/80">
-                    <div class="p-3 border-b border-slate-800 flex justify-between items-center">
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
-                            <span class="font-bold text-sm text-white">محادثات WhatsApp</span>
-                        </div>
-                        <button onclick="showToast('بدء محادثة جديدة')" class="text-slate-400 hover:text-emerald-400 p-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                    </div>
-
-                    <!-- Status Bar / Stories Row -->
-                    <div class="p-3 border-b border-slate-800 flex space-x-3 space-x-reverse overflow-x-auto shrink-0">
-                        <!-- Add Status -->
-                        <div class="flex flex-col items-center space-y-1 shrink-0 cursor-pointer" onclick="showToast('إضافة حالة جديدة')">
-                            <div class="relative w-11 h-11 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-emerald-400">
-                                <i class="fa-solid fa-plus"></i>
-                            </div>
-                            <span class="text-[10px] text-slate-400">حالتك</span>
-                        </div>
-                        <!-- Status Item 1 -->
-                        <div class="flex flex-col items-center space-y-1 shrink-0 cursor-pointer" onclick="showToast('عرض حالة سارة')">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120" class="w-11 h-11 rounded-full p-0.5 border-2 border-emerald-400 object-cover">
-                            <span class="text-[10px] text-slate-300">سارة</span>
+                        <div class="stat-value-container">
+                            <span class="stat-value">3,840</span>
+                            <span class="stat-tag" style="background: rgba(37, 211, 102, 0.1); color: var(--whatsapp-green);">8 مجموعات نشطة</span>
                         </div>
                     </div>
 
-                    <!-- Chats List -->
-                    <div class="flex-1 overflow-y-auto divide-y divide-slate-800/50">
-                        <div onclick="selectWaChat(this, 'مجتمع النخبة التقني VIP', true)" class="wa-chat-item p-3 hover:bg-slate-800/50 cursor-pointer bg-slate-800/80 border-r-4 border-emerald-400 transition">
-                            <div class="flex space-x-3 space-x-reverse">
-                                <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0">
-                                    <i class="fa-solid fa-users text-sm"></i>
-                                </div>
-                                <div class="flex-1 overflow-hidden">
-                                    <div class="flex justify-between items-center">
-                                        <h4 class="font-bold text-xs text-white truncate">مجتمع النخبة التقني VIP</h4>
-                                        <span class="text-[10px] text-slate-400">11:20 ص</span>
-                                    </div>
-                                    <p class="text-[11px] text-emerald-400 truncate mt-0.5"><i class="fa-solid fa-microphone text-[10px] ml-1"></i> رسالة صوتية (0:14)</p>
-                                </div>
-                            </div>
+                    <!-- Card 3 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">مشتركي Telegram</span>
+                            <div class="stat-icon" style="background: rgba(34, 158, 217, 0.15); color: var(--telegram-blue);">✈️</div>
                         </div>
-
-                        <div onclick="selectWaChat(this, 'المهندس خالد العتيبي', false)" class="wa-chat-item p-3 hover:bg-slate-800/50 cursor-pointer transition">
-                            <div class="flex space-x-3 space-x-reverse">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" class="w-10 h-10 rounded-full object-cover shrink-0">
-                                <div class="flex-1 overflow-hidden">
-                                    <div class="flex justify-between items-center">
-                                        <h4 class="font-bold text-xs text-white truncate">المهندس خالد العتيبي</h4>
-                                        <span class="text-[10px] text-slate-400">أمس</span>
-                                    </div>
-                                    <p class="text-[11px] text-slate-400 truncate mt-0.5">تم استلام التصاميم النهائية، شكرًا لك!</p>
-                                </div>
-                            </div>
+                        <div class="stat-value-container">
+                            <span class="stat-value">45,210</span>
+                            <span class="stat-tag" style="background: rgba(34, 158, 217, 0.1); color: var(--telegram-blue);">4 قنوات رسمية</span>
                         </div>
                     </div>
+
+                    <!-- Card 4 -->
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-label">مشاهدات TikTok الموجّهة</span>
+                            <div class="stat-icon" style="background: rgba(254, 44, 85, 0.15); color: var(--tiktok-pink);">🎬</div>
+                        </div>
+                        <div class="stat-value-container">
+                            <span class="stat-value">1.8M</span>
+                            <span class="stat-tag" style="background: rgba(254, 44, 85, 0.1); color: var(--tiktok-pink);">أعلى تحويل 🔥</span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Chat Messages View Pane -->
-                <div class="hidden md:flex flex-1 flex-col bg-slate-950">
-                    <!-- Chat Header -->
-                    <div class="p-3 bg-slate-900 border-b border-slate-800 flex justify-between items-center px-4">
-                        <div class="flex items-center space-x-3 space-x-reverse">
-                            <div class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-users text-sm"></i>
-                            </div>
-                            <div>
-                                <h4 id="waActiveTitle" class="font-bold text-xs text-white">مجتمع النخبة التقني VIP</h4>
-                                <p class="text-[10px] text-emerald-400">متصل الآن • 1,024 عضو</p>
-                            </div>
+                <!-- Channels Table Card -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="table-title-box">
+                            <h3>قائمة المجموعات والقنوات النشطة</h3>
+                            <p>إدارة وتتبع القنوات المربوطة بالمنصة مباشرة</p>
                         </div>
-                        <div class="flex items-center space-x-3 space-x-reverse text-slate-400 text-sm">
-                            <button class="hover:text-emerald-400 p-1"><i class="fa-solid fa-video"></i></button>
-                            <button class="hover:text-emerald-400 p-1"><i class="fa-solid fa-phone"></i></button>
-                            <button class="hover:text-emerald-400 p-1"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+
+                        <!-- Platform Filter Tabs -->
+                        <div class="filter-tabs">
+                            <button class="filter-btn active" data-filter="all">الكل</button>
+                            <button class="filter-btn" data-filter="whatsapp">واتساب</button>
+                            <button class="filter-btn" data-filter="telegram">تلغرام</button>
                         </div>
                     </div>
 
-                    <!-- Messages Feed -->
-                    <div id="waMessageFeed" class="flex-1 p-4 overflow-y-auto space-y-3">
-                        <!-- Received Voice Note Message -->
-                        <div class="flex items-start space-x-2 space-x-reverse max-w-[75%]">
-                            <div class="bg-slate-800 p-3 rounded-2xl rounded-tr-none border border-slate-700/60 space-y-2 w-full">
-                                <div class="flex justify-between items-center text-[10px] text-slate-400">
-                                    <span class="font-bold text-emerald-400">فيصل الغامدي</span>
-                                    <span>11:18 ص</span>
-                                </div>
-                                <!-- Simulated Audio Player UI -->
-                                <div class="flex items-center space-x-3 space-x-reverse bg-slate-900/80 p-2 rounded-xl border border-slate-700/40">
-                                    <button onclick="toggleAudioPlay(this)" class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center text-xs font-bold hover:scale-105 transition">
-                                        <i class="fa-solid fa-play ml-0.5"></i>
-                                    </button>
-                                    <div class="flex-1 space-y-1">
-                                        <!-- Audio Wave Visualizer Simulation -->
-                                        <div class="flex items-center space-x-0.5 space-x-reverse h-4">
-                                            <span class="w-1 bg-emerald-400 h-2 rounded-full"></span>
-                                            <span class="w-1 bg-emerald-400 h-4 rounded-full"></span>
-                                            <span class="w-1 bg-emerald-400 h-3 rounded-full"></span>
-                                            <span class="w-1 bg-slate-600 h-2 rounded-full"></span>
-                                            <span class="w-1 bg-slate-600 h-4 rounded-full"></span>
-                                            <span class="w-1 bg-slate-600 h-1 rounded-full"></span>
-                                            <span class="w-1 bg-slate-600 h-3 rounded-full"></span>
+                    <!-- Table Container -->
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>اسم القناة / المجموعة</th>
+                                    <th>المنصة</th>
+                                    <th>عدد الأعضاء</th>
+                                    <th>الحالة</th>
+                                    <th style="text-align: left;">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="channels-table-body">
+                                
+                                <tr class="table-row" data-platform="whatsapp">
+                                    <td>
+                                        <div class="channel-info">
+                                            <div class="channel-avatar" style="background: rgba(37, 211, 102, 0.15); color: var(--whatsapp-green);">WA</div>
+                                            <span style="font-weight: 600;">مجتمع التقنية والبرمجة</span>
                                         </div>
-                                        <div class="flex justify-between text-[9px] text-slate-400">
-                                            <span>0:14</span>
-                                            <i class="fa-solid fa-microphone text-emerald-400"></i>
+                                    </td>
+                                    <td style="color: var(--text-muted);">WhatsApp Group</td>
+                                    <td style="font-weight: 700;">1,024 عضو</td>
+                                    <td>
+                                        <span class="badge-status badge-active">● نشط</span>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="action-btn">إدارة</button>
+                                    </td>
+                                </tr>
+
+                                <tr class="table-row" data-platform="telegram">
+                                    <td>
+                                        <div class="channel-info">
+                                            <div class="channel-avatar" style="background: rgba(34, 158, 217, 0.15); color: var(--telegram-blue);">TG</div>
+                                            <span style="font-weight: 600;">قناة الأخبار الرسمية</span>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    </td>
+                                    <td style="color: var(--text-muted);">Telegram Channel</td>
+                                    <td style="font-weight: 700;">28,500 مشترك</td>
+                                    <td>
+                                        <span class="badge-status badge-active">● نشط</span>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="action-btn">إدارة</button>
+                                    </td>
+                                </tr>
 
-                        <!-- Sent Message -->
-                        <div class="flex items-start space-x-2 space-x-reverse max-w-[75%] mr-auto flex-row-reverse">
-                            <div class="bg-emerald-700 text-white p-3 rounded-2xl rounded-tl-none space-y-1 text-xs">
-                                <p>تم الاستماع للملاحظة الصوتية، سنبدأ بتطوير الميزة فوراً.</p>
-                                <span class="text-[9px] text-emerald-200 block text-left">11:20 ص <i class="fa-solid fa-check-double text-[8px] text-sky-300"></i></span>
-                            </div>
-                        </div>
-                    </div>
+                                <tr class="table-row" data-platform="whatsapp">
+                                    <td>
+                                        <div class="channel-info">
+                                            <div class="channel-avatar" style="background: rgba(37, 211, 102, 0.15); color: var(--whatsapp-green);">WA</div>
+                                            <span style="font-weight: 600;">مجموعة العروض والتخفيضات</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: var(--text-muted);">WhatsApp Group</td>
+                                    <td style="font-weight: 700;">816 عضو</td>
+                                    <td>
+                                        <span class="badge-status badge-active">● نشط</span>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="action-btn">إدارة</button>
+                                    </td>
+                                </tr>
 
-                    <!-- Input Bar -->
-                    <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center space-x-2 space-x-reverse">
-                        <button class="text-slate-400 hover:text-emerald-400 p-2 text-base"><i class="fa-solid fa-paperclip"></i></button>
-                        <input id="waInput" type="text" placeholder="اكتب رسالة WhatsApp..." class="flex-1 bg-slate-800 border border-slate-700/60 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <button onclick="sendWaMessage()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold p-2.5 rounded-xl text-xs transition"><i class="fa-solid fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
+                                <tr class="table-row" data-platform="telegram">
+                                    <td>
+                                        <div class="channel-info">
+                                            <div class="channel-avatar" style="background: rgba(34, 158, 217, 0.15); color: var(--telegram-blue);">TG</div>
+                                            <span style="font-weight: 600;">مجتمع المناقشات المفتوحة</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: var(--text-muted);">Telegram Group</td>
+                                    <td style="font-weight: 700;">16,710 مشترك</td>
+                                    <td>
+                                        <span class="badge-status badge-inactive">○ غير نشط</span>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="action-btn">إدارة</button>
+                                    </td>
+                                </tr>
 
-            <!-- ================= VIEW 4: TELEGRAM CHANNELS & LARGE GROUPS ================= -->
-            <div id="view-telegram" class="view-panel hidden h-[calc(100vh-6.5rem)] glass-card rounded-2xl flex flex-col overflow-hidden border border-slate-800">
-                <!-- Telegram Channel Header with Direct Link -->
-                <div class="bg-gradient-to-r from-sky-600 via-sky-700 to-indigo-800 p-4 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shadow-lg">
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <div class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-2xl font-bold text-white shadow-inner">
-                            <i class="fa-brands fa-telegram"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center space-x-2 space-x-reverse">
-                                <h3 class="font-extrabold text-base">القناة الرسمية الموثقة على Telegram</h3>
-                                <i class="fa-solid fa-circle-check text-sky-300 text-sm"></i>
-                            </div>
-                            <p class="text-xs text-sky-100 mt-0.5 font-mono">https://t.me/+7qI8F19y45EzZjU8</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2 space-x-reverse w-full sm:w-auto">
-                        <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="w-full sm:w-auto bg-white text-sky-700 hover:bg-sky-50 px-5 py-2.5 rounded-xl text-xs font-black flex items-center justify-center space-x-2 space-x-reverse shadow-xl transition transform hover:scale-105">
-                            <i class="fa-brands fa-telegram text-base"></i>
-                            <span>الانضمام للقناة الآن</span>
-                            <i class="fa-solid fa-arrow-left text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Pinned Message Banner -->
-                <div class="bg-slate-900/90 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs text-slate-300">
-                    <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <i class="fa-solid fa-thumbtack text-sky-400 text-xs"></i>
-                        <span class="font-bold text-sky-400">رابط الدعوة المباشر:</span>
-                        <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="truncate text-slate-300 hover:text-sky-400 underline font-mono">https://t.me/+7qI8F19y45EzZjU8</a>
-                    </div>
-                    <button class="text-slate-500 hover:text-white text-xs" onclick="showToast('تم نسخ الرابط المثبت')"><i class="fa-solid fa-copy"></i></button>
-                </div>
-
-                <!-- Telegram Message Feed Container -->
-                <div id="telegramFeed" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4 bg-slate-950">
-                    <!-- Featured Channel Welcome Card -->
-                    <div class="glass-card max-w-2xl mx-auto rounded-2xl p-5 space-y-4 border border-sky-500/30 bg-gradient-to-b from-sky-950/20 to-slate-900/40">
-                        <div class="flex justify-between items-center text-xs">
-                            <div class="flex items-center space-x-2 space-x-reverse">
-                                <span class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-sm"><i class="fa-brands fa-telegram"></i></span>
-                                <div>
-                                    <span class="font-bold text-white block">إدارة القناة الرسمية</span>
-                                    <span class="text-[10px] text-sky-400">منشور مثبت</span>
-                                </div>
-                            </div>
-                            <span class="bg-sky-500/20 text-sky-300 text-[10px] px-2 py-0.5 rounded-full font-bold">OFFICIAL LINK</span>
-                        </div>
-                        <p class="text-xs text-slate-200 leading-relaxed font-medium">
-                            أهلاً بكم جميعاً في قناتنا الرسمية الموثقة على تلغرام! يمكنك الانضمام ومتابعة كافة التحديثات الحصرية، البث المباشر، والأخبار الفورية عبر الرابط المباشر أدناه:
-                        </p>
-                        <div class="p-3 bg-slate-900/90 rounded-xl border border-sky-500/30 flex items-center justify-between">
-                            <div class="flex items-center space-x-3 space-x-reverse overflow-hidden">
-                                <i class="fa-solid fa-link text-sky-400 text-lg shrink-0"></i>
-                                <span class="text-xs font-mono text-sky-300 truncate">https://t.me/+7qI8F19y45EzZjU8</span>
-                            </div>
-                            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-slate-950 px-4 py-1.5 rounded-lg text-xs font-black shrink-0 transition">انضمام</a>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2 space-x-reverse">
-                        <span class="bg-sky-950/40 border border-sky-300/30 text-sky-200 text-[10px] px-2.5 py-1 rounded-full font-bold">Bot Connected</span>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Pinned Message Banner -->
-                <div class="bg-slate-900/90 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs text-slate-300">
-                    <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <i class="fa-solid fa-thumbtack text-sky-400 text-xs"></i>
-                        <span class="font-bold text-sky-400">رسالة مثبّتة:</span>
-                        <span class="truncate text-slate-400">تحديث النظام رقم #309 متاح الآن للجميع.</span>
-                    </div>
-                    <button class="text-slate-500 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-
-                <!-- Telegram Message Feed Container -->
-                <div id="telegramFeed" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4 bg-slate-950">
-                    <!-- Broadcast Post Card 1 -->
-                    <div class="glass-card max-w-2xl mx-auto rounded-2xl p-4 space-y-3 border border-slate-800">
-                        <div class="flex justify-between items-center text-xs">
-                            <div class="flex items-center space-x-2 space-x-reverse">
-                                <span class="w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-xs"><i class="fa-solid fa-shield-halved"></i></span>
-                                <span class="font-bold text-white">المشرف العام (Admin)</span>
-                                <span class="bg-sky-500/20 text-sky-400 text-[9px] px-1.5 py-0.5 rounded font-bold">ADMIN</span>
-                            </div>
-                            <span class="text-[10px] text-slate-500">منذ ساعة واحدة</span>
-                        </div>
-                        <p class="text-xs text-slate-200 leading-relaxed">
-                            📢 مرحباً بالجميع! تم رسمياً ربط خوادم البث المباشر مع منصة تيك توك لتغطية كافة الأحداث التقنية القادمة secara أوتوماتيكية.
-                        </p>
-                        <div class="rounded-xl overflow-hidden border border-slate-800 h-44">
-                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800/60">
-                            <span class="text-[11px]"><i class="fa-solid fa-eye text-sky-400 ml-1"></i> 12.4K</span>
-                            <div class="flex space-x-2 space-x-reverse">
-                                <button onclick="showToast('تم إضافة التفاعل 👍')" class="bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300">👍 340</button>
-                                <button onclick="showToast('تم إضافة التفاعل 🔥')" class="bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300">🔥 120</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Telegram Admin Fast Post Bar -->
-                <div class="p-3 bg-slate-900 border-t border-slate-800">
-                    <div class="max-w-2xl mx-auto flex space-x-2 space-x-reverse">
-                        <input id="telegramInput" type="text" placeholder="اكتب منشوراً جديداً لنشره في قناة Telegram..." class="flex-1 bg-slate-800 border border-slate-700/60 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        <button onclick="postToTelegram()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">نشر الآن</button>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <!-- MODAL 1: CREATE GROUP / CHANNEL -->
-    <div id="createGroupModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-card rounded-2xl max-w-md w-full p-6 space-y-4 border border-slate-700">
-            <div class="flex justify-between items-center">
-                <h3 class="font-extrabold text-base text-white">إنشاء مجموعة أو قناة جديدة</h3>
-                <button onclick="closeModal('createGroupModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-300 mb-1">منصة النشر Target Platform</label>
-                    <select id="modalPlatform" class="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200">
-                        <option value="whatsapp">مجتمع / مجموعة WhatsApp</option>
-                        <option value="telegram">قناة / مجموعة Telegram</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-300 mb-1">اسم المجموعة / القناة</label>
-                    <input type="text" id="modalGroupName" placeholder="مثال: رواد الأعمال والتقنية" class="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                </div>
-            </div>
-            <div class="flex justify-end space-x-2 space-x-reverse pt-2">
-                <button onclick="closeModal('createGroupModal')" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">إلغاء</button>
-                <button onclick="submitNewGroup()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold">تأكيد والإنشاء</button>
-            </div>
+            </main>
         </div>
+
     </div>
 
-    <!-- MODAL 2: TIKTOK COMMENTS SIDEBAR/MODAL -->
-    <div id="tiktokCommentsModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-end sm:items-center justify-center hidden p-0 sm:p-4">
-        <div class="glass-card rounded-t-3xl sm:rounded-2xl max-w-md w-full h-[60vh] p-4 flex flex-col justify-between border border-slate-700">
-            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
-                <h3 class="font-extrabold text-xs text-white">التعليقات (1,820)</h3>
-                <button onclick="closeModal('tiktokCommentsModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="flex-1 overflow-y-auto py-3 space-y-3 text-xs">
-                <div class="flex space-x-2 space-x-reverse">
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=80" class="w-7 h-7 rounded-full object-cover">
-                    <div>
-                        <span class="font-bold text-slate-300 text-[11px]">محمد العلي</span>
-                        <p class="text-slate-400 mt-0.5">تصميم الخوادم والمزيج بين التطبيقات رائع جداً! 🔥</p>
-                    </div>
-                </div>
-            </div>
-            <div class="pt-2 border-t border-slate-800 flex space-x-2 space-x-reverse">
-                <input type="text" placeholder="إضافة تعليق..." class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                <button onclick="showToast('تمت إضافة تعليقك!')" class="bg-pink-500 text-white px-3 py-2 rounded-xl text-xs font-bold">إرسال</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification Element -->
-    <div id="toast" class="fixed bottom-5 left-5 bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 space-x-reverse text-xs opacity-0 pointer-events-none transition-all duration-300 z-50">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-        <span id="toastMsg">تمت العملية بنجاح!</span>
-    </div>
-
-    <!-- Application Script Engine -->
+    <!-- Pure Vanilla JS Logic -->
     <script>
-        // Sidebar Toggle for Mobile
-        function toggleSidebar() {
-            const sidebar = document.getElementById('appSidebar');
-            sidebar.classList.toggle('-translate-x-full');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
 
-        // Main Navigation View Switcher
-        function switchTab(tabId) {
-            document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
-            const activeView = document.getElementById(`view-${tabId}`);
-            if (activeView) activeView.classList.remove('hidden');
-
-            document.querySelectorAll('.nav-tab').forEach(btn => {
-                btn.classList.remove('active', 'text-indigo-400', 'bg-indigo-950/60', 'border', 'border-indigo-800/40');
-        // Helper to update link dynamically
-        function updateLinkView(platform) {
-            const input = document.getElementById('generatedLink');
-            if (platform === 'telegram') {
-                input.value = 'https://t.me/+7qI8F19y45EzZjU8';
-            } else {
-                input.value = 'https://omnihub.app/join/whatsapp?ref=vip';
+            // Sidebar Controls
+            function toggleSidebar(show) {
+                if (show) {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
+                } else {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
             }
-        }
 
-        // Modal Controls
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+            hamburgerBtn?.addEventListener('click', () => toggleSidebar(true));
+            closeSidebarBtn?.addEventListener('click', () => toggleSidebar(false));
+            overlay?.addEventListener('click', () => toggleSidebar(false));
 
-        // Toast Helper
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').textContent = msg;
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
-        }
+            // Filtering Mechanism
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const tableRows = document.querySelectorAll('.table-row');
 
-        // Group Link Generator
-        function copyGeneratedLink() {
-            const linkInput = document.getElementById('generatedLink');
-            document.execCommand('copy');
-            showToast('تم نسخ رابط الانضمام المخصص للحافظة!');
-        }
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update Active Tab
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
 
-        // WhatsApp Messaging Logic
-        function sendWaMessage() {
-            const input = document.getElementById('waInput');
-            const feed = document.getElementById('waMessageFeed');
-            if (!input.value.trim()) return;
+                    const filter = btn.getAttribute('data-filter');
 
-            const msgHTML = `
-                <div class="flex items-start space-x-2 space-x-reverse max-w-[75%] mr-auto flex-row-reverse">
-                    <div class="bg-emerald-700 text-white p-3 rounded-2xl rounded-tl-none space-y-1 text-xs">
-                        <p>${input.value}</p>
-                        <span class="text-[9px] text-emerald-200 block text-left">الآن <i class="fa-solid fa-check text-[8px]"></i></span>
-                    </div>
-                </div>
-            `;
-            feed.insertAdjacentHTML('beforeend', msgHTML);
-            feed.scrollTop = feed.scrollHeight;
-            input.value = '';
-        }
-
-        // Telegram Channel Post Logic
-        function postToTelegram() {
-            const input = document.getElementById('telegramInput');
-            const feed = document.getElementById('telegramFeed');
-            if (!input.value.trim()) return;
-
-            const postHTML = `
-                <div class="glass-card max-w-2xl mx-auto rounded-2xl p-4 space-y-3 border border-slate-800">
-                    <div class="flex justify-between items-center text-xs">
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <span class="w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-xs"><i class="fa-solid fa-shield-halved"></i></span>
-                            <span class="font-bold text-white">المشرف العام (أنت)</span>
-                        </div>
-                        <span class="text-[10px] text-slate-500">الآن</span>
-                    </div>
-                    <p class="text-xs text-slate-200 leading-relaxed">${input.value}</p>
-                    <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800/60">
-                        <span class="text-[11px]"><i class="fa-solid fa-eye text-sky-400 ml-1"></i> 1</span>
-                    </div>
-                </div>
-            `;
-            feed.insertAdjacentHTML('afterbegin', postHTML);
-            input.value = '';
-            showToast('تم نشر البرودكاست بالقناة!');
-        }
-
-        // TikTok Video Switcher Mockup
-        const tiktokData = [
-            { bg: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800', author: '@TechInnovator', caption: 'تجرية بناء واجهات متطورة تجمع بين جميع شبكات التواصل الاجتماعي! 🚀🔥' },
-            { bg: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=800', author: '@CodeMaster_Ar', caption: 'كيف تجعل أداء تطبيقك أسرع بـ 10 أضعاف؟ الشرح الكامل! 💻✨' }
-        ];
-        let currentTikTokIndex = 0;
-
-        function switchTikTokVideo() {
-            currentTikTokIndex = (currentTikTokIndex + 1) % tiktokData.length;
-            const data = tiktokData[currentTikTokIndex];
-            document.getElementById('tiktokBg').style.backgroundImage = `url('${data.bg}')`;
-            document.getElementById('tiktokAuthor').textContent = data.author;
-            document.getElementById('tiktokCaption').textContent = data.caption;
-            showToast('تم الانتقال للفيديو التالي');
-        }
-
-        function toggleTikTokLike() {
-            const btn = document.getElementById('tiktokLikeBtn');
-            const count = document.getElementById('tiktokLikesCount');
-            if (btn.classList.contains('text-pink-500')) {
-                btn.classList.remove('text-pink-500');
-                count.textContent = '142.5K';
-            } else {
-                btn.classList.add('text-pink-500');
-                count.textContent = '142.6K';
-                showHeartAnimation();
-            }
-        }
-
-        function showHeartAnimation() {
-            const container = document.getElementById('heartAnimationContainer');
-            const heart = document.createElement('i');
-            heart.className = 'fa-solid fa-heart text-6xl text-pink-500 animate-heart drop-shadow-lg';
-            container.appendChild(heart);
-            setTimeout(() => heart.remove(), 800);
-        }
-
-        function shareTikTokToGroup() {
-            showToast('تم مشاركة فيديو TikTok المباشر في مجموعات WhatsApp وتلغرام!');
-        }
-
-        // Filter Table Groups
-        function filterGroups(type) {
-            document.querySelectorAll('.group-row').forEach(row => {
-                if (type === 'all' || row.classList.contains(type)) row.classList.remove('hidden');
-                else row.classList.add('hidden');
+                    // Filter Rows
+                    tableRows.forEach(row => {
+                        const platform = row.getAttribute('data-platform');
+                        if (filter === 'all' || platform === filter) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
             });
-        }
-
-        function toggleAudioPlay(btn) {
-            const icon = btn.querySelector('i');
-            if (icon.classList.contains('fa-play')) {
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
-                showToast('تشغيل الملاحظة الصوتية...');
-            } else {
-                icon.classList.remove('fa-pause');
-                icon.classList.add('fa-play');
-            }
-        }
-
-        function submitNewGroup() {
-            const name = document.getElementById('modalGroupName').value;
-            if (!name) return;
-            showToast(`تم إنشاء "${name}" بنجاح وإضافتها للوحة التحكم!`);
-            closeModal('createGroupModal');
-        }
+        });
     </script>
 </body>
 </html>
