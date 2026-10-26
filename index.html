@@ -1,790 +1,538 @@
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniHub Super-App | لوحة التحكم</title>
-    <!-- Google Font: Tajawal -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>عالم الذئب والخراف | Wolf and Sheep World</title>
+    <!-- Tailwind CSS (CDN خفيف وموثوق) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Base Reset & Variables */
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: #161e2e;
-            --border-color: #232d3f;
-            --accent-purple: #6366f1;
-            --accent-purple-hover: #4f46e5;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --whatsapp-green: #25d366;
-            --telegram-blue: #229ed9;
-            --tiktok-pink: #fe2c55;
-            --sidebar-width: 260px;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Cairo', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
         }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            overflow-x: hidden;
-        }
-
-        /* Layout Architecture */
-        .app-container {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: #0f172a;
-            border-left: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            z-index: 1000;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 38px;
-            height: 38px;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-purple);
-            font-weight: 800;
-            font-size: 18px;
-        }
-
-        .logo-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.2;
-        }
-
-        .version-tag {
-            font-size: 10px;
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--accent-purple);
-            padding: 2px 6px;
-            border-radius: 12px;
-            display: inline-block;
-        }
-
-        .close-sidebar-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 20px;
-            cursor: pointer;
-            display: none;
-        }
-
-        .sidebar-menu {
-            padding: 20px 12px;
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        .menu-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            padding: 0 12px 8px 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            color: var(--text-muted);
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-        }
-
-        .nav-item.active {
-            background: var(--accent-purple);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .nav-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        /* Mobile Overlay Backdrop */
-        .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Main Content Wrapper */
-        .main-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-right: var(--sidebar-width);
-            min-width: 0;
-            transition: margin 0.3s ease;
-        }
-
-        /* Top Header */
-        .top-header {
-            height: 64px;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .hamburger-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .page-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .status-badge {
-            background: rgba(37, 211, 102, 0.1);
-            color: var(--whatsapp-green);
-            border: 1px solid rgba(37, 211, 102, 0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--whatsapp-green);
-            border-radius: 50%;
-        }
-
-        /* Dashboard Content Container */
-        .dashboard-content {
-            padding: 28px;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
+        .board-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 2px;
+            background-color: #374151;
+            padding: 2px;
+            border-radius: 0.75rem;
         }
-
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+        .cell {
+            aspect-ratio: 1;
+            transition: all 0.15s ease-in-out;
         }
-
-        .stat-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            transform: translateY(-2px);
+        /* أنيميشن خفيفة للحركات */
+        .entity-pop {
+            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .stat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .stat-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .stat-value-container {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-        }
-
-        .stat-value {
-            font-size: 26px;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .stat-tag {
-            font-size: 11px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-
-        /* Table Card Section */
-        .table-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-        }
-
-        .table-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .table-title-box h3 {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .table-title-box p {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            background: #0b0f19;
-            padding: 4px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            gap: 4px;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 6px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn.active {
-            background: var(--accent-purple);
-            color: #fff;
-        }
-
-        /* Custom Data Table */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: right;
-            font-size: 14px;
-        }
-
-        th {
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 600;
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        td {
-            padding: 16px;
-            border-bottom: 1px solid rgba(35, 45, 63, 0.5);
-            color: var(--text-main);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .channel-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .channel-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .badge-status {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .badge-active {
-            background: rgba(37, 211, 102, 0.1);
-            color: var(--whatsapp-green);
-        }
-
-        .badge-inactive {
-            background: rgba(148, 163, 184, 0.1);
-            color: var(--text-muted);
-        }
-
-        .action-btn {
-            background: #232d3f;
-            border: none;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .action-btn:hover {
-            background: #334155;
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-wrapper {
-                margin-right: 0;
-            }
-
-            .hamburger-btn, .close-sidebar-btn {
-                display: flex;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .dashboard-content {
-                padding: 16px;
-            }
-
-            .top-header {
-                padding: 0 16px;
-            }
-
-            .status-badge span {
-                display: none;
-            }
-
-            .table-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .filter-tabs {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .filter-btn {
-                flex: 1;
-            }
+        @keyframes popIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between transition-colors duration-200">
 
-    <div class="app-container">
-
-        <!-- Mobile Overlay -->
-        <div id="sidebar-overlay" class="sidebar-overlay"></div>
-
-        <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-box">
-                    <div class="logo-icon">OH</div>
-                    <div>
-                        <div class="logo-title">OmniHub</div>
-                        <span class="version-tag">Pro v3.0</span>
-                    </div>
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-slate-950/70 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">🐺</span>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl text-emerald-400 leading-tight">عالم الذئب والخراف</h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Wolf and Sheep World Simulation</p>
                 </div>
-                <button id="close-sidebar-btn" class="close-sidebar-btn">✕</button>
             </div>
 
-            <nav class="sidebar-menu">
-                <div class="menu-label">الأقسام الرئيسية</div>
-                
-                <a href="#" class="nav-item active">
-                    <span class="nav-icon">📊</span>
-                    <span>إدارة المجموعات الشاملة</span>
-                </a>
+            <!-- Tab Navigation & Theme Toggle -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <nav class="flex bg-slate-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+                    <button id="tab-sim" onclick="switchTab('sim')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white transition">المحاكاة</button>
+                    <button id="tab-rules" onclick="switchTab('rules')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">القواعد</button>
+                    <button id="tab-settings" onclick="switchTab('settings')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">الإعدادات</button>
+                </nav>
+            </div>
+        </div>
+    </header>
 
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">🎵</span>
-                    <span>خلاصة TikTok / Reels</span>
-                </a>
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto w-full px-4 py-4 flex-grow flex flex-col">
 
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">💬</span>
-                    <span>محادثات WhatsApp</span>
-                </a>
+        <!-- TAB 1: SIMULATION & GAME -->
+        <div id="view-sim" class="space-y-4 flex flex-col flex-grow">
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-400 font-medium">الخراف الحية</p>
+                        <p id="stat-sheep" class="text-xl sm:text-2xl font-bold text-emerald-400">0</p>
+                    </div>
+                    <span class="text-2xl">🐑</span>
+                </div>
+                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-400 font-medium">الذئاب النشطة</p>
+                        <p id="stat-wolves" class="text-xl sm:text-2xl font-bold text-rose-400">0</p>
+                    </div>
+                    <span class="text-2xl">🐺</span>
+                </div>
+                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-400 font-medium">العشب المتوفر</p>
+                        <p id="stat-grass" class="text-xl sm:text-2xl font-bold text-green-500">0</p>
+                    </div>
+                    <span class="text-2xl">🌱</span>
+                </div>
+                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-400 font-medium">عدد الجولات</p>
+                        <p id="stat-turns" class="text-xl sm:text-2xl font-bold text-amber-400">0</p>
+                    </div>
+                    <span class="text-2xl">⏳</span>
+                </div>
+            </div>
 
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">📢</span>
-                    <span>قنوات Telegram</span>
-                </a>
-
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">📈</span>
-                    <span>معدل التفاعل الكلي</span>
-                </a>
-            </nav>
-        </aside>
-
-        <!-- Main Wrapper -->
-        <div class="main-wrapper">
-            
-            <!-- Top Header -->
-            <header class="top-header">
-                <div class="header-left">
-                    <button id="hamburger-btn" class="hamburger-btn">☰</button>
-                    <h2 class="page-title">لوحة التحكم الإحصائية</h2>
+            <!-- Game Board & Controls Workspace -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 items-start flex-grow">
+                <!-- Board Area -->
+                <div class="lg:col-span-3 bg-slate-800/40 border border-slate-700/50 p-3 sm:p-4 rounded-3xl flex flex-col items-center justify-center">
+                    <div id="board-container" class="w-full max-w-[500px] aspect-square">
+                        <div id="board" class="board-grid w-full h-full"></div>
+                    </div>
                 </div>
 
-                <div class="status-badge">
-                    <div class="status-dot"></div>
-                    <span>النظام يعمل بكفاءة</span>
-                </div>
-            </header>
-
-            <!-- Main Dashboard Area -->
-            <main class="dashboard-content">
-
-                <!-- Stats Overview Grid -->
-                <div class="stats-grid">
+                <!-- Interactive Control Panel -->
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-3xl space-y-4">
+                    <h2 class="font-bold text-sm text-slate-300 border-b border-slate-700 pb-2">لوحة التحكم</h2>
                     
-                    <!-- Card 1 -->
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <span class="stat-label">إجمالي المجموعات المربوطة</span>
-                            <div class="stat-icon" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-purple);">🔗</div>
-                        </div>
-                        <div class="stat-value-container">
-                            <span class="stat-value">12</span>
-                            <span class="stat-tag" style="background: rgba(37, 211, 102, 0.1); color: var(--whatsapp-green);">+3 هذا الشهر</span>
-                        </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                        <button id="btn-start" onclick="toggleSim()" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 active:scale-95 transition">
+                            <span id="start-icon">▶</span> <span id="start-text">تشغيل المحاكاة</span>
+                        </button>
+                        <button onclick="stepSim()" class="w-full py-2.5 px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold rounded-xl active:scale-95 transition">
+                            ⏭ خطوة واحدة
+                        </button>
+                        <button onclick="resetSim()" class="w-full py-2.5 px-4 bg-rose-950/60 hover:bg-rose-900 text-rose-300 font-semibold border border-rose-800/50 rounded-xl active:scale-95 transition">
+                            🔄 إعادة ضبط
+                        </button>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <span class="stat-label">أعضاء WhatsApp</span>
-                            <div class="stat-icon" style="background: rgba(37, 211, 102, 0.15); color: var(--whatsapp-green);">💬</div>
+                    <!-- Speed Slider -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span>سرعة المحاكاة</span>
+                            <span id="speed-val">متوسطة</span>
                         </div>
-                        <div class="stat-value-container">
-                            <span class="stat-value">3,840</span>
-                            <span class="stat-tag" style="background: rgba(37, 211, 102, 0.1); color: var(--whatsapp-green);">8 مجموعات نشطة</span>
-                        </div>
+                        <input id="speed-slider" type="range" min="100" max="1000" step="100" value="500" onchange="updateSpeed(this.value)" class="w-full accent-emerald-500 bg-slate-700 h-2 rounded-lg cursor-pointer">
                     </div>
 
-                    <!-- Card 3 -->
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <span class="stat-label">مشتركي Telegram</span>
-                            <div class="stat-icon" style="background: rgba(34, 158, 217, 0.15); color: var(--telegram-blue);">✈️</div>
+                    <!-- Spawn Placement Options -->
+                    <div class="space-y-2 border-t border-slate-700 pt-3">
+                        <p class="text-xs text-slate-400 font-medium">إضافة عنصر بالضغط على الرقعة:</p>
+                        <div class="grid grid-cols-3 gap-1">
+                            <button onclick="setSpawnType('sheep')" id="tool-sheep" class="tool-btn active-tool border border-emerald-500 bg-emerald-950/50 p-2 rounded-xl text-center text-xs">
+                                🐑 خروف
+                            </button>
+                            <button onclick="setSpawnType('wolf')" id="tool-wolf" class="tool-btn border border-slate-700 bg-slate-900/50 p-2 rounded-xl text-center text-xs">
+                                🐺 ذئب
+                            </button>
+                            <button onclick="setSpawnType('grass')" id="tool-grass" class="tool-btn border border-slate-700 bg-slate-900/50 p-2 rounded-xl text-center text-xs">
+                                🌱 عشب
+                            </button>
                         </div>
-                        <div class="stat-value-container">
-                            <span class="stat-value">45,210</span>
-                            <span class="stat-tag" style="background: rgba(34, 158, 217, 0.1); color: var(--telegram-blue);">4 قنوات رسمية</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <span class="stat-label">مشاهدات TikTok الموجّهة</span>
-                            <div class="stat-icon" style="background: rgba(254, 44, 85, 0.15); color: var(--tiktok-pink);">🎬</div>
-                        </div>
-                        <div class="stat-value-container">
-                            <span class="stat-value">1.8M</span>
-                            <span class="stat-tag" style="background: rgba(254, 44, 85, 0.1); color: var(--tiktok-pink);">أعلى تحويل 🔥</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Channels Table Card -->
-                <div class="table-card">
-                    <div class="table-header">
-                        <div class="table-title-box">
-                            <h3>قائمة المجموعات والقنوات النشطة</h3>
-                            <p>إدارة وتتبع القنوات المربوطة بالمنصة مباشرة</p>
-                        </div>
-
-                        <!-- Platform Filter Tabs -->
-                        <div class="filter-tabs">
-                            <button class="filter-btn active" data-filter="all">الكل</button>
-                            <button class="filter-btn" data-filter="whatsapp">واتساب</button>
-                            <button class="filter-btn" data-filter="telegram">تلغرام</button>
-                        </div>
-                    </div>
-
-                    <!-- Table Container -->
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>اسم القناة / المجموعة</th>
-                                    <th>المنصة</th>
-                                    <th>عدد الأعضاء</th>
-                                    <th>الحالة</th>
-                                    <th style="text-align: left;">إجراءات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="channels-table-body">
-                                
-                                <tr class="table-row" data-platform="whatsapp">
-                                    <td>
-                                        <div class="channel-info">
-                                            <div class="channel-avatar" style="background: rgba(37, 211, 102, 0.15); color: var(--whatsapp-green);">WA</div>
-                                            <span style="font-weight: 600;">مجتمع التقنية والبرمجة</span>
-                                        </div>
-                                    </td>
-                                    <td style="color: var(--text-muted);">WhatsApp Group</td>
-                                    <td style="font-weight: 700;">1,024 عضو</td>
-                                    <td>
-                                        <span class="badge-status badge-active">● نشط</span>
-                                    </td>
-                                    <td style="text-align: left;">
-                                        <button class="action-btn">إدارة</button>
-                                    </td>
-                                </tr>
-
-                                <tr class="table-row" data-platform="telegram">
-                                    <td>
-                                        <div class="channel-info">
-                                            <div class="channel-avatar" style="background: rgba(34, 158, 217, 0.15); color: var(--telegram-blue);">TG</div>
-                                            <span style="font-weight: 600;">قناة الأخبار الرسمية</span>
-                                        </div>
-                                    </td>
-                                    <td style="color: var(--text-muted);">Telegram Channel</td>
-                                    <td style="font-weight: 700;">28,500 مشترك</td>
-                                    <td>
-                                        <span class="badge-status badge-active">● نشط</span>
-                                    </td>
-                                    <td style="text-align: left;">
-                                        <button class="action-btn">إدارة</button>
-                                    </td>
-                                </tr>
-
-                                <tr class="table-row" data-platform="whatsapp">
-                                    <td>
-                                        <div class="channel-info">
-                                            <div class="channel-avatar" style="background: rgba(37, 211, 102, 0.15); color: var(--whatsapp-green);">WA</div>
-                                            <span style="font-weight: 600;">مجموعة العروض والتخفيضات</span>
-                                        </div>
-                                    </td>
-                                    <td style="color: var(--text-muted);">WhatsApp Group</td>
-                                    <td style="font-weight: 700;">816 عضو</td>
-                                    <td>
-                                        <span class="badge-status badge-active">● نشط</span>
-                                    </td>
-                                    <td style="text-align: left;">
-                                        <button class="action-btn">إدارة</button>
-                                    </td>
-                                </tr>
-
-                                <tr class="table-row" data-platform="telegram">
-                                    <td>
-                                        <div class="channel-info">
-                                            <div class="channel-avatar" style="background: rgba(34, 158, 217, 0.15); color: var(--telegram-blue);">TG</div>
-                                            <span style="font-weight: 600;">مجتمع المناقشات المفتوحة</span>
-                                        </div>
-                                    </td>
-                                    <td style="color: var(--text-muted);">Telegram Group</td>
-                                    <td style="font-weight: 700;">16,710 مشترك</td>
-                                    <td>
-                                        <span class="badge-status badge-inactive">○ غير نشط</span>
-                                    </td>
-                                    <td style="text-align: left;">
-                                        <button class="action-btn">إدارة</button>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
                     </div>
                 </div>
-
-            </main>
+            </div>
         </div>
 
-    </div>
+        <!-- TAB 2: RULES & INFO -->
+        <div id="view-rules" class="hidden space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-3xl space-y-4">
+                <h2 class="text-xl font-bold text-emerald-400">قواعد نظام عالم الذئب والخراف</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/40 space-y-2">
+                        <span class="text-3xl">🌱</span>
+                        <h3 class="font-bold text-emerald-300">النباتات (العشب)</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">ينمو العشب عشوائياً في الأماكن الفارغة بالشبكة لتوفير الغذاء للخراف.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/40 space-y-2">
+                        <span class="text-3xl">🐑</span>
+                        <h3 class="font-bold text-blue-300">الخراف</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">تتحرك عشوائياً للبحث عن العشب. عند التغذي تتزايد طاقتها وتستطيع التكاثر. إذا نفدت طاقتها تموت.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/40 space-y-2">
+                        <span class="text-3xl">🐺</span>
+                        <h3 class="font-bold text-rose-300">الذئاب</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">تتطارد الخراف القريبة للتغذي عليها. تتكاثر عند التغذي وتفقد طاقتها تدريجياً وتتحلل إن لم تجد طعاماً.</p>
+                    </div>
+                </div>
 
-    <!-- Pure Vanilla JS Logic -->
+                <div class="bg-slate-900/40 p-4 rounded-2xl text-xs text-slate-300 space-y-2">
+                    <h4 class="font-bold text-amber-400">💡 نصيحة لتحقيق التوازن البيئي:</h4>
+                    <p>إذا زاد عدد الذئاب بسرعة فسوف تلتهم كل الخراف ثم تموت جوعاً. يحتاج النظام إلى توازن دقيق بين كمية العشب وعدد الخراف للوصول لاستقرار طويل الأمد.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: SETTINGS -->
+        <div id="view-settings" class="hidden space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-3xl space-y-4">
+                <h2 class="text-xl font-bold text-emerald-400">إعدادات المحاكاة</h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs text-slate-300 font-semibold">حجم الرقعة (الشبكة)</label>
+                        <select id="setting-size" onchange="applySettings()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl p-2.5 text-sm">
+                            <option value="8">8 × 8 (سريعة وخفيفة)</option>
+                            <option value="10" selected>10 × 10 (قياسي)</option>
+                            <option value="12">12 × 12 (كبيرة)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-xs text-slate-300 font-semibold">معدل نمو العشب لكل جولة</label>
+                        <select id="setting-grass-rate" onchange="applySettings()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl p-2.5 text-sm">
+                            <option value="1">بطيء (1 عشبة)</option>
+                            <option value="2" selected>معتدل (2 عشبة)</option>
+                            <option value="4">سريع (4 أعشاب)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-3 text-center text-xs text-slate-500">
+        تطبيق عالم الذئب والخراف &copy; 2026 - خفيف وسريع للعمل على كافة المتصفحات والهواتف.
+    </footer>
+
+    <!-- Simulation Script (Vanilla JS - Zero external dependencies) -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            const hamburgerBtn = document.getElementById('hamburger-btn');
-            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        // App State
+        let gridSize = 10;
+        let boardState = [];
+        let isRunning = false;
+        let intervalId = null;
+        let speed = 500;
+        let turnCount = 0;
+        let spawnType = 'sheep';
+        let grassGrowthRate = 2;
 
-            // Sidebar Controls
-            function toggleSidebar(show) {
-                if (show) {
-                    sidebar.classList.add('active');
-                    overlay.classList.add('active');
-                } else {
-                    sidebar.classList.remove('active');
-                    overlay.classList.remove('active');
+        // Cell Entity Types: null, 'sheep', 'wolf', 'grass'
+        // Each entity object: { type, energy }
+
+        function initBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.style.gridTemplateColumns = `repeat(${gridSize}, minmax(0, 1fr))`;
+            boardEl.innerHTML = '';
+            boardState = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
+
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell bg-slate-900/80 hover:bg-slate-700/50 flex items-center justify-center text-xl sm:text-2xl cursor-pointer rounded-md';
+                    cell.dataset.r = r;
+                    cell.dataset.c = c;
+                    cell.onclick = () => onCellClick(r, c);
+                    boardEl.appendChild(cell);
                 }
             }
 
-            hamburgerBtn?.addEventListener('click', () => toggleSidebar(true));
-            closeSidebarBtn?.addEventListener('click', () => toggleSidebar(false));
-            overlay?.addEventListener('click', () => toggleSidebar(false));
+            // Populate initial state
+            seedWorld();
+            renderBoard();
+            updateStats();
+        }
 
-            // Filtering Mechanism
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const tableRows = document.querySelectorAll('.table-row');
+        function seedWorld() {
+            turnCount = 0;
+            // Clear
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    boardState[r][c] = null;
+                }
+            }
+            // Add initial Grass
+            placeRandom('grass', Math.floor(gridSize * 1.5));
+            // Add initial Sheep
+            placeRandom('sheep', Math.floor(gridSize * 0.8), { energy: 10 });
+            // Add initial Wolves
+            placeRandom('wolf', 2, { energy: 15 });
+        }
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Update Active Tab
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
+        function placeRandom(type, count, extraProps = {}) {
+            let placed = 0;
+            let attempts = 0;
+            while (placed < count && attempts < 200) {
+                attempts++;
+                let r = Math.floor(Math.random() * gridSize);
+                let c = Math.floor(Math.random() * gridSize);
+                if (!boardState[r][c]) {
+                    boardState[r][c] = { type, energy: extraProps.energy || 10 };
+                    placed++;
+                }
+            }
+        }
 
-                    const filter = btn.getAttribute('data-filter');
+        function renderBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                const r = parseInt(cell.dataset.r);
+                const c = parseInt(cell.dataset.c);
+                const entity = boardState[r][c];
 
-                    // Filter Rows
-                    tableRows.forEach(row => {
-                        const platform = row.getAttribute('data-platform');
-                        if (filter === 'all' || platform === filter) {
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                    });
-                });
+                if (entity) {
+                    let icon = '';
+                    if (entity.type === 'sheep') icon = '🐑';
+                    else if (entity.type === 'wolf') icon = '🐺';
+                    else if (entity.type === 'grass') icon = '🌱';
+
+                    if (cell.innerHTML !== icon) {
+                        cell.innerHTML = `<span class="entity-pop">${icon}</span>`;
+                    }
+                } else {
+                    cell.innerHTML = '';
+                }
             });
-        });
+        }
+
+        function onCellClick(r, c) {
+            if (spawnType === 'clear') {
+                boardState[r][c] = null;
+            } else {
+                boardState[r][c] = { type: spawnType, energy: 10 };
+            }
+            renderBoard();
+            updateStats();
+        }
+
+        function setSpawnType(type) {
+            spawnType = type;
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'bg-emerald-950/50');
+                btn.classList.add('border-slate-700', 'bg-slate-900/50');
+            });
+            const activeBtn = document.getElementById(`tool-${type}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-700', 'bg-slate-900/50');
+                activeBtn.classList.add('border-emerald-500', 'bg-emerald-950/50');
+            }
+        }
+
+        function stepSim() {
+            turnCount++;
+            let nextState = boardState.map(row => row.map(cell => cell ? { ...cell, moved: false } : null));
+
+            // Helper to get free adjacent positions
+            const getNeighbors = (r, c) => {
+                const dirs = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
+                return dirs.map(([dr, dc]) => [r + dr, c + dc])
+                    .filter(([nr, nc]) => nr >= 0 && nr < gridSize && nc >= 0 && nc < gridSize);
+            };
+
+            // 1. Process Wolves
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    let entity = nextState[r][c];
+                    if (entity && entity.type === 'wolf' && !entity.moved) {
+                        entity.moved = true;
+                        entity.energy -= 1; // Energy loss per step
+
+                        const neighbors = getNeighbors(r, c);
+                        const sheepNeighbors = neighbors.filter(([nr, nc]) => nextState[nr][nc] && nextState[nr][nc].type === 'sheep');
+
+                        if (sheepNeighbors.length > 0) {
+                            // Eat sheep
+                            const [targetR, targetC] = sheepNeighbors[Math.floor(Math.random() * sheepNeighbors.length)];
+                            entity.energy += 8;
+                            nextState[targetR][targetC] = entity;
+                            nextState[r][c] = null;
+
+                            // Reproduction
+                            if (entity.energy >= 22) {
+                                entity.energy = 10;
+                                nextState[r][c] = { type: 'wolf', energy: 10, moved: true };
+                            }
+                        } else {
+                            // Move randomly
+                            const emptyNeighbors = neighbors.filter(([nr, nc]) => !nextState[nr][nc]);
+                            if (emptyNeighbors.length > 0 && Math.random() > 0.3) {
+                                const [targetR, targetC] = emptyNeighbors[Math.floor(Math.random() * emptyNeighbors.length)];
+                                nextState[targetR][targetC] = entity;
+                                nextState[r][c] = null;
+                            }
+                        }
+
+                        // Starvation check
+                        if (entity.energy <= 0) {
+                            // Find current position of wolf and remove
+                            for (let tr = 0; tr < gridSize; tr++) {
+                                for (let tc = 0; tc < gridSize; tc++) {
+                                    if (nextState[tr][tc] === entity) nextState[tr][tc] = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 2. Process Sheep
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    let entity = nextState[r][c];
+                    if (entity && entity.type === 'sheep' && !entity.moved) {
+                        entity.moved = true;
+                        entity.energy -= 1;
+
+                        const neighbors = getNeighbors(r, c);
+                        const grassNeighbors = neighbors.filter(([nr, nc]) => nextState[nr][nc] && nextState[nr][nc].type === 'grass');
+
+                        if (grassNeighbors.length > 0) {
+                            // Eat grass
+                            const [targetR, targetC] = grassNeighbors[Math.floor(Math.random() * grassNeighbors.length)];
+                            entity.energy += 5;
+                            nextState[targetR][targetC] = entity;
+                            nextState[r][c] = null;
+
+                            // Reproduction
+                            if (entity.energy >= 16) {
+                                entity.energy = 8;
+                                nextState[r][c] = { type: 'sheep', energy: 8, moved: true };
+                            }
+                        } else {
+                            // Move randomly
+                            const emptyNeighbors = neighbors.filter(([nr, nc]) => !nextState[nr][nc]);
+                            if (emptyNeighbors.length > 0) {
+                                const [targetR, targetC] = emptyNeighbors[Math.floor(Math.random() * emptyNeighbors.length)];
+                                nextState[targetR][targetC] = entity;
+                                nextState[r][c] = null;
+                            }
+                        }
+
+                        // Starvation check
+                        if (entity.energy <= 0) {
+                            for (let tr = 0; tr < gridSize; tr++) {
+                                for (let tc = 0; tc < gridSize; tc++) {
+                                    if (nextState[tr][tc] === entity) nextState[tr][tc] = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 3. Regrow Grass
+            boardState = nextState;
+            placeRandom('grass', grassGrowthRate);
+
+            renderBoard();
+            updateStats();
+        }
+
+        function toggleSim() {
+            isRunning = !isRunning;
+            const btnText = document.getElementById('start-text');
+            const btnIcon = document.getElementById('start-icon');
+            const btn = document.getElementById('btn-start');
+
+            if (isRunning) {
+                btnText.textContent = 'إيقاف مؤقت';
+                btnIcon.textContent = '⏸';
+                btn.classList.replace('bg-emerald-600', 'bg-amber-600');
+                btn.classList.replace('hover:bg-emerald-500', 'hover:bg-amber-500');
+                intervalId = setInterval(stepSim, speed);
+            } else {
+                btnText.textContent = 'تشغيل المحاكاة';
+                btnIcon.textContent = '▶';
+                btn.classList.replace('bg-amber-600', 'bg-emerald-600');
+                btn.classList.replace('hover:bg-amber-500', 'hover:bg-emerald-500');
+                clearInterval(intervalId);
+            }
+        }
+
+        function resetSim() {
+            if (isRunning) toggleSim();
+            seedWorld();
+            renderBoard();
+            updateStats();
+        }
+
+        function updateSpeed(val) {
+            speed = 1100 - parseInt(val);
+            const speedVal = document.getElementById('speed-val');
+            if (speed > 700) speedVal.textContent = 'بطيئة';
+            else if (speed > 300) speedVal.textContent = 'متوسطة';
+            else speedVal.textContent = 'سريعة جداً';
+
+            if (isRunning) {
+                clearInterval(intervalId);
+                intervalId = setInterval(stepSim, speed);
+            }
+        }
+
+        function updateStats() {
+            let sheep = 0, wolves = 0, grass = 0;
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cell = boardState[r][c];
+                    if (cell) {
+                        if (cell.type === 'sheep') sheep++;
+                        else if (cell.type === 'wolf') wolves++;
+                        else if (cell.type === 'grass') grass++;
+                    }
+                }
+            }
+            document.getElementById('stat-sheep').textContent = sheep;
+            document.getElementById('stat-wolves').textContent = wolves;
+            document.getElementById('stat-grass').textContent = grass;
+            document.getElementById('stat-turns').textContent = turnCount;
+        }
+
+        function switchTab(tabName) {
+            ['sim', 'rules', 'settings'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('bg-emerald-600', 'text-white');
+                document.getElementById(`tab-${t}`).classList.add('text-slate-300');
+            });
+
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('bg-emerald-600', 'text-white');
+            document.getElementById(`tab-${tabName}`).classList.remove('text-slate-300');
+        }
+
+        function applySettings() {
+            gridSize = parseInt(document.getElementById('setting-size').value);
+            grassGrowthRate = parseInt(document.getElementById('setting-grass-rate').value);
+            resetSim();
+        }
+
+        // Initialize on Load
+        window.onload = function() {
+            initBoard();
+        };
     </script>
 </body>
 </html>
