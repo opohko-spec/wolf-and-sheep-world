@@ -1,392 +1,218 @@
-```html
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التحديث الجديد | منصة الترفيه والخدمات</title>
-    <!-- Tailwind CSS -->
+    <title>حكايات الذئب والخروف - مغامرات مضحكة</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f8fafc;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+        .story-card {
+            transition: all 0.3s ease;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-        }
-        .social-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .social-btn:hover {
-            transform: translateY(-5px) scale(1.03);
-        }
-        /* Canvas game styling */
-        #gameCanvas {
-            touch-action: none;
-            background: linear-gradient(to bottom, #0f172a, #1e293b);
+        .story-card:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
-    <header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-10 h-10 rounded-2xl gradient-bg flex items-center justify-center text-white font-bold text-xl shadow-md shadow-indigo-200">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>
-                <span class="font-extrabold text-xl bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent">
-                    منصة التحديث الجديد
-                </span>
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-right">
+                <h1 class="text-3xl font-extrabold flex items-center gap-3 justify-center md:justify-start">
+                    <span>🐺 🐑</span>
+                    <span>طرائف الذئب والخروف</span>
+                </h1>
+                <p class="text-amber-100 text-sm mt-1">سلسلة من المغامرات والقصص الكوميدية الساخرة</p>
             </div>
-            <a href="#downloadSection" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-all shadow-md shadow-indigo-100">
-                <i class="fa-solid fa-download ml-1"></i> رابط التحديث
-            </a>
+            <!-- Quick Social Bar -->
+            <div class="flex items-center gap-3 bg-white/10 p-2 rounded-full backdrop-blur-md">
+                <a href="https://x.com/abodmiec" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-black hover:text-white flex items-center justify-center transition" title="X (Twitter)">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/bwda90210?psln=anExem94Y2o4MzFt" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-pink-600 hover:text-white flex items-center justify-center transition" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.threads.net/@bwda90210" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-black hover:text-white flex items-center justify-center transition" title="Threads">
+                    <i class="fa-brands fa-threads"></i>
+                </a>
+                <a href="https://www.facebook.com/share/1J5XBMmXfh/" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-blue-600 hover:text-white flex items-center justify-center transition" title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-sky-500 hover:text-white flex items-center justify-center transition" title="Telegram">
+                    <i class="fa-brands fa-telegram"></i>
+                </a>
+                <a href="https://tiktok.com/@abod5_11" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-black hover:text-white flex items-center justify-center transition" title="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://wa.me/963992508470" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-green-500 hover:text-white flex items-center justify-center transition" title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-10">
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full">
+        
+        <!-- Intro Banner -->
+        <div class="bg-orange-100 border-r-4 border-orange-500 p-6 rounded-lg mb-8 shadow-sm">
+            <h2 class="text-xl font-bold text-orange-800 mb-2">مرحباً بكم في عالم الذكاء والغباء الكوميدي!</h2>
+            <p class="text-orange-700">مجموعة مختارة من المواقف الطريفة بين الذئب المفترس (سوء الحظ) والخروف ذكي الحيلة (أو محظوظ الصدفة).</p>
+        </div>
 
-        <!-- Hero Section & Download Card -->
-        <section id="downloadSection" class="rounded-3xl gradient-bg p-8 md:p-12 text-white text-center shadow-xl relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-            
-            <div class="relative z-10 max-w-2xl mx-auto space-y-6">
-                <span class="inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide border border-white/30">
-                    🚀 التحديث الجديد أصبح متوفراً الآن!
-                </span>
-                
-                <h1 class="text-3xl md:text-5xl font-black leading-tight">
-                    انقر للوصول الفوري للتحديث الجديد
-                </h1>
-                
-                <p class="text-white/90 text-sm md:text-base leading-relaxed">
-                    استمتع بأحدث الميزات والأداء المحسّن. يمكنك الانتقال الفوري أو تحميل التحديث بالضغط على الزر المباشر بالأسفل.
-                </p>
+        <!-- Stories Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- Action Buttons -->
-                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <!-- Update Direct Link (عدّل الرابط هنا إلى رابط ملفك أو صفحة التحميل) -->
-                    <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" id="updateDirectBtn" class="inline-flex items-center justify-center gap-3 bg-white text-indigo-700 hover:bg-slate-50 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 active:translate-y-0 w-full sm:w-auto">
-                        <i class="fa-solid fa-circle-down text-2xl text-pink-500"></i>
-                        <span>الذهاب لرابط التحديث الجديد</span>
-                    </a>
-                    
-                    <button onclick="triggerDownload()" class="inline-flex items-center justify-center gap-2 bg-black/20 hover:bg-black/30 text-white font-semibold text-base px-6 py-4 rounded-2xl border border-white/20 transition-all w-full sm:w-auto">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <span>معلومات التحديث</span>
-                    </button>
-                </div>
-
-                <div class="flex justify-center items-center gap-6 text-xs text-white/80 pt-2">
-                    <span><i class="fa-solid fa-shield-halved ml-1"></i> آمن ومضمون</span>
-                    <span><i class="fa-solid fa-bolt ml-1"></i> تحميل سريع</span>
-                    <span><i class="fa-solid fa-star ml-1"></i> مجاني 100%</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Social Media Contact Links -->
-        <section class="space-y-4 text-center">
-            <h2 class="text-2xl font-bold text-slate-800">حساباتنا الرسمية على مواقع التواصل</h2>
-            <p class="text-slate-500 text-sm">تواصل معنا أو تابع جديدنا مباشرة من خلال الروابط التالية</p>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-                <!-- TikTok -->
-                <a href="https://tiktok.com/@abod5_11" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
-                    <div class="w-14 h-14 bg-black text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:rotate-6 transition-transform">
-                        <i class="fa-brands fa-tiktok"></i>
+            <!-- القصة 1 -->
+            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 1</span>
+                        <span class="text-2xl">🥗</span>
                     </div>
-                    <span class="font-bold text-slate-800 text-base">تيك توك</span>
-                    <span class="text-xs text-slate-400 mt-1">@abod5_11</span>
-                </a>
-
-                <!-- Telegram -->
-                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
-                    <div class="w-14 h-14 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:-rotate-6 transition-transform">
-                        <i class="fa-brands fa-telegram"></i>
-                    </div>
-                    <span class="font-bold text-slate-800 text-base">تلغرام</span>
-                    <span class="text-xs text-slate-400 mt-1">القناة الرسمية</span>
-                </a>
-
-                <!-- WhatsApp -->
-                <a href="https://wa.me/963992508470" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
-                    <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:rotate-6 transition-transform">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <span class="font-bold text-slate-800 text-base">واتساب</span>
-                    <span class="text-xs text-slate-400 mt-1">00963992508470</span>
-                </a>
-
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/share/1JqMEbAow2/" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
-                    <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:-rotate-6 transition-transform">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </div>
-                    <span class="font-bold text-slate-800 text-base">فيسبوك</span>
-                    <span class="text-xs text-slate-400 mt-1">الصفحة الرسمية</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- Interactive Game Section -->
-        <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 space-y-4">
-            <div class="flex flex-col sm:flex-row justify-between items-center border-b border-slate-100 pb-4 gap-3">
-                <div>
-                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-gamepad text-indigo-500"></i>
-                        لعبة صائد الجواهر والنجوم (تسلَّ أثناء الانتظار!)
-                    </h3>
-                    <p class="text-xs text-slate-500">حرك السلة بالماوس أو اللمس لجمع النجوم والجواهر، وحاول تجنب القنابل!</p>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">الخروف والنظام الغذائي</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        هجم الذئب على الخروف في الغابة وقال بصرامة: "سآكلك الآن!". نُظر الخروف إليه بهدوء وقال: "يا أخي، ألم تسمع عن التغذية الصحية؟ أنصحك بالابتعاد عن الدهون واللحوم الحمراء، كولسترولك سيرتفع!". صدم الذئب واقتنع بكلامه، ومنذ ذلك اليوم وأصبح الذئب نباتياً يأكل الخس والجرجير بفضل الخروف!
+                    </p>
                 </div>
-                <!-- Game Stats -->
-                <div class="flex items-center gap-4 text-sm font-bold bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
-                    <div>النقاط: <span id="scoreText" class="text-indigo-600 font-extrabold text-base">0</span></div>
-                    <div class="h-4 w-[1px] bg-slate-300"></div>
-                    <div>الأعلى: <span id="highScoreText" class="text-pink-600 font-extrabold text-base">0</span></div>
-                </div>
-            </div>
+            </article>
 
-            <!-- Canvas Container -->
-            <div class="relative w-full h-[340px] rounded-2xl overflow-hidden shadow-inner border border-slate-200">
-                <canvas id="gameCanvas" class="w-full h-full block"></canvas>
-                
-                <!-- Start / Game Over Overlay -->
-                <div id="gameOverlay" class="absolute inset-0 bg-slate-900/70 backdrop-blur-sm flex flex-col items-center justify-center text-white space-y-4 p-4 text-center">
-                    <div class="w-16 h-16 rounded-full bg-indigo-500/30 flex items-center justify-center text-4xl animate-bounce">
-                        💎
+            <!-- القصة 2 -->
+            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 2</span>
+                        <span class="text-2xl">📸</span>
                     </div>
-                    <h4 id="overlayTitle" class="text-2xl font-black">جاهز للتحدي؟</h4>
-                    <p id="overlaySub" class="text-sm text-slate-300">حرك السلة يميناً ويساراً لتجميع أكبر عدد من الجواهر!</p>
-                    <button onclick="startGame()" class="bg-gradient-to-r from-indigo-500 to-pink-500 hover:from-indigo-600 hover:to-pink-600 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-transform transform active:scale-95">
-                        <i class="fa-solid fa-play ml-1"></i> ابدأ اللعب الآن
-                    </button>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">صورة تذكارية أخيرة</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        حاصر الذئب الخروف وقال له: "حانت نهايتك!". ابتسم الخروف وقال: "موافق، ولكن قبل أن تأكلني دعنا نلتقط صورة سيلفي تذكارية لنرفعها على تيك توك!". انطُليت الحيلة على الذئب وبدأ يضبط تسريحة شعره، وأثناء انشغاله بالوضعية، جاء الراعي وضربه بالعصا وفرّ الخروف ضاحكاً!
+                    </p>
                 </div>
-            </div>
-        </section>
+            </article>
 
+            <!-- القصة 3 -->
+            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 3</span>
+                        <span class="text-2xl">💼</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">خدمة العملاء</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        امسك الذئب بالخروف، فقال له الخروف: "عفواً يا سيد، هل قمت بتقييم تجربتك معنا أولاً؟". تساءل الذئب مستغرباً، فأكمل الخروف: "اضغط 1 لتأكلني فوراً، أو اضغط 2 للاستماع إلى الأغنية المفضلة لديك!". حار الذئب في أمره وأخذ يفكر بالخيارات، حتى غلبه النوم وهرب الخروف بسلام!
+                    </p>
+                </div>
+            </article>
+
+            <!-- القصة 4 -->
+            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 4</span>
+                        <span class="text-2xl">📱</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">الخروف المؤثر</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        اقترب الذئب ليأكل الخروف، فطلع الخروف هاتفه وبدأ بثاً مباشراً قائلاً: "أهلاً يا متابعين، اليوم معنا الذئب في تحدي أكل الخروف مباشر!". خاف الذئب من التعليقات الحاقدة وهبوط عدد المتابعين لديه، فاعتذر من الخروف وانحبس في جحره من الخجل!
+                    </p>
+                </div>
+            </article>
+
+            <!-- القصة 5 -->
+            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 5</span>
+                        <span class="text-2xl">🎧</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">عازف الجيتار</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        عندما حاصر الذئب الخروف، أخرج الخروف مكبر صوت وأخذ يغني بصوت نكير ومزعج جداً. وضع الذئب يديه على أذنيه وسقط أرضاً يرجوه أن يصمت، شرط أن يتركه وشأنه. وافق الخروف واستمر في الغناء وهو عائد إلى الحقل بكل فخر!
+                    </p>
+                </div>
+            </article>
+
+            <!-- القصة 6 -->
+            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 6</span>
+                        <span class="text-2xl">💈</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">صالون الحلاقة</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        التقى الذئب بالخروف في يوم صيف حار، فقال له: "صوفك كثيف جداً وسوف تضايقني أثناء الأكل!". رد الخروف: "إذاً انتظرني حتى أحلق صوفي في الصالون". ذهب الخروف ولم يعد حتى يومنا هذا، وما زال الذئب ينتظره أمام صالون الحلاقة!
+                    </p>
+                </div>
+            </article>
+
+        </div>
     </main>
 
-    <!-- Custom Download Alert Modal -->
-    <div id="downloadModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl transform transition-all scale-95 opacity-0" id="modalCard">
-            <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-3xl mx-auto">
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-            <h3 class="text-xl font-bold text-slate-800">تفاصيل التحديث الجديد</h3>
-            <p class="text-sm text-slate-500">التحديث جاهز ويمكنك الانتقال إليه مباشرة عبر الرابط المخصص أو عبر قناة التلغرام الرسمية.</p>
-            <div class="pt-2 space-y-2">
-                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-sm transition-colors">
-                    الذهاب إلى رابط التحديث الفوري
+    <!-- Social Media Footer Section -->
+    <footer class="bg-slate-900 text-white mt-12 py-10 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-3 text-amber-400">تابعنا على حساباتنا الرسمية</h3>
+            <p class="text-slate-400 text-sm mb-8">لا تنسَ الاشتراك والتواصل معنا لمزيد من القصص والمحتوى المميز</p>
+            
+            <!-- Social Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-4 max-w-4xl mx-auto mb-8">
+                <!-- Twitter / X -->
+                <a href="https://x.com/abodmiec" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-black transition duration-300">
+                    <i class="fa-brands fa-x-twitter text-2xl mb-2 text-white"></i>
+                    <span class="text-xs">X / Twitter</span>
                 </a>
-                <button onclick="closeModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-sm transition-colors">
-                    إغلاق
-                </button>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/bwda90210?psln=anExem94Y2o4MzFt" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-pink-500 hover:to-purple-600 transition duration-300">
+                    <i class="fa-brands fa-instagram text-2xl mb-2 text-pink-500"></i>
+                    <span class="text-xs">Instagram</span>
+                </a>
+                <!-- Threads -->
+                <a href="https://www.threads.net/@bwda90210" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-slate-700 transition duration-300">
+                    <i class="fa-brands fa-threads text-2xl mb-2 text-white"></i>
+                    <span class="text-xs">Threads</span>
+                </a>
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/share/1J5XBMmXfh/" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-blue-600 transition duration-300">
+                    <i class="fa-brands fa-facebook-f text-2xl mb-2 text-blue-500"></i>
+                    <span class="text-xs">Facebook</span>
+                </a>
+                <!-- Telegram -->
+                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-sky-500 transition duration-300">
+                    <i class="fa-brands fa-telegram text-2xl mb-2 text-sky-400"></i>
+                    <span class="text-xs">Telegram</span>
+                </a>
+                <!-- TikTok -->
+                <a href="https://tiktok.com/@abod5_11" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-black transition duration-300">
+                    <i class="fa-brands fa-tiktok text-2xl mb-2 text-pink-500"></i>
+                    <span class="text-xs">TikTok</span>
+                </a>
+                <!-- WhatsApp -->
+                <a href="https://wa.me/963992508470" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-green-600 transition duration-300">
+                    <i class="fa-brands fa-whatsapp text-2xl mb-2 text-green-400"></i>
+                    <span class="text-xs">WhatsApp</span>
+                </a>
             </div>
-        </div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-100 py-6 mt-12 text-center text-xs text-slate-400">
-        <div class="max-w-5xl mx-auto px-4 space-y-2">
-            <p>جميع الحقوق محفوظة © 2026 - منصة التحديث الجديد</p>
+            <div class="text-xs text-slate-500 border-t border-slate-800 pt-6">
+                © 2026 جميع الحقوق محفوظة - تم التصميم خصيصاً لموقعك.
+            </div>
         </div>
     </footer>
 
-    <!-- Game Logic & Scripts -->
-    <script>
-        // Modal logic
-        function triggerDownload() {
-            const modal = document.getElementById('downloadModal');
-            const card = document.getElementById('modalCard');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                card.classList.remove('scale-95', 'opacity-0');
-                card.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('downloadModal');
-            const card = document.getElementById('modalCard');
-            card.classList.remove('scale-100', 'opacity-100');
-            card.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 200);
-        }
-
-        // --- Gem Collector Mini-Game Logic ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const scoreText = document.getElementById('scoreText');
-        const highScoreText = document.getElementById('highScoreText');
-        const overlay = document.getElementById('gameOverlay');
-        const overlayTitle = document.getElementById('overlayTitle');
-        const overlaySub = document.getElementById('overlaySub');
-
-        let isPlaying = false;
-        let score = 0;
-        let highScore = localStorage.getItem('gem_game_highscore') || 0;
-        highScoreText.innerText = highScore;
-
-        let animationId;
-        let player = { x: 0, y: 0, width: 80, height: 20 };
-        let items = [];
-        let spawnTimer = 0;
-
-        const gemTypes = [
-            { icon: '💎', pts: 10 },
-            { icon: '⭐', pts: 15 },
-            { icon: '💖', pts: 20 },
-            { icon: '💣', pts: -1 } // Bomb ends game
-        ];
-
-        function resizeCanvas() {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
-            player.y = canvas.height - 35;
-            if(!isPlaying) player.x = canvas.width / 2 - player.width / 2;
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        // Mouse & Touch Controls
-        function handleMove(e) {
-            if (!isPlaying) return;
-            const rect = canvas.getBoundingClientRect();
-            let clientX = e.clientX;
-            if (e.touches && e.touches.length > 0) {
-                clientX = e.touches[0].clientX;
-            }
-            const mouseX = clientX - rect.left;
-            player.x = mouseX - player.width / 2;
-
-            // Keep in bounds
-            if (player.x < 0) player.x = 0;
-            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
-        }
-
-        canvas.addEventListener('mousemove', handleMove);
-        canvas.addEventListener('touchmove', handleMove);
-
-        function startGame() {
-            score = 0;
-            items = [];
-            spawnTimer = 0;
-            isPlaying = true;
-            scoreText.innerText = score;
-            overlay.classList.add('hidden');
-            resizeCanvas();
-            cancelAnimationFrame(animationId);
-            gameLoop();
-        }
-
-        function gameOver() {
-            isPlaying = false;
-            cancelAnimationFrame(animationId);
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('gem_game_highscore', highScore);
-                highScoreText.innerText = highScore;
-            }
-            overlayTitle.innerText = "انتهت اللعبة!";
-            overlaySub.innerText = `رصيدك النهائي من النقاط: ${score}`;
-            overlay.classList.remove('hidden');
-        }
-
-        function spawnItem() {
-            const isBomb = Math.random() < 0.22;
-            let type = isBomb ? gemTypes[3] : gemTypes[Math.floor(Math.random() * 3)];
-            items.push({
-                x: Math.random() * (canvas.width - 40) + 20,
-                y: -20,
-                size: 28,
-                speed: 2.5 + Math.random() * 3,
-                type: type
-            });
-        }
-
-        function gameLoop() {
-            if (!isPlaying) return;
-
-            // Clear Background
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw Player Paddle/Basket
-            ctx.fillStyle = '#6366f1';
-            ctx.beginPath();
-            ctx.roundRect(player.x, player.y, player.width, player.height, [10]);
-            ctx.fill();
-            
-            // Highlight bar on top of paddle
-            ctx.fillStyle = '#a855f7';
-            ctx.beginPath();
-            ctx.roundRect(player.x + 4, player.y + 3, player.width - 8, 4, [2]);
-            ctx.fill();
-
-            // Spawn Items
-            spawnTimer++;
-            if (spawnTimer % 30 === 0) {
-                spawnItem();
-            }
-
-            // Update & Draw Items
-            for (let i = items.length - 1; i >= 0; i--) {
-                let item = items[i];
-                item.y += item.speed;
-
-                // Draw Emoji Gem
-                ctx.font = `${item.size}px Cairo, sans-serif`;
-                ctx.textAlign = 'center';
-                ctx.fillText(item.type.icon, item.x, item.y);
-
-                // Collision Detection
-                if (
-                    item.y + 5 >= player.y &&
-                    item.y - item.size <= player.y + player.height &&
-                    item.x >= player.x - 12 &&
-                    item.x <= player.x + player.width + 12
-                ) {
-                    if (item.type.pts === -1) {
-                        gameOver();
-                        return;
-                    } else {
-                        score += item.type.pts;
-                        scoreText.innerText = score;
-                        items.splice(i, 1);
-                        continue;
-                    }
-                }
-
-                // Remove out of bounds items
-                if (item.y > canvas.height + 35) {
-                    items.splice(i, 1);
-                }
-            }
-
-            animationId = requestAnimationFrame(gameLoop);
-        }
-
-        window.onload = function() {
-            resizeCanvas();
-        };
-    </script>
 </body>
 </html>
 ```
