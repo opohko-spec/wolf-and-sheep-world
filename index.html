@@ -1,537 +1,390 @@
-
+```html
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم الذئب والخراف | Wolf and Sheep World</title>
-    <!-- Tailwind CSS (CDN خفيف وموثوق) -->
+    <title>التحديث الجديد | منصة الترفيه والخدمات</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
-        * {
+        body {
             font-family: 'Cairo', sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
+            background-color: #f8fafc;
         }
-        .board-grid {
-            display: grid;
-            gap: 2px;
-            background-color: #374151;
-            padding: 2px;
-            border-radius: 0.75rem;
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
         }
-        .cell {
-            aspect-ratio: 1;
-            transition: all 0.15s ease-in-out;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
         }
-        /* أنيميشن خفيفة للحركات */
-        .entity-pop {
-            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .social-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes popIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+        }
+        /* Canvas game styling */
+        #gameCanvas {
+            touch-action: none;
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between transition-colors duration-200">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
 
     <!-- Header / Navbar -->
-    <header class="border-b border-slate-800 bg-slate-950/70 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <span class="text-3xl">🐺</span>
-                <div>
-                    <h1 class="font-extrabold text-lg sm:text-xl text-emerald-400 leading-tight">عالم الذئب والخراف</h1>
-                    <p class="text-xs text-slate-400 hidden sm:block">Wolf and Sheep World Simulation</p>
+    <header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-2xl gradient-bg flex items-center justify-center text-white font-bold text-xl shadow-md shadow-indigo-200">
+                    <i class="fa-solid fa-rocket"></i>
                 </div>
+                <span class="font-extrabold text-xl bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent">
+                    منصة التحديث الجديد
+                </span>
             </div>
-
-            <!-- Tab Navigation & Theme Toggle -->
-            <div class="flex items-center gap-2 sm:gap-4">
-                <nav class="flex bg-slate-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
-                    <button id="tab-sim" onclick="switchTab('sim')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white transition">المحاكاة</button>
-                    <button id="tab-rules" onclick="switchTab('rules')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">القواعد</button>
-                    <button id="tab-settings" onclick="switchTab('settings')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">الإعدادات</button>
-                </nav>
-            </div>
+            <a href="#downloadSection" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-all shadow-md shadow-indigo-100">
+                <i class="fa-solid fa-download ml-1"></i> رابط التحديث
+            </a>
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-5xl mx-auto w-full px-4 py-4 flex-grow flex flex-col">
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-10">
 
-        <!-- TAB 1: SIMULATION & GAME -->
-        <div id="view-sim" class="space-y-4 flex flex-col flex-grow">
-            <!-- Stats Bar -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium">الخراف الحية</p>
-                        <p id="stat-sheep" class="text-xl sm:text-2xl font-bold text-emerald-400">0</p>
-                    </div>
-                    <span class="text-2xl">🐑</span>
-                </div>
-                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium">الذئاب النشطة</p>
-                        <p id="stat-wolves" class="text-xl sm:text-2xl font-bold text-rose-400">0</p>
-                    </div>
-                    <span class="text-2xl">🐺</span>
-                </div>
-                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium">العشب المتوفر</p>
-                        <p id="stat-grass" class="text-xl sm:text-2xl font-bold text-green-500">0</p>
-                    </div>
-                    <span class="text-2xl">🌱</span>
-                </div>
-                <div class="bg-slate-800/80 border border-slate-700/50 p-3 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium">عدد الجولات</p>
-                        <p id="stat-turns" class="text-xl sm:text-2xl font-bold text-amber-400">0</p>
-                    </div>
-                    <span class="text-2xl">⏳</span>
-                </div>
-            </div>
-
-            <!-- Game Board & Controls Workspace -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 items-start flex-grow">
-                <!-- Board Area -->
-                <div class="lg:col-span-3 bg-slate-800/40 border border-slate-700/50 p-3 sm:p-4 rounded-3xl flex flex-col items-center justify-center">
-                    <div id="board-container" class="w-full max-w-[500px] aspect-square">
-                        <div id="board" class="board-grid w-full h-full"></div>
-                    </div>
-                </div>
-
-                <!-- Interactive Control Panel -->
-                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-3xl space-y-4">
-                    <h2 class="font-bold text-sm text-slate-300 border-b border-slate-700 pb-2">لوحة التحكم</h2>
-                    
-                    <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
-                        <button id="btn-start" onclick="toggleSim()" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 active:scale-95 transition">
-                            <span id="start-icon">▶</span> <span id="start-text">تشغيل المحاكاة</span>
-                        </button>
-                        <button onclick="stepSim()" class="w-full py-2.5 px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold rounded-xl active:scale-95 transition">
-                            ⏭ خطوة واحدة
-                        </button>
-                        <button onclick="resetSim()" class="w-full py-2.5 px-4 bg-rose-950/60 hover:bg-rose-900 text-rose-300 font-semibold border border-rose-800/50 rounded-xl active:scale-95 transition">
-                            🔄 إعادة ضبط
-                        </button>
-                    </div>
-
-                    <!-- Speed Slider -->
-                    <div class="space-y-1">
-                        <div class="flex justify-between text-xs text-slate-400">
-                            <span>سرعة المحاكاة</span>
-                            <span id="speed-val">متوسطة</span>
-                        </div>
-                        <input id="speed-slider" type="range" min="100" max="1000" step="100" value="500" onchange="updateSpeed(this.value)" class="w-full accent-emerald-500 bg-slate-700 h-2 rounded-lg cursor-pointer">
-                    </div>
-
-                    <!-- Spawn Placement Options -->
-                    <div class="space-y-2 border-t border-slate-700 pt-3">
-                        <p class="text-xs text-slate-400 font-medium">إضافة عنصر بالضغط على الرقعة:</p>
-                        <div class="grid grid-cols-3 gap-1">
-                            <button onclick="setSpawnType('sheep')" id="tool-sheep" class="tool-btn active-tool border border-emerald-500 bg-emerald-950/50 p-2 rounded-xl text-center text-xs">
-                                🐑 خروف
-                            </button>
-                            <button onclick="setSpawnType('wolf')" id="tool-wolf" class="tool-btn border border-slate-700 bg-slate-900/50 p-2 rounded-xl text-center text-xs">
-                                🐺 ذئب
-                            </button>
-                            <button onclick="setSpawnType('grass')" id="tool-grass" class="tool-btn border border-slate-700 bg-slate-900/50 p-2 rounded-xl text-center text-xs">
-                                🌱 عشب
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: RULES & INFO -->
-        <div id="view-rules" class="hidden space-y-4">
-            <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-3xl space-y-4">
-                <h2 class="text-xl font-bold text-emerald-400">قواعد نظام عالم الذئب والخراف</h2>
+        <!-- Hero Section & Download Card -->
+        <section id="downloadSection" class="rounded-3xl gradient-bg p-8 md:p-12 text-white text-center shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+            
+            <div class="relative z-10 max-w-2xl mx-auto space-y-6">
+                <span class="inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide border border-white/30">
+                    🚀 التحديث الجديد أصبح متوفراً الآن!
+                </span>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/40 space-y-2">
-                        <span class="text-3xl">🌱</span>
-                        <h3 class="font-bold text-emerald-300">النباتات (العشب)</h3>
-                        <p class="text-xs text-slate-300 leading-relaxed">ينمو العشب عشوائياً في الأماكن الفارغة بالشبكة لتوفير الغذاء للخراف.</p>
-                    </div>
-                    <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/40 space-y-2">
-                        <span class="text-3xl">🐑</span>
-                        <h3 class="font-bold text-blue-300">الخراف</h3>
-                        <p class="text-xs text-slate-300 leading-relaxed">تتحرك عشوائياً للبحث عن العشب. عند التغذي تتزايد طاقتها وتستطيع التكاثر. إذا نفدت طاقتها تموت.</p>
-                    </div>
-                    <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/40 space-y-2">
-                        <span class="text-3xl">🐺</span>
-                        <h3 class="font-bold text-rose-300">الذئاب</h3>
-                        <p class="text-xs text-slate-300 leading-relaxed">تتطارد الخراف القريبة للتغذي عليها. تتكاثر عند التغذي وتفقد طاقتها تدريجياً وتتحلل إن لم تجد طعاماً.</p>
-                    </div>
+                <h1 class="text-3xl md:text-5xl font-black leading-tight">
+                    انقر للوصول الفوري للتحديث الجديد
+                </h1>
+                
+                <p class="text-white/90 text-sm md:text-base leading-relaxed">
+                    استمتع بأحدث الميزات والأداء المحسّن. يمكنك الانتقال الفوري أو تحميل التحديث بالضغط على الزر المباشر بالأسفل.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <!-- Update Direct Link (عدّل الرابط هنا إلى رابط ملفك أو صفحة التحميل) -->
+                    <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" id="updateDirectBtn" class="inline-flex items-center justify-center gap-3 bg-white text-indigo-700 hover:bg-slate-50 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 active:translate-y-0 w-full sm:w-auto">
+                        <i class="fa-solid fa-circle-down text-2xl text-pink-500"></i>
+                        <span>الذهاب لرابط التحديث الجديد</span>
+                    </a>
+                    
+                    <button onclick="triggerDownload()" class="inline-flex items-center justify-center gap-2 bg-black/20 hover:bg-black/30 text-white font-semibold text-base px-6 py-4 rounded-2xl border border-white/20 transition-all w-full sm:w-auto">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>معلومات التحديث</span>
+                    </button>
                 </div>
 
-                <div class="bg-slate-900/40 p-4 rounded-2xl text-xs text-slate-300 space-y-2">
-                    <h4 class="font-bold text-amber-400">💡 نصيحة لتحقيق التوازن البيئي:</h4>
-                    <p>إذا زاد عدد الذئاب بسرعة فسوف تلتهم كل الخراف ثم تموت جوعاً. يحتاج النظام إلى توازن دقيق بين كمية العشب وعدد الخراف للوصول لاستقرار طويل الأمد.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: SETTINGS -->
-        <div id="view-settings" class="hidden space-y-4">
-            <div class="bg-slate-800/60 border border-slate-700/50 p-6 rounded-3xl space-y-4">
-                <h2 class="text-xl font-bold text-emerald-400">إعدادات المحاكاة</h2>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="space-y-1">
-                        <label class="text-xs text-slate-300 font-semibold">حجم الرقعة (الشبكة)</label>
-                        <select id="setting-size" onchange="applySettings()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl p-2.5 text-sm">
-                            <option value="8">8 × 8 (سريعة وخفيفة)</option>
-                            <option value="10" selected>10 × 10 (قياسي)</option>
-                            <option value="12">12 × 12 (كبيرة)</option>
-                        </select>
-                    </div>
-
-                    <div class="space-y-1">
-                        <label class="text-xs text-slate-300 font-semibold">معدل نمو العشب لكل جولة</label>
-                        <select id="setting-grass-rate" onchange="applySettings()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl p-2.5 text-sm">
-                            <option value="1">بطيء (1 عشبة)</option>
-                            <option value="2" selected>معتدل (2 عشبة)</option>
-                            <option value="4">سريع (4 أعشاب)</option>
-                        </select>
-                    </div>
+                <div class="flex justify-center items-center gap-6 text-xs text-white/80 pt-2">
+                    <span><i class="fa-solid fa-shield-halved ml-1"></i> آمن ومضمون</span>
+                    <span><i class="fa-solid fa-bolt ml-1"></i> تحميل سريع</span>
+                    <span><i class="fa-solid fa-star ml-1"></i> مجاني 100%</span>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Social Media Contact Links -->
+        <section class="space-y-4 text-center">
+            <h2 class="text-2xl font-bold text-slate-800">حساباتنا الرسمية على مواقع التواصل</h2>
+            <p class="text-slate-500 text-sm">تواصل معنا أو تابع جديدنا مباشرة من خلال الروابط التالية</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+                <!-- TikTok -->
+                <a href="https://tiktok.com/@abod5_11" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
+                    <div class="w-14 h-14 bg-black text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:rotate-6 transition-transform">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">تيك توك</span>
+                    <span class="text-xs text-slate-400 mt-1">@abod5_11</span>
+                </a>
+
+                <!-- Telegram -->
+                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
+                    <div class="w-14 h-14 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:-rotate-6 transition-transform">
+                        <i class="fa-brands fa-telegram"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">تلغرام</span>
+                    <span class="text-xs text-slate-400 mt-1">القناة الرسمية</span>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/963992508470" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
+                    <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:rotate-6 transition-transform">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">واتساب</span>
+                    <span class="text-xs text-slate-400 mt-1">00963992508470</span>
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/share/1JqMEbAow2/" target="_blank" class="social-btn glass-card border border-slate-200 p-5 rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-lg group">
+                    <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-md group-hover:-rotate-6 transition-transform">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <span class="font-bold text-slate-800 text-base">فيسبوك</span>
+                    <span class="text-xs text-slate-400 mt-1">الصفحة الرسمية</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Interactive Game Section -->
+        <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center border-b border-slate-100 pb-4 gap-3">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad text-indigo-500"></i>
+                        لعبة صائد الجواهر والنجوم (تسلَّ أثناء الانتظار!)
+                    </h3>
+                    <p class="text-xs text-slate-500">حرك السلة بالماوس أو اللمس لجمع النجوم والجواهر، وحاول تجنب القنابل!</p>
+                </div>
+                <!-- Game Stats -->
+                <div class="flex items-center gap-4 text-sm font-bold bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
+                    <div>النقاط: <span id="scoreText" class="text-indigo-600 font-extrabold text-base">0</span></div>
+                    <div class="h-4 w-[1px] bg-slate-300"></div>
+                    <div>الأعلى: <span id="highScoreText" class="text-pink-600 font-extrabold text-base">0</span></div>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="relative w-full h-[340px] rounded-2xl overflow-hidden shadow-inner border border-slate-200">
+                <canvas id="gameCanvas" class="w-full h-full block"></canvas>
+                
+                <!-- Start / Game Over Overlay -->
+                <div id="gameOverlay" class="absolute inset-0 bg-slate-900/70 backdrop-blur-sm flex flex-col items-center justify-center text-white space-y-4 p-4 text-center">
+                    <div class="w-16 h-16 rounded-full bg-indigo-500/30 flex items-center justify-center text-4xl animate-bounce">
+                        💎
+                    </div>
+                    <h4 id="overlayTitle" class="text-2xl font-black">جاهز للتحدي؟</h4>
+                    <p id="overlaySub" class="text-sm text-slate-300">حرك السلة يميناً ويساراً لتجميع أكبر عدد من الجواهر!</p>
+                    <button onclick="startGame()" class="bg-gradient-to-r from-indigo-500 to-pink-500 hover:from-indigo-600 hover:to-pink-600 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-transform transform active:scale-95">
+                        <i class="fa-solid fa-play ml-1"></i> ابدأ اللعب الآن
+                    </button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- Custom Download Alert Modal -->
+    <div id="downloadModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl transform transition-all scale-95 opacity-0" id="modalCard">
+            <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-3xl mx-auto">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">تفاصيل التحديث الجديد</h3>
+            <p class="text-sm text-slate-500">التحديث جاهز ويمكنك الانتقال إليه مباشرة عبر الرابط المخصص أو عبر قناة التلغرام الرسمية.</p>
+            <div class="pt-2 space-y-2">
+                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-sm transition-colors">
+                    الذهاب إلى رابط التحديث الفوري
+                </a>
+                <button onclick="closeModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-sm transition-colors">
+                    إغلاق
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="border-t border-slate-800 py-3 text-center text-xs text-slate-500">
-        تطبيق عالم الذئب والخراف &copy; 2026 - خفيف وسريع للعمل على كافة المتصفحات والهواتف.
+    <footer class="bg-white border-t border-slate-100 py-6 mt-12 text-center text-xs text-slate-400">
+        <div class="max-w-5xl mx-auto px-4 space-y-2">
+            <p>جميع الحقوق محفوظة © 2026 - منصة التحديث الجديد</p>
+        </div>
     </footer>
 
-    <!-- Simulation Script (Vanilla JS - Zero external dependencies) -->
+    <!-- Game Logic & Scripts -->
     <script>
-        // App State
-        let gridSize = 10;
-        let boardState = [];
-        let isRunning = false;
-        let intervalId = null;
-        let speed = 500;
-        let turnCount = 0;
-        let spawnType = 'sheep';
-        let grassGrowthRate = 2;
-
-        // Cell Entity Types: null, 'sheep', 'wolf', 'grass'
-        // Each entity object: { type, energy }
-
-        function initBoard() {
-            const boardEl = document.getElementById('board');
-            boardEl.style.gridTemplateColumns = `repeat(${gridSize}, minmax(0, 1fr))`;
-            boardEl.innerHTML = '';
-            boardState = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
-
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell bg-slate-900/80 hover:bg-slate-700/50 flex items-center justify-center text-xl sm:text-2xl cursor-pointer rounded-md';
-                    cell.dataset.r = r;
-                    cell.dataset.c = c;
-                    cell.onclick = () => onCellClick(r, c);
-                    boardEl.appendChild(cell);
-                }
-            }
-
-            // Populate initial state
-            seedWorld();
-            renderBoard();
-            updateStats();
+        // Modal logic
+        function triggerDownload() {
+            const modal = document.getElementById('downloadModal');
+            const card = document.getElementById('modalCard');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
         }
 
-        function seedWorld() {
-            turnCount = 0;
-            // Clear
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    boardState[r][c] = null;
-                }
-            }
-            // Add initial Grass
-            placeRandom('grass', Math.floor(gridSize * 1.5));
-            // Add initial Sheep
-            placeRandom('sheep', Math.floor(gridSize * 0.8), { energy: 10 });
-            // Add initial Wolves
-            placeRandom('wolf', 2, { energy: 15 });
+        function closeModal() {
+            const modal = document.getElementById('downloadModal');
+            const card = document.getElementById('modalCard');
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
         }
 
-        function placeRandom(type, count, extraProps = {}) {
-            let placed = 0;
-            let attempts = 0;
-            while (placed < count && attempts < 200) {
-                attempts++;
-                let r = Math.floor(Math.random() * gridSize);
-                let c = Math.floor(Math.random() * gridSize);
-                if (!boardState[r][c]) {
-                    boardState[r][c] = { type, energy: extraProps.energy || 10 };
-                    placed++;
-                }
-            }
+        // --- Gem Collector Mini-Game Logic ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreText = document.getElementById('scoreText');
+        const highScoreText = document.getElementById('highScoreText');
+        const overlay = document.getElementById('gameOverlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlaySub = document.getElementById('overlaySub');
+
+        let isPlaying = false;
+        let score = 0;
+        let highScore = localStorage.getItem('gem_game_highscore') || 0;
+        highScoreText.innerText = highScore;
+
+        let animationId;
+        let player = { x: 0, y: 0, width: 80, height: 20 };
+        let items = [];
+        let spawnTimer = 0;
+
+        const gemTypes = [
+            { icon: '💎', pts: 10 },
+            { icon: '⭐', pts: 15 },
+            { icon: '💖', pts: 20 },
+            { icon: '💣', pts: -1 } // Bomb ends game
+        ];
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            player.y = canvas.height - 35;
+            if(!isPlaying) player.x = canvas.width / 2 - player.width / 2;
         }
 
-        function renderBoard() {
-            const cells = document.querySelectorAll('.cell');
-            cells.forEach(cell => {
-                const r = parseInt(cell.dataset.r);
-                const c = parseInt(cell.dataset.c);
-                const entity = boardState[r][c];
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-                if (entity) {
-                    let icon = '';
-                    if (entity.type === 'sheep') icon = '🐑';
-                    else if (entity.type === 'wolf') icon = '🐺';
-                    else if (entity.type === 'grass') icon = '🌱';
+        // Mouse & Touch Controls
+        function handleMove(e) {
+            if (!isPlaying) return;
+            const rect = canvas.getBoundingClientRect();
+            let clientX = e.clientX;
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+            }
+            const mouseX = clientX - rect.left;
+            player.x = mouseX - player.width / 2;
 
-                    if (cell.innerHTML !== icon) {
-                        cell.innerHTML = `<span class="entity-pop">${icon}</span>`;
-                    }
-                } else {
-                    cell.innerHTML = '';
-                }
+            // Keep in bounds
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+        }
+
+        canvas.addEventListener('mousemove', handleMove);
+        canvas.addEventListener('touchmove', handleMove);
+
+        function startGame() {
+            score = 0;
+            items = [];
+            spawnTimer = 0;
+            isPlaying = true;
+            scoreText.innerText = score;
+            overlay.classList.add('hidden');
+            resizeCanvas();
+            cancelAnimationFrame(animationId);
+            gameLoop();
+        }
+
+        function gameOver() {
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('gem_game_highscore', highScore);
+                highScoreText.innerText = highScore;
+            }
+            overlayTitle.innerText = "انتهت اللعبة!";
+            overlaySub.innerText = `رصيدك النهائي من النقاط: ${score}`;
+            overlay.classList.remove('hidden');
+        }
+
+        function spawnItem() {
+            const isBomb = Math.random() < 0.22;
+            let type = isBomb ? gemTypes[3] : gemTypes[Math.floor(Math.random() * 3)];
+            items.push({
+                x: Math.random() * (canvas.width - 40) + 20,
+                y: -20,
+                size: 28,
+                speed: 2.5 + Math.random() * 3,
+                type: type
             });
         }
 
-        function onCellClick(r, c) {
-            if (spawnType === 'clear') {
-                boardState[r][c] = null;
-            } else {
-                boardState[r][c] = { type: spawnType, energy: 10 };
+        function gameLoop() {
+            if (!isPlaying) return;
+
+            // Clear Background
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Player Paddle/Basket
+            ctx.fillStyle = '#6366f1';
+            ctx.beginPath();
+            ctx.roundRect(player.x, player.y, player.width, player.height, [10]);
+            ctx.fill();
+            
+            // Highlight bar on top of paddle
+            ctx.fillStyle = '#a855f7';
+            ctx.beginPath();
+            ctx.roundRect(player.x + 4, player.y + 3, player.width - 8, 4, [2]);
+            ctx.fill();
+
+            // Spawn Items
+            spawnTimer++;
+            if (spawnTimer % 30 === 0) {
+                spawnItem();
             }
-            renderBoard();
-            updateStats();
-        }
 
-        function setSpawnType(type) {
-            spawnType = type;
-            document.querySelectorAll('.tool-btn').forEach(btn => {
-                btn.classList.remove('border-emerald-500', 'bg-emerald-950/50');
-                btn.classList.add('border-slate-700', 'bg-slate-900/50');
-            });
-            const activeBtn = document.getElementById(`tool-${type}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('border-slate-700', 'bg-slate-900/50');
-                activeBtn.classList.add('border-emerald-500', 'bg-emerald-950/50');
-            }
-        }
+            // Update & Draw Items
+            for (let i = items.length - 1; i >= 0; i--) {
+                let item = items[i];
+                item.y += item.speed;
 
-        function stepSim() {
-            turnCount++;
-            let nextState = boardState.map(row => row.map(cell => cell ? { ...cell, moved: false } : null));
+                // Draw Emoji Gem
+                ctx.font = `${item.size}px Cairo, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.fillText(item.type.icon, item.x, item.y);
 
-            // Helper to get free adjacent positions
-            const getNeighbors = (r, c) => {
-                const dirs = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
-                return dirs.map(([dr, dc]) => [r + dr, c + dc])
-                    .filter(([nr, nc]) => nr >= 0 && nr < gridSize && nc >= 0 && nc < gridSize);
-            };
-
-            // 1. Process Wolves
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    let entity = nextState[r][c];
-                    if (entity && entity.type === 'wolf' && !entity.moved) {
-                        entity.moved = true;
-                        entity.energy -= 1; // Energy loss per step
-
-                        const neighbors = getNeighbors(r, c);
-                        const sheepNeighbors = neighbors.filter(([nr, nc]) => nextState[nr][nc] && nextState[nr][nc].type === 'sheep');
-
-                        if (sheepNeighbors.length > 0) {
-                            // Eat sheep
-                            const [targetR, targetC] = sheepNeighbors[Math.floor(Math.random() * sheepNeighbors.length)];
-                            entity.energy += 8;
-                            nextState[targetR][targetC] = entity;
-                            nextState[r][c] = null;
-
-                            // Reproduction
-                            if (entity.energy >= 22) {
-                                entity.energy = 10;
-                                nextState[r][c] = { type: 'wolf', energy: 10, moved: true };
-                            }
-                        } else {
-                            // Move randomly
-                            const emptyNeighbors = neighbors.filter(([nr, nc]) => !nextState[nr][nc]);
-                            if (emptyNeighbors.length > 0 && Math.random() > 0.3) {
-                                const [targetR, targetC] = emptyNeighbors[Math.floor(Math.random() * emptyNeighbors.length)];
-                                nextState[targetR][targetC] = entity;
-                                nextState[r][c] = null;
-                            }
-                        }
-
-                        // Starvation check
-                        if (entity.energy <= 0) {
-                            // Find current position of wolf and remove
-                            for (let tr = 0; tr < gridSize; tr++) {
-                                for (let tc = 0; tc < gridSize; tc++) {
-                                    if (nextState[tr][tc] === entity) nextState[tr][tc] = null;
-                                }
-                            }
-                        }
+                // Collision Detection
+                if (
+                    item.y + 5 >= player.y &&
+                    item.y - item.size <= player.y + player.height &&
+                    item.x >= player.x - 12 &&
+                    item.x <= player.x + player.width + 12
+                ) {
+                    if (item.type.pts === -1) {
+                        gameOver();
+                        return;
+                    } else {
+                        score += item.type.pts;
+                        scoreText.innerText = score;
+                        items.splice(i, 1);
+                        continue;
                     }
+                }
+
+                // Remove out of bounds items
+                if (item.y > canvas.height + 35) {
+                    items.splice(i, 1);
                 }
             }
 
-            // 2. Process Sheep
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    let entity = nextState[r][c];
-                    if (entity && entity.type === 'sheep' && !entity.moved) {
-                        entity.moved = true;
-                        entity.energy -= 1;
-
-                        const neighbors = getNeighbors(r, c);
-                        const grassNeighbors = neighbors.filter(([nr, nc]) => nextState[nr][nc] && nextState[nr][nc].type === 'grass');
-
-                        if (grassNeighbors.length > 0) {
-                            // Eat grass
-                            const [targetR, targetC] = grassNeighbors[Math.floor(Math.random() * grassNeighbors.length)];
-                            entity.energy += 5;
-                            nextState[targetR][targetC] = entity;
-                            nextState[r][c] = null;
-
-                            // Reproduction
-                            if (entity.energy >= 16) {
-                                entity.energy = 8;
-                                nextState[r][c] = { type: 'sheep', energy: 8, moved: true };
-                            }
-                        } else {
-                            // Move randomly
-                            const emptyNeighbors = neighbors.filter(([nr, nc]) => !nextState[nr][nc]);
-                            if (emptyNeighbors.length > 0) {
-                                const [targetR, targetC] = emptyNeighbors[Math.floor(Math.random() * emptyNeighbors.length)];
-                                nextState[targetR][targetC] = entity;
-                                nextState[r][c] = null;
-                            }
-                        }
-
-                        // Starvation check
-                        if (entity.energy <= 0) {
-                            for (let tr = 0; tr < gridSize; tr++) {
-                                for (let tc = 0; tc < gridSize; tc++) {
-                                    if (nextState[tr][tc] === entity) nextState[tr][tc] = null;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            // 3. Regrow Grass
-            boardState = nextState;
-            placeRandom('grass', grassGrowthRate);
-
-            renderBoard();
-            updateStats();
+            animationId = requestAnimationFrame(gameLoop);
         }
 
-        function toggleSim() {
-            isRunning = !isRunning;
-            const btnText = document.getElementById('start-text');
-            const btnIcon = document.getElementById('start-icon');
-            const btn = document.getElementById('btn-start');
-
-            if (isRunning) {
-                btnText.textContent = 'إيقاف مؤقت';
-                btnIcon.textContent = '⏸';
-                btn.classList.replace('bg-emerald-600', 'bg-amber-600');
-                btn.classList.replace('hover:bg-emerald-500', 'hover:bg-amber-500');
-                intervalId = setInterval(stepSim, speed);
-            } else {
-                btnText.textContent = 'تشغيل المحاكاة';
-                btnIcon.textContent = '▶';
-                btn.classList.replace('bg-amber-600', 'bg-emerald-600');
-                btn.classList.replace('hover:bg-amber-500', 'hover:bg-emerald-500');
-                clearInterval(intervalId);
-            }
-        }
-
-        function resetSim() {
-            if (isRunning) toggleSim();
-            seedWorld();
-            renderBoard();
-            updateStats();
-        }
-
-        function updateSpeed(val) {
-            speed = 1100 - parseInt(val);
-            const speedVal = document.getElementById('speed-val');
-            if (speed > 700) speedVal.textContent = 'بطيئة';
-            else if (speed > 300) speedVal.textContent = 'متوسطة';
-            else speedVal.textContent = 'سريعة جداً';
-
-            if (isRunning) {
-                clearInterval(intervalId);
-                intervalId = setInterval(stepSim, speed);
-            }
-        }
-
-        function updateStats() {
-            let sheep = 0, wolves = 0, grass = 0;
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    const cell = boardState[r][c];
-                    if (cell) {
-                        if (cell.type === 'sheep') sheep++;
-                        else if (cell.type === 'wolf') wolves++;
-                        else if (cell.type === 'grass') grass++;
-                    }
-                }
-            }
-            document.getElementById('stat-sheep').textContent = sheep;
-            document.getElementById('stat-wolves').textContent = wolves;
-            document.getElementById('stat-grass').textContent = grass;
-            document.getElementById('stat-turns').textContent = turnCount;
-        }
-
-        function switchTab(tabName) {
-            ['sim', 'rules', 'settings'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).classList.remove('bg-emerald-600', 'text-white');
-                document.getElementById(`tab-${t}`).classList.add('text-slate-300');
-            });
-
-            document.getElementById(`view-${tabName}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabName}`).classList.add('bg-emerald-600', 'text-white');
-            document.getElementById(`tab-${tabName}`).classList.remove('text-slate-300');
-        }
-
-        function applySettings() {
-            gridSize = parseInt(document.getElementById('setting-size').value);
-            grassGrowthRate = parseInt(document.getElementById('setting-grass-rate').value);
-            resetSim();
-        }
-
-        // Initialize on Load
         window.onload = function() {
-            initBoard();
+            resizeCanvas();
         };
     </script>
 </body>
