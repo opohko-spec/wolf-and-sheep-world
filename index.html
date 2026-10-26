@@ -1,257 +1,240 @@
+```html
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم الذيب والخروف - 50 قصة كوميدية</title>
+    <title>Social Super-App Pro (TikTok + WhatsApp + Telegram + Groups)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts (Cairo & Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            tiktok: '#FE2C55',
+                            tiktokCyan: '#25F4EE',
+                            whatsapp: '#25D366',
+                            telegram: '#0088cc',
+                            primary: '#6366f1',
+                            darkBg: '#0f172a',
+                            darkCard: '#1e293b'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-color: #1b4d3e;
-            --secondary-color: #f4f6f5;
-            --accent-color: #e67e22;
-            --text-color: #333;
-        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            font-family: 'Cairo', 'Inter', sans-serif;
+            user-select: none;
         }
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        /* Glassmorphism */
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        header p {
-            margin: 5px 0 0;
-            font-size: 0.95rem;
-            opacity: 0.9;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
         }
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            flex: 1;
-            box-sizing: border-box;
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
         }
-        .story-counter {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 15px;
-            font-weight: bold;
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 9999px;
         }
-        .story-title {
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 8px;
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.6);
         }
-        .story-content {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            white-space: pre-line;
-            background: #fafafa;
-            padding: 15px;
-            border-radius: 8px;
-            border-right: 4px solid var(--accent-color);
+        /* Animations */
+        @keyframes heartPulse {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
         }
-        .buttons-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+        .animate-heart {
+            animation: heartPulse 0.8s ease-out forwards;
         }
-        button {
-            flex: 1;
-            padding: 12px 20px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s, transform 0.1s;
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-        button:active {
-            transform: scale(0.98);
-        }
-        .btn-next {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .btn-next:hover {
-            background-color: #14382d;
-        }
-        .btn-whatsapp-share {
-            background-color: #25d366;
-            color: white;
-        }
-        .btn-whatsapp-share:hover {
-            background-color: #1ebe5d;
-        }
-        
-        .social-links {
-            border-top: 2px dashed #e2e8f0;
-            padding-top: 15px;
-            text-align: center;
-        }
-        .social-links h3 {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .social-btn {
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 6px;
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        .tg-btn { background-color: #0088cc; }
-        .wa-btn { background-color: #25d366; }
-        .tt-btn { background-color: #010101; }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #e2e8f0;
-            font-size: 0.85rem;
-            color: #555;
-            margin-top: auto;
+        .animate-spin-slow {
+            animation: spinSlow 5s linear infinite;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 h-screen overflow-hidden flex flex-col font-cairo">
 
-    <header>
-        <h1>عالم الذيب والخروف 🐺🐑</h1>
-        <p>رفقات... ولو واحد ذيب والتاني خروف!</p>
-    </header>
-
-    <div class="container">
-        <div class="story-counter" id="storyCounter">القصة رقم 1 من 50</div>
-        <div class="story-title" id="storyTitle">عنوان القصة</div>
-        <div class="story-content" id="storyContent">نص القصة سيظهر هنا...</div>
-        
-        <div class="buttons-group">
-            <button class="btn-next" onclick="nextStory()">القصة التالية ➡️</button>
-            <button class="btn-whatsapp-share" onclick="shareOnWhatsApp()">مشاركة القصة ع واتساب 📱</button>
-        </div>
-
-        <div class="social-links">
-            <h3>تابعني وتواصل معي عبر:</h3>
-            <div class="social-buttons">
-                <!-- رابط التلجرام -->
-                <a href="https://t.me/abod5_11" target="_blank" class="social-btn tg-btn">قناة التليجرام 📢</a>
-                <!-- رقم الواتساب -->
-                <a href="https://wa.me/96399250470" target="_blank" class="social-btn wa-btn">راسلني واتساب 💬</a>
-                <!-- حساب التيك توك -->
-                <a href="https://www.tiktok.com/@abod5_11" target="_blank" class="social-btn tt-btn">تيك توك 🎬</a>
+    <!-- Top Navigation Bar -->
+    <header class="h-16 border-b border-slate-800/80 bg-slate-900/90 glass px-4 flex items-center justify-between z-30 shrink-0">
+        <!-- Logo & Branding -->
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white p-2 text-lg">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-pink-500 to-amber-400 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-indigo-500/20">
+                <i class="fa-solid fa-shapes"></i>
+            </div>
+            <div>
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <h1 class="text-base font-extrabold tracking-wide bg-gradient-to-r from-indigo-400 via-pink-400 to-emerald-400 bg-clip-text text-transparent">
+                        OmniHub Super-App
+                    </h1>
+                    <span class="text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-semibold">Pro v3.0</span>
+                </div>
+                <p class="text-[11px] text-slate-400">تيك توك • واتساب • تلغرام • إدارة المجتمعات</p>
             </div>
         </div>
-    </div>
 
-    <footer>
-        جميع الحقوق محفوظة - عالم الذيب والخروف &copy; 2026
-    </footer>
+        <!-- Global Search -->
+        <div class="hidden md:flex items-center relative w-1/3 max-w-lg">
+            <i class="fa-solid fa-magnifying-glass absolute right-3.5 text-slate-400 text-xs"></i>
+            <input type="text" placeholder="بحث موحد في القنوات، المجموعات، والمحادثات..." class="w-full pl-4 pr-10 py-2 rounded-xl border border-slate-700/60 bg-slate-800/60 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-slate-200 placeholder-slate-400 transition">
+        </div>
 
-    <script>
-        const stories = [
-            { title: "الذيب ع طاولة البوكر", text: "🐺 الذيب: مرة رح أربح كل المصاري!\n🐑 الخروف: بس لا تبكي لما تخسر...\n🐺 الذيب: أنا ما بخسر أبداً!" },
-            { title: "الصورة التذكارية", text: "🐺 الذيب: وقف بدي آخد معك سيلفي. اسحب وجهك لورا شوي!\n🐑 الخروف: ليش لوراء؟ ما شاء الله الخشوم واضحة بالصورة اتنيناتها!" },
-            { title: "الرجيم القاسي", text: "🐑 الخروف: مقرر أعمل رجيم قاسي وأخسر وزن.\n🐺 الذيب بابتسامة خبيثة: فكرة ممتازة! كل ما ضعفت، كل ما كنت أسهل... قصدي أسرع بالحركة!" },
-            { title: "منزل الأحلام", text: "🐺 الذيب: عم فكر ابني بيت جديد، شو رأيك بالديكورات الحديثة؟\n🐑 الخروف: أهم شي يكون باب البيت من برة عريض، لانو اذا هجمت عليك شي مرة أعرف هرب بسرعة!" },
-            { title: "فحص العقل", text: "🐑 الخروف: رحت عند حكيم العيون وقلي نظرك ضعيف.\n🐺 الذيب: عادي، مو غريب عليك... طول عمرك ماشي ورا القطيع بدون ما تشوف وين رايح!" },
-            { title: "مسابقة الأكل", text: "🐺 الذيب: شرايك ندخل مسابقة أكل ونقسم الجائزة بالنص؟\n🐑 الخروف: خايف آكل كتير وتخلص الجائزة وتعتبرني أنا الوجبة الرئيسية!" },
-            { title: "تأمين السيارات", text: "🐑 الخروف: سجلت سيارتي بتأمين شامل ضد الحوادث.\n🐺 الذيب: خطوة موفقة، بس نسيت تضمن حالك من غدر الذيب بالطريق السريع!" },
-            { title: "ساعة الصباح", text: "🐺 الذيب: ليش دايماً بتفيق بكير وبتعمل رياضة الصبح؟\n🐑 الخروف: عشان أكون بنشاطي ولياقتي لما أحتاج أركض منك!" },
-            { title: "رحلة الصيد", text: "🐑 الخروف: شرايك نطلع نطلع رحلة صيد بالغابة؟\n🐺 الذيب: بلا ما نروح صيد... خلص، اعتبر حالك صتني وأنا صتك وخلصنا!" },
-            { title: "الحظ السيء", text: "🐺 الذيب: يا زلمة حظي نحس، كل ما خطط لشغلة بتخرب!\n🐑 الخروف: اتذكر دائماً أنك ذيب، يعني النحس حرام بحقك، اترك النحس لأمثالي!" },
-            { title: "موقع العمل", text: "🐑 الخروف: عم افتش على شغلة جديدة بمجال الإدارة.\n🐺 الذيب: في شواغر عندي، بس الدوام بيكون بطوننا... قصدي بكتيبة الحراسة!" },
-            { title: "كورس اللغات", text: "🐺 الذيب: عم اتعلم لغة جديدة لأحكي مع كل حيوانات الغابة.\n🐑 الخروف: علمنا لغة الخرفان، مشان نفهم شو عم تحكي علينا من وراء ظهرنا!" },
-            { title: "عزيمة العشاء", text: "🐑 الخروف: عازمك عشاء اليوم عندي بالحظيرة.\n🐺 الذيب: كفؤ! بس جيب معك صحن كبير، لانو شهيتي اليوم مفتوحة على الآخر." },
-            { title: "الاستثمار بالأسهم", text: "🐺 الذيب: شو رأيك ندخل سوق الأسهم نعمل ملايين؟\n🐑 الخروف: أخاف أشتري أسهم وتنزل، متل ما بينزل سعر الخروف قبل العيد تماماً!" },
-            { title: "شارب الذيب", text: "🐑 الخروف: ليش شاربك دايماً مجدول وطويل؟\n🐺 الذيب: هيبة يا صاحبي، هيبة! مو مثلك شاربك دوبو طالع." },
-            { title: "اختبار الذكاء", text: "🐺 الذيب: عملت اختبار ذكاء وطلعت عبقري.\n🐑 الخروف: الأختبار كان اختياري ولا صح وغلط؟ لأنك لوحدك باللجنة أكيد رح تنجح!" },
-            { title: "السرعة القصوى", text: "🐑 الخروف: قدرت أركض مسافة كيلومتر بدقيقة واحدة!\n🐺 الذيب: عظيم! بس لما أركض وراك رح تقطع نفس المسافة بثانية وحدة." },
-            { title: "موضة الصيف", text: "🐺 الذيب: صوفك سميك كتير، ما بتحس بالحر بهالصيف؟\n🐑 الخروف: صوفي طبيعي، مو مثلك جلدك سميك وما بتحس بغلطاتك!" },
-            { title: "فتح مشروع", text: "🐑 الخروف: بدي افتح محل لحوم ومشاوي.\n🐺 الذيب: مشروع ناجح مليون بالمية! وأنا مستعد أكون الشريك والمشرف العام عالتذوق." },
-            { title: "درس الحكمة", text: "🐺 الذيب: اسمع مني الحكمة: الغبي من صدق كلام الناس.\n🐑 الخروف: والحكمة الأكبر هي إنو الذيب ما بيترك طبعو ولو طال شعرو!" },
-            { title: "بطارية الهاتف", text: "🐑 الخروف: تلفوني فصل بطارية وما عاد يفتح.\n🐺 الذيب: اشحنو بحرارتك.. آه سوري، أنت أصلاً دمك بارد دايماً!" },
-            { title: "طريقة السشوار", text: "🐺 الذيب: كيف بترتب شعرك وصوفك ليطلعوا بهذا الشكل المنفوش؟\n🐑 الخروف: هاد اسمه ستايل طبيعي، مو مثلك شعرك منكد وواقف لحالو رعب!" },
-            { title: "لعبة الشطرنج", text: "🐑 الخروف: العب معي شطرنج لنشوف مين أذكى.\n🐺 الذيب: لا تحرج حالك، أنت من أول نقلة بتضحي بحالك." },
-            { title: "موعد النوم", text: "🐺 الذيب: أنا ما بنام غير متأخر، سهران لحراسة الغابة.\n🐑 الخروف: وأنا بنام من وقت العصر، لأني بعرف ورايي يوم شاق معك!" },
-            { title: "سهرة الغابة", text: "🐑 الخروف: شرايك نسهر الليلة تحت ضوء القمر؟\n🐺 الذيب: فكرة حلوة، بس بشرط.. أنت تكون الضيف الرئيسي عالعشاء." },
-            { title: "مباراة كرة قدم", text: "🐺 الذيب: أنا بلعب هجوم وبسجل أهداف خارقة.\n🐑 الخروف: وأنا بكون حارس مرمى، وكل ما شفتك جياتني بركض بترك المرمى وبشرد!" },
-            { title: "فقدان الذاكرة", text: "🐑 الخروف: تصدق نسيت وين حطيت أكلي اليوم؟\n🐺 الذيب: مو غريب عليك، طول عمرك ماشي بالدنيا غايب عن القضايا." },
-            { title: "مشاكل النت", text: "🐺 الذيب: شبكة الإنترنت عندك بطيئة كتير.\n🐑 الخروف: لأن الراوتر بعيد، مو مثلك شبكتك قوية لأنك بتلقط أي شي عالتطير!" },
-            { title: "الطقس الجميل", text: "🐑 الخروف: الجو اليوم رومنسي وهادي.\n🐺 الذيب: هاد الجو بساعدني أركض وراك بدون ما أتعب من الحر!" },
-            { title: "شراء سيارة", text: "🐺 الذيب: ناوي أشتري سيارة دفع رباعي جبّار.\n🐑 الخروف: اشتري اللي بدك ياها، بس لا تركض فيا جنبي لانو فراملي ضعيفة." },
-            { title: "حلم الليل", text: "🐑 الخروف: حلمت البارحة أني صرت ذيب وقوي.\n🐺 الذيب: أحلام اليقظة حلوة، بس اصحى على ريحة الواقع عاد!" },
-            { title: "صوت العاصفة", text: "🐺 الذيب: عواء الذئب بالليل بيبعث الرعب بالقلوب.\n🐑 الخروف: وصوت صياحك لما تنقرص بيبعث الضحكة بالقلوب!" },
-            { title: "نصيحة مالية", text: "🐑 الخروف: كيف أجمع ثروة وأصير غني؟\n🐺 الذيب: اترك المصاري عندي وأنا بحفظلك ياها لآخر العمر!" },
-            { title: "رحلة البحر", text: "🐺 الذيب: شرايك ننزل نسبح بالبحر؟\n🐑 الخروف: بتعرف إني ما بعوم، وبعدين البحر مليان أسماك وأنت مليان طماعي!" },
-            { title: "أكلة المنسف", text: "🐑 الخروف: مين بيعرف يطبخ منسف أطيب شي؟\n🐺 الذيب: ما بيعني مين بيعرف يطبخ، بيعني مين بيكون هو اللحمة الأساسية بالمنسف!" },
-            { title: "نظارات شمسية", text: "🐺 الذيب: شايفني بهذا اللوك؟ لابس نظارات شمسية وطالع مهيب.\n🐑 الخروف: صاير تشبه عصابات المافيا اللي ما بيرحموا حدا." },
-            { title: "طريقة المشي", text: "🐑 الخروف: ليش بتمشي بهدوء وأنا بمشي بخوف؟\n🐺 الذيب: لأنك بتعرف وراك مصدر إزعاج دائم اسمه أنا!" },
-            { title: "مسابقة الجري", text: "🐺 الذيب: شرايك نتسابق لنشوف مين الأسرع؟\n🐑 الخروف: إما أني بربح وبأخد الجائزة، أو أنك بتربح وبتاخدني أنا.. بلاها أحسن!" },
-            { title: "بناء المستقبل", text: "🐑 الخروف: لازم نفكر بمستقبلنا ونخطط لقدام.\n🐺 الذيب: مستقبلنا مرتبط ببعض.. أنت الخطط وأنا التنفيذ!" },
-            { title: "زيارة الطبيب", text: "🐺 الذيب: عندي ألم خفيف بأنيابي من كثر ما قرمشت جوز.\n🐑 الخروف: أنا عندي ألم بقلبي من كثر ما بتخوفني كل ما شفتك!" },
-            { title: "عزيمة الحقل", text: "🐑 الخروف: العشب هالسنة طالع أخضر وطري كتير.\n🐺 الذيب: صحة وهنا على قلبك، كل وشد حيلك.. لانو التسمين إله دور كبير عندي!" },
-            { title: "فكرة تجارية", text: "🐺 الذيب: بدي أعمل صالون حلاقة للحيوانات.\n🐑 الخروف: أول زبون عندك أنا، بس بشرط ممنوع تقترب من رقبتي بالموس!" },
-            { title: "قصة الشجاعة", text: "🐑 الخروف: أنا مرة وقفت بوجه أسد وما خفت منه.\n🐺 الذيب: غريب! خفت مني وأنا ذيب، وما خفت من الأسد؟ شكله الكذب ماله رجول!" },
-            { title: "الأكلة المفضلة", text: "🐺 الذيب: شو أكلتك المفضلة بالدنيا؟\n🐑 الخروف بارتجاف: العشب الأخضر.. وأنت شو أكلتك؟\n🐺 الذيب: الشغلات اللي فيها لحم طري وناعم!" },
-            { title: "موقف ضايع", text: "🐑 الخروف: ضاع طريقي وما عم أعرف ارجع عالحظيرة.\n🐺 الذيب: لا تخاف، أنا بَدليك الطريق.. تعقّل وامشي قدامي بس!" },
-            { title: "موسم الصوف", text: "🐺 الذيب: شو رح تعمل بموسم قص الصوف؟\n🐑 الخروف: رح أبكي، لانو رح أبين عريان قدام الكل.\n🐺 الذيب: ولا تقلق، أنا بغطيك.. بجلدي! (قصدي بصداقتي)." },
-            { title: "سر السعادة", text: "🐑 الخروف: شو سر السعادة والروقان بحياتك؟\n🐺 الذيب: إنو ما في حدا طمعان فيني، وكل الحيوانات بتهابني!" },
-            { title: "الأصحاب الوفيين", text: "🐺 الذيب: ما في أوفى مني كصديق بيحميك من الغربان.\n🐑 الخروف: صحيح، بتحميني من الغربان لتاكلني أنت برواق!" },
-            { title: "نهاية المطاف", text: "🐑 الخروف: يا ذيب، معقول نبقى أصحاب للأبد هيك؟\n🐺 الذيب يضحك: للأبد يا صاحبي.. للأبد!" }
-        ];
+        <!-- Action Controls -->
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <button onclick="openModal('createGroupModal')" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 space-x-reverse shadow-lg shadow-indigo-500/20 transition">
+                <i class="fa-solid fa-plus-circle text-sm"></i>
+                <span class="hidden sm:inline">مجموعة / قناة جديدة</span>
+            </button>
+            <div class="h-6 w-px bg-slate-800 mx-1"></div>
+            <!-- Profile Avatar -->
+            <div class="relative group cursor-pointer" onclick="showToast('حساب المسؤول النشط: أحمد القحطاني')">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Avatar" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/40">
+                <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+            </div>
+        </div>
+    </header>
 
-        let currentIndex = 0;
+    <!-- Main Content App Wrapper -->
+    <div class="flex flex-1 overflow-hidden relative">
 
-        function updateStory() {
-            const current = stories[currentIndex];
-            document.getElementById("storyCounter").innerText = `القصة رقم ${currentIndex + 1} من ${stories.length}`;
-            document.getElementById("storyTitle").innerText = current.title;
-            document.getElementById("storyContent").innerText = current.text;
-        }
+        <!-- Collapsible Navigation Sidebar -->
+        <aside id="appSidebar" class="absolute lg:relative z-20 w-64 h-full border-l border-slate-800/80 bg-slate-900/95 lg:bg-slate-900/60 glass flex flex-col justify-between shrink-0 transition-all duration-300 transform -translate-x-full lg:translate-x-0">
+            <div class="p-3 space-y-1">
+                <div class="px-3 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">الأقسام الرئيسية</div>
+                
+                <!-- Unified Dashboard Tab -->
+                <button onclick="switchTab('community')" id="nav-community" class="nav-tab active w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-indigo-400 bg-indigo-950/60 border border-indigo-800/40">
+                    <i class="fa-solid fa-chart-line text-base w-6 text-center text-indigo-400"></i>
+                    <span class="flex-1 text-right">إدارة المجموعات الشاملة</span>
+                    <span class="bg-indigo-500/20 text-indigo-300 text-[10px] px-2 py-0.5 rounded-full font-bold">12</span>
+                </button>
 
-        function nextStory() {
-            currentIndex = (currentIndex + 1) % stories.length;
-            updateStory();
-        }
+                <!-- TikTok Reels Tab -->
+                <button onclick="switchTab('tiktok')" id="nav-tiktok" class="nav-tab w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-slate-400 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-brands fa-tiktok text-base w-6 text-center text-pink-500"></i>
+                    <span class="flex-1 text-right">خلاصة TikTok / Reels</span>
+                    <span class="bg-pink-500/20 text-pink-400 text-[10px] px-2 py-0.5 rounded-full font-bold">HOT</span>
+                </button>
 
-        function shareOnWhatsApp() {
-            const current = stories[currentIndex];
-            const textToShare = `😂 *عالم الذيب والخروف* 🐺🐑\n\n*${current.title}*\n${current.text}\n\n📲 اقرأ المزيد من القصص الشامية المضحكة!`;
-            const encodedText = encodeURIComponent(textToShare);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
-        }
+                <!-- WhatsApp Chats Tab -->
+                <button onclick="switchTab('whatsapp')" id="nav-whatsapp" class="nav-tab w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-slate-400 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-brands fa-whatsapp text-base w-6 text-center text-emerald-400"></i>
+                    <span class="flex-1 text-right">محادثات WhatsApp</span>
+                    <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">5</span>
+                </button>
 
-        updateStory();
-    </script>
-</body>
-</html>
+                <!-- Telegram Channels Tab -->
+                <button onclick="switchTab('telegram')" id="nav-telegram" class="nav-tab w-full flex items-center space-x-3 space-x-reverse px-3 py-3 rounded-xl font-bold text-xs transition text-slate-400 hover:text-white hover:bg-slate-800/50">
+                    <i class="fa-brands fa-telegram text-base w-6 text-center text-sky-400"></i>
+                    <span class="flex-1 text-right">قنوات Telegram والمجموعات</span>
+                    <span class="bg-sky-500/20 text-sky-400 text-[10px] px-2 py-0.5 rounded-full font-bold">34K</span>
+                </button>
+            </div>
+
+            <!-- Quick Stats & System Status -->
+            <div class="p-3 border-t border-slate-800/80">
+                <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/40 space-y-2">
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-400">معدل التفاعل الكلي</span>
+                        <span class="text-emerald-400 font-bold">94.8%</span>
+                    </div>
+                    <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full w-[94%]"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-400">جميع القنوات ومحادثات البوت متصلة بنجاح.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dynamic View Container -->
+        <main class="flex-1 overflow-y-auto bg-slate-950 p-3 sm:p-6 relative" id="mainContainer">
+
+            <!-- ================= VIEW 1: UNIFIED GROUPS & COMMUNITY DASHBOARD ================= -->
+            <div id="view-community" class="view-panel space-y-6">
+                <!-- Banner Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Stat Card 1 -->
+                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-indigo-500/50 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400">إجمالي المجموعات المربوطة</p>
+                                <h3 class="text-2xl font-black mt-1 text-white">12 مجموعة</h3>
+                                <p class="text-[11px] text-emerald-400 mt-2 font-medium"><i class="fa-solid fa-arrow-trend-up ml-1"></i> +3 المجموعات هذا الشهر</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 2 -->
+                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-emerald-500/50 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400">أعضاء WhatsApp</p>
+                                <h3 class="text-2xl font-black mt-1 text-white">3,840</h3>
+                                <p class="text-[11px] text-emerald-400 mt-2 font-medium"><i class="fa-solid fa-circle-check ml-1"></i> 8 مجموعات نشطة</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 3 -->
+                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-sky-500/50 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400">مشتركي Telegram</p>
+                                <h3 class="text-2xl font-black mt-1 text-white">45,210</h3>
+                                <p class="text-[11px] text-sky-400 mt-2 font-medium"><i class="fa-solid fa-bolt ml-1"></i> 4 قنوات رسمية</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 text-sky-400 flex items-center justify-center text-lg">
+                                <i class="fa-brands fa-telegram"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 4 -->
+                    <div class="glass-card p-4 rounded-2xl relative overflow-hidden group hover:border-pink-500/50 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400">مشاهدات TikTok الموجهة</p>
+                                <h3 class="text-2xl font-black mt-1 text-white">1.8M</h3>
+                                <p class="text-[11px] text-pink-400 mt-2 font-medium"><i class="fa
+```
