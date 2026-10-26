@@ -116,6 +116,11 @@
 
         <!-- Action Controls -->
         <div class="flex items-center space-x-3 space-x-reverse">
+            <!-- Telegram Direct Channel Button -->
+            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 space-x-reverse shadow-lg shadow-sky-500/20 transition animate-pulse">
+                <i class="fa-brands fa-telegram text-sm"></i>
+                <span class="hidden sm:inline">انضم للقناة الرسمية</span>
+            </a>
             <button onclick="openModal('createGroupModal')" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 space-x-reverse shadow-lg shadow-indigo-500/20 transition">
                 <i class="fa-solid fa-plus-circle text-sm"></i>
                 <span class="hidden sm:inline">مجموعة / قناة جديدة</span>
@@ -236,5 +241,674 @@
                             <div>
                                 <p class="text-xs font-semibold text-slate-400">مشاهدات TikTok الموجهة</p>
                                 <h3 class="text-2xl font-black mt-1 text-white">1.8M</h3>
-                                <p class="text-[11px] text-pink-400 mt-2 font-medium"><i class="fa
+                                <p class="text-[11px] text-pink-400 mt-2 font-medium"><i class="fa-solid fa-fire ml-1"></i> أعلى معدل تحويل</p>
+                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500/30 text-pink-400 flex items-center justify-center text-lg">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unified Group Management & Link Generator -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Active Groups Table & Management -->
+                    <div class="lg:col-span-2 glass-card p-5 rounded-2xl space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <h2 class="text-sm font-extrabold text-white flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-users-gear text-indigo-400"></i>
+                                <span>قائمة المجموعات والقنوات النشطة</span>
+                            </h2>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button onclick="filterGroups('all')" class="group-tab-btn active px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white">الكل</button>
+                                <button onclick="filterGroups('whatsapp')" class="group-tab-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">واتساب</button>
+                                <button onclick="filterGroups('telegram')" class="group-tab-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">تلغرام</button>
+                            </div>
+                        </div>
+
+                        <!-- Groups Table Container -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-right text-xs text-slate-300">
+                                <thead class="bg-slate-800/60 text-slate-400 font-bold uppercase border-b border-slate-700/60">
+                                    <tr>
+                                        <th class="p-3">اسم المجموعة / القناة</th>
+                                        <th class="p-3">المنصة</th>
+                                        <th class="p-3">الأعضاء</th>
+                                        <th class="p-3">الدور / الصلاحية</th>
+                                        <th class="p-3 text-center">الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-800/60" id="communityGroupsList">
+                                    <tr class="group-row whatsapp hover:bg-slate-800/30 transition">
+                                        <td class="p-3 flex items-center space-x-3 space-x-reverse font-bold text-white">
+                                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                                <i class="fa-brands fa-whatsapp"></i>
+                                            </div>
+                                            <span>مجتمع النخبة التقني VIP</span>
+                                        </td>
+                                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-semibold">WhatsApp</span></td>
+                                        <td class="p-3 font-bold">1,024 عضو</td>
+                                        <td class="p-3 text-amber-400 font-semibold"><i class="fa-solid fa-crown text-[10px] ml-1"></i> مالك المجموعة</td>
+                                        <td class="p-3 text-center">
+                                            <button onclick="switchTab('whatsapp')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition">دخول</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="group-row telegram hover:bg-slate-800/30 transition">
+                                        <td class="p-3 flex items-center space-x-3 space-x-reverse font-bold text-white">
+                                            <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
+                                                <i class="fa-brands fa-telegram"></i>
+                                            </div>
+                                            <span>القناة الرسمية الموثقة</span>
+                                        </td>
+                                        <td class="p-3"><span class="px-2 py-0.5 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded font-semibold">Telegram</span></td>
+                                        <td class="p-3 font-bold">34,100 مشترك</td>
+                                        <td class="p-3 text-indigo-400 font-semibold"><i class="fa-solid fa-shield-halved text-[10px] ml-1"></i> قناة رسمية</td>
+                                        <td class="p-3 text-center">
+                                            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="inline-block bg-sky-600 hover:bg-sky-500 text-white px-3 py-1 rounded-lg text-[11px] font-bold transition">انضمام <i class="fa-solid fa-arrow-up-right-from-square text-[9px] mr-1"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr class="group-row whatsapp hover:bg-slate-800/30 transition">
+                                        <td class="p-3 flex items-center space-x-3 space-x-reverse font-bold text-white">
+                                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                                <i class="fa-brands fa-whatsapp"></i>
+                                            </div>
+                                            <span>فريق الدعم الفني المباشر</span>
+                                        </td>
+                                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-semibold">WhatsApp</span></td>
+                                        <td class="p-3 font-bold">450 عضو</td>
+                                        <td class="p-3 text-emerald-400 font-semibold">مشرف دائم</td>
+                                        <td class="p-3 text-center">
+                                            <button onclick="switchTab('whatsapp')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition">دخول</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Join Link Generator & Bot Shortcuts -->
+                    <div class="space-y-4">
+                        <!-- Join Link Tool -->
+                        <div class="glass-card p-5 rounded-2xl space-y-3">
+                            <h3 class="text-xs font-extrabold text-white flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-link text-indigo-400"></i>
+                                <span>مولد روابط الانضمام السريعة</span>
+                            </h3>
+                            <p class="text-[11px] text-slate-400">قم بتوليد رابط انضمام مخصص بدعوة مشفرة مع تتبع النقرات.</p>
+                            <select id="linkPlatform" class="w-full text-xs p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500" onchange="updateLinkView(this.value)">
+                                <option value="telegram">تلغرام - القناة الرسمية M9 VIP</option>
+                                <option value="whatsapp">واتساب - مجتمع النخبة التقني</option>
+                            </select>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <input type="text" id="generatedLink" readonly value="https://t.me/+7qI8F19y45EzZjU8" class="flex-1 text-xs p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sky-300 font-mono">
+                                <button onclick="copyGeneratedLink()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2.5 rounded-xl text-xs font-bold transition">نسخ</button>
+                            </div>
+                            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="w-full mt-2 py-2 bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 space-x-reverse transition">
+                                <i class="fa-brands fa-telegram"></i>
+                                <span>فتح رابط القناة مباشرة</span>
+                            </a>
+                        </div>
+                        </div>
+
+                        <!-- Bot Action Shortcuts -->
+                        <div class="glass-card p-5 rounded-2xl space-y-3">
+                            <h3 class="text-xs font-extrabold text-white flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-robot text-sky-400"></i>
+                                <span>اختصارات أوتوماتيكية (Auto Bots)</span>
+                            </h3>
+                            <div class="space-y-2 text-xs">
+                                <button onclick="showToast('تم تفعيل الترحيب التلقائي بالأعضاء الجدد!')" class="w-full text-right p-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 flex items-center justify-between transition">
+                                    <span><i class="fa-solid fa-hand-wave text-amber-400 ml-2"></i> ترحيب تلقائي بالعضو الجديد</span>
+                                    <i class="fa-solid fa-toggle-on text-emerald-400 text-base"></i>
+                                </button>
+                                <button onclick="showToast('تم تفعيل فلتيرة الكلمات المحظورة!')" class="w-full text-right p-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 flex items-center justify-between transition">
+                                    <span><i class="fa-solid fa-shield-virus text-pink-400 ml-2"></i> حظر السبام والروابط العشوائية</span>
+                                    <i class="fa-solid fa-toggle-on text-emerald-400 text-base"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 2: TIKTOK REELS / SHORT VIDEOS ================= -->
+            <div id="view-tiktok" class="view-panel hidden h-[calc(100vh-6.5rem)] flex items-center justify-center">
+                <div class="relative w-full max-w-sm h-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col justify-between">
+                    <!-- Video Background Overlay Visual Mockup -->
+                    <div class="absolute inset-0 bg-cover bg-center" id="tiktokBg" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800');">
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/90"></div>
+                    </div>
+
+                    <!-- Heart Click Animation Overlay -->
+                    <div id="heartAnimationContainer" class="absolute inset-0 pointer-events-none flex items-center justify-center"></div>
+
+                    <!-- Top Stream Overlay Controls -->
+                    <div class="relative z-10 p-4 flex justify-between items-center text-white">
+                        <div class="flex items-center space-x-2 space-x-reverse bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold border border-white/10">
+                            <span class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span>
+                            <span>TikTok Reel Live</span>
+                        </div>
+                        <button onclick="switchTikTokVideo()" class="bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 transition">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </div>
+
+                    <!-- Right Side Action Bar -->
+                    <div class="relative z-10 p-4 flex flex-col items-center space-y-5 mr-auto text-white">
+                        <!-- Creator Profile Avatar -->
+                        <div class="relative group cursor-pointer">
+                            <img id="tiktokAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" class="w-11 h-11 rounded-full border-2 border-pink-500 object-cover shadow-lg">
+                            <button class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-pink-500 text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold">+</button>
+                        </div>
+
+                        <!-- Like Button -->
+                        <button onclick="toggleTikTokLike()" class="flex flex-col items-center group">
+                            <div id="tiktokLikeBtn" class="w-11 h-11 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <span id="tiktokLikesCount" class="text-[11px] font-bold mt-1 text-slate-200">142.5K</span>
+                        </button>
+
+                        <!-- Comments Button -->
+                        <button onclick="openModal('tiktokCommentsModal')" class="flex flex-col items-center group">
+                            <div class="w-11 h-11 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
+                                <i class="fa-solid fa-comment-dots"></i>
+                            </div>
+                            <span class="text-[11px] font-bold mt-1 text-slate-200">1,820</span>
+                        </button>
+
+                        <!-- Share Button -->
+                        <button onclick="shareTikTokToGroup()" class="flex flex-col items-center group">
+                            <div class="w-11 h-11 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-xl text-white group-hover:scale-110 transition">
+                                <i class="fa-solid fa-share"></i>
+                            </div>
+                            <span class="text-[11px] font-bold mt-1 text-slate-200">مشاركة</span>
+                        </button>
+
+                        <!-- Audio Spinning Disk -->
+                        <div class="w-9 h-9 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center overflow-hidden animate-spin-slow">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=80" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Bottom Info Box -->
+                    <div class="relative z-10 p-4 space-y-2 text-white">
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <h4 id="tiktokAuthor" class="font-bold text-sm">@TechInnovator</h4>
+                            <span class="bg-pink-500/80 text-[9px] px-1.5 py-0.5 rounded font-bold">مُوثق</span>
+                        </div>
+                        <p id="tiktokCaption" class="text-xs text-slate-200 line-clamp-2 leading-relaxed">تجرية بناء واجهات متطورة تجمع بين جميع شبكات التواصل الاجتماعي في مكان واحد! 🚀🔥 #tech #coding #superapp</p>
+                        
+                        <!-- Sound Details -->
+                        <div class="flex items-center space-x-2 space-x-reverse text-[11px] text-slate-300">
+                            <i class="fa-solid fa-music text-pink-400 animate-pulse"></i>
+                            <span id="tiktokAudio" class="truncate max-w-[200px]">الصوت الأصلي - أحدث التقنيات 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 3: WHATSAPP CHATS & VOICENOTES ================= -->
+            <div id="view-whatsapp" class="view-panel hidden h-[calc(100vh-6.5rem)] glass-card rounded-2xl flex overflow-hidden border border-slate-800">
+                <!-- Chats Sidebar -->
+                <div class="w-full md:w-80 border-l border-slate-800 flex flex-col shrink-0 bg-slate-900/80">
+                    <div class="p-3 border-b border-slate-800 flex justify-between items-center">
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+                            <span class="font-bold text-sm text-white">محادثات WhatsApp</span>
+                        </div>
+                        <button onclick="showToast('بدء محادثة جديدة')" class="text-slate-400 hover:text-emerald-400 p-1"><i class="fa-solid fa-pen-to-square"></i></button>
+                    </div>
+
+                    <!-- Status Bar / Stories Row -->
+                    <div class="p-3 border-b border-slate-800 flex space-x-3 space-x-reverse overflow-x-auto shrink-0">
+                        <!-- Add Status -->
+                        <div class="flex flex-col items-center space-y-1 shrink-0 cursor-pointer" onclick="showToast('إضافة حالة جديدة')">
+                            <div class="relative w-11 h-11 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-emerald-400">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                            <span class="text-[10px] text-slate-400">حالتك</span>
+                        </div>
+                        <!-- Status Item 1 -->
+                        <div class="flex flex-col items-center space-y-1 shrink-0 cursor-pointer" onclick="showToast('عرض حالة سارة')">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120" class="w-11 h-11 rounded-full p-0.5 border-2 border-emerald-400 object-cover">
+                            <span class="text-[10px] text-slate-300">سارة</span>
+                        </div>
+                    </div>
+
+                    <!-- Chats List -->
+                    <div class="flex-1 overflow-y-auto divide-y divide-slate-800/50">
+                        <div onclick="selectWaChat(this, 'مجتمع النخبة التقني VIP', true)" class="wa-chat-item p-3 hover:bg-slate-800/50 cursor-pointer bg-slate-800/80 border-r-4 border-emerald-400 transition">
+                            <div class="flex space-x-3 space-x-reverse">
+                                <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0">
+                                    <i class="fa-solid fa-users text-sm"></i>
+                                </div>
+                                <div class="flex-1 overflow-hidden">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="font-bold text-xs text-white truncate">مجتمع النخبة التقني VIP</h4>
+                                        <span class="text-[10px] text-slate-400">11:20 ص</span>
+                                    </div>
+                                    <p class="text-[11px] text-emerald-400 truncate mt-0.5"><i class="fa-solid fa-microphone text-[10px] ml-1"></i> رسالة صوتية (0:14)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div onclick="selectWaChat(this, 'المهندس خالد العتيبي', false)" class="wa-chat-item p-3 hover:bg-slate-800/50 cursor-pointer transition">
+                            <div class="flex space-x-3 space-x-reverse">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" class="w-10 h-10 rounded-full object-cover shrink-0">
+                                <div class="flex-1 overflow-hidden">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="font-bold text-xs text-white truncate">المهندس خالد العتيبي</h4>
+                                        <span class="text-[10px] text-slate-400">أمس</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-400 truncate mt-0.5">تم استلام التصاميم النهائية، شكرًا لك!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages View Pane -->
+                <div class="hidden md:flex flex-1 flex-col bg-slate-950">
+                    <!-- Chat Header -->
+                    <div class="p-3 bg-slate-900 border-b border-slate-800 flex justify-between items-center px-4">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-users text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 id="waActiveTitle" class="font-bold text-xs text-white">مجتمع النخبة التقني VIP</h4>
+                                <p class="text-[10px] text-emerald-400">متصل الآن • 1,024 عضو</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 space-x-reverse text-slate-400 text-sm">
+                            <button class="hover:text-emerald-400 p-1"><i class="fa-solid fa-video"></i></button>
+                            <button class="hover:text-emerald-400 p-1"><i class="fa-solid fa-phone"></i></button>
+                            <button class="hover:text-emerald-400 p-1"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Messages Feed -->
+                    <div id="waMessageFeed" class="flex-1 p-4 overflow-y-auto space-y-3">
+                        <!-- Received Voice Note Message -->
+                        <div class="flex items-start space-x-2 space-x-reverse max-w-[75%]">
+                            <div class="bg-slate-800 p-3 rounded-2xl rounded-tr-none border border-slate-700/60 space-y-2 w-full">
+                                <div class="flex justify-between items-center text-[10px] text-slate-400">
+                                    <span class="font-bold text-emerald-400">فيصل الغامدي</span>
+                                    <span>11:18 ص</span>
+                                </div>
+                                <!-- Simulated Audio Player UI -->
+                                <div class="flex items-center space-x-3 space-x-reverse bg-slate-900/80 p-2 rounded-xl border border-slate-700/40">
+                                    <button onclick="toggleAudioPlay(this)" class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center text-xs font-bold hover:scale-105 transition">
+                                        <i class="fa-solid fa-play ml-0.5"></i>
+                                    </button>
+                                    <div class="flex-1 space-y-1">
+                                        <!-- Audio Wave Visualizer Simulation -->
+                                        <div class="flex items-center space-x-0.5 space-x-reverse h-4">
+                                            <span class="w-1 bg-emerald-400 h-2 rounded-full"></span>
+                                            <span class="w-1 bg-emerald-400 h-4 rounded-full"></span>
+                                            <span class="w-1 bg-emerald-400 h-3 rounded-full"></span>
+                                            <span class="w-1 bg-slate-600 h-2 rounded-full"></span>
+                                            <span class="w-1 bg-slate-600 h-4 rounded-full"></span>
+                                            <span class="w-1 bg-slate-600 h-1 rounded-full"></span>
+                                            <span class="w-1 bg-slate-600 h-3 rounded-full"></span>
+                                        </div>
+                                        <div class="flex justify-between text-[9px] text-slate-400">
+                                            <span>0:14</span>
+                                            <i class="fa-solid fa-microphone text-emerald-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sent Message -->
+                        <div class="flex items-start space-x-2 space-x-reverse max-w-[75%] mr-auto flex-row-reverse">
+                            <div class="bg-emerald-700 text-white p-3 rounded-2xl rounded-tl-none space-y-1 text-xs">
+                                <p>تم الاستماع للملاحظة الصوتية، سنبدأ بتطوير الميزة فوراً.</p>
+                                <span class="text-[9px] text-emerald-200 block text-left">11:20 ص <i class="fa-solid fa-check-double text-[8px] text-sky-300"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Bar -->
+                    <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center space-x-2 space-x-reverse">
+                        <button class="text-slate-400 hover:text-emerald-400 p-2 text-base"><i class="fa-solid fa-paperclip"></i></button>
+                        <input id="waInput" type="text" placeholder="اكتب رسالة WhatsApp..." class="flex-1 bg-slate-800 border border-slate-700/60 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <button onclick="sendWaMessage()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold p-2.5 rounded-xl text-xs transition"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 4: TELEGRAM CHANNELS & LARGE GROUPS ================= -->
+            <div id="view-telegram" class="view-panel hidden h-[calc(100vh-6.5rem)] glass-card rounded-2xl flex flex-col overflow-hidden border border-slate-800">
+                <!-- Telegram Channel Header with Direct Link -->
+                <div class="bg-gradient-to-r from-sky-600 via-sky-700 to-indigo-800 p-4 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shadow-lg">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-2xl font-bold text-white shadow-inner">
+                            <i class="fa-brands fa-telegram"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <h3 class="font-extrabold text-base">القناة الرسمية الموثقة على Telegram</h3>
+                                <i class="fa-solid fa-circle-check text-sky-300 text-sm"></i>
+                            </div>
+                            <p class="text-xs text-sky-100 mt-0.5 font-mono">https://t.me/+7qI8F19y45EzZjU8</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 space-x-reverse w-full sm:w-auto">
+                        <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="w-full sm:w-auto bg-white text-sky-700 hover:bg-sky-50 px-5 py-2.5 rounded-xl text-xs font-black flex items-center justify-center space-x-2 space-x-reverse shadow-xl transition transform hover:scale-105">
+                            <i class="fa-brands fa-telegram text-base"></i>
+                            <span>الانضمام للقناة الآن</span>
+                            <i class="fa-solid fa-arrow-left text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pinned Message Banner -->
+                <div class="bg-slate-900/90 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs text-slate-300">
+                    <div class="flex items-center space-x-2 space-x-reverse truncate">
+                        <i class="fa-solid fa-thumbtack text-sky-400 text-xs"></i>
+                        <span class="font-bold text-sky-400">رابط الدعوة المباشر:</span>
+                        <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="truncate text-slate-300 hover:text-sky-400 underline font-mono">https://t.me/+7qI8F19y45EzZjU8</a>
+                    </div>
+                    <button class="text-slate-500 hover:text-white text-xs" onclick="showToast('تم نسخ الرابط المثبت')"><i class="fa-solid fa-copy"></i></button>
+                </div>
+
+                <!-- Telegram Message Feed Container -->
+                <div id="telegramFeed" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4 bg-slate-950">
+                    <!-- Featured Channel Welcome Card -->
+                    <div class="glass-card max-w-2xl mx-auto rounded-2xl p-5 space-y-4 border border-sky-500/30 bg-gradient-to-b from-sky-950/20 to-slate-900/40">
+                        <div class="flex justify-between items-center text-xs">
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <span class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-sm"><i class="fa-brands fa-telegram"></i></span>
+                                <div>
+                                    <span class="font-bold text-white block">إدارة القناة الرسمية</span>
+                                    <span class="text-[10px] text-sky-400">منشور مثبت</span>
+                                </div>
+                            </div>
+                            <span class="bg-sky-500/20 text-sky-300 text-[10px] px-2 py-0.5 rounded-full font-bold">OFFICIAL LINK</span>
+                        </div>
+                        <p class="text-xs text-slate-200 leading-relaxed font-medium">
+                            أهلاً بكم جميعاً في قناتنا الرسمية الموثقة على تلغرام! يمكنك الانضمام ومتابعة كافة التحديثات الحصرية، البث المباشر، والأخبار الفورية عبر الرابط المباشر أدناه:
+                        </p>
+                        <div class="p-3 bg-slate-900/90 rounded-xl border border-sky-500/30 flex items-center justify-between">
+                            <div class="flex items-center space-x-3 space-x-reverse overflow-hidden">
+                                <i class="fa-solid fa-link text-sky-400 text-lg shrink-0"></i>
+                                <span class="text-xs font-mono text-sky-300 truncate">https://t.me/+7qI8F19y45EzZjU8</span>
+                            </div>
+                            <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="bg-sky-500 hover:bg-sky-400 text-slate-950 px-4 py-1.5 rounded-lg text-xs font-black shrink-0 transition">انضمام</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <span class="bg-sky-950/40 border border-sky-300/30 text-sky-200 text-[10px] px-2.5 py-1 rounded-full font-bold">Bot Connected</span>
+                    </div>
+                </div>
+
+                <!-- Pinned Message Banner -->
+                <div class="bg-slate-900/90 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs text-slate-300">
+                    <div class="flex items-center space-x-2 space-x-reverse truncate">
+                        <i class="fa-solid fa-thumbtack text-sky-400 text-xs"></i>
+                        <span class="font-bold text-sky-400">رسالة مثبّتة:</span>
+                        <span class="truncate text-slate-400">تحديث النظام رقم #309 متاح الآن للجميع.</span>
+                    </div>
+                    <button class="text-slate-500 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <!-- Telegram Message Feed Container -->
+                <div id="telegramFeed" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4 bg-slate-950">
+                    <!-- Broadcast Post Card 1 -->
+                    <div class="glass-card max-w-2xl mx-auto rounded-2xl p-4 space-y-3 border border-slate-800">
+                        <div class="flex justify-between items-center text-xs">
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <span class="w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-xs"><i class="fa-solid fa-shield-halved"></i></span>
+                                <span class="font-bold text-white">المشرف العام (Admin)</span>
+                                <span class="bg-sky-500/20 text-sky-400 text-[9px] px-1.5 py-0.5 rounded font-bold">ADMIN</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500">منذ ساعة واحدة</span>
+                        </div>
+                        <p class="text-xs text-slate-200 leading-relaxed">
+                            📢 مرحباً بالجميع! تم رسمياً ربط خوادم البث المباشر مع منصة تيك توك لتغطية كافة الأحداث التقنية القادمة secara أوتوماتيكية.
+                        </p>
+                        <div class="rounded-xl overflow-hidden border border-slate-800 h-44">
+                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800/60">
+                            <span class="text-[11px]"><i class="fa-solid fa-eye text-sky-400 ml-1"></i> 12.4K</span>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button onclick="showToast('تم إضافة التفاعل 👍')" class="bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300">👍 340</button>
+                                <button onclick="showToast('تم إضافة التفاعل 🔥')" class="bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300">🔥 120</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telegram Admin Fast Post Bar -->
+                <div class="p-3 bg-slate-900 border-t border-slate-800">
+                    <div class="max-w-2xl mx-auto flex space-x-2 space-x-reverse">
+                        <input id="telegramInput" type="text" placeholder="اكتب منشوراً جديداً لنشره في قناة Telegram..." class="flex-1 bg-slate-800 border border-slate-700/60 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <button onclick="postToTelegram()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">نشر الآن</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL 1: CREATE GROUP / CHANNEL -->
+    <div id="createGroupModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-card rounded-2xl max-w-md w-full p-6 space-y-4 border border-slate-700">
+            <div class="flex justify-between items-center">
+                <h3 class="font-extrabold text-base text-white">إنشاء مجموعة أو قناة جديدة</h3>
+                <button onclick="closeModal('createGroupModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">منصة النشر Target Platform</label>
+                    <select id="modalPlatform" class="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200">
+                        <option value="whatsapp">مجتمع / مجموعة WhatsApp</option>
+                        <option value="telegram">قناة / مجموعة Telegram</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">اسم المجموعة / القناة</label>
+                    <input type="text" id="modalGroupName" placeholder="مثال: رواد الأعمال والتقنية" class="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                </div>
+            </div>
+            <div class="flex justify-end space-x-2 space-x-reverse pt-2">
+                <button onclick="closeModal('createGroupModal')" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">إلغاء</button>
+                <button onclick="submitNewGroup()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold">تأكيد والإنشاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: TIKTOK COMMENTS SIDEBAR/MODAL -->
+    <div id="tiktokCommentsModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-end sm:items-center justify-center hidden p-0 sm:p-4">
+        <div class="glass-card rounded-t-3xl sm:rounded-2xl max-w-md w-full h-[60vh] p-4 flex flex-col justify-between border border-slate-700">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <h3 class="font-extrabold text-xs text-white">التعليقات (1,820)</h3>
+                <button onclick="closeModal('tiktokCommentsModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto py-3 space-y-3 text-xs">
+                <div class="flex space-x-2 space-x-reverse">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=80" class="w-7 h-7 rounded-full object-cover">
+                    <div>
+                        <span class="font-bold text-slate-300 text-[11px]">محمد العلي</span>
+                        <p class="text-slate-400 mt-0.5">تصميم الخوادم والمزيج بين التطبيقات رائع جداً! 🔥</p>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-2 border-t border-slate-800 flex space-x-2 space-x-reverse">
+                <input type="text" placeholder="إضافة تعليق..." class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+                <button onclick="showToast('تمت إضافة تعليقك!')" class="bg-pink-500 text-white px-3 py-2 rounded-xl text-xs font-bold">إرسال</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="toast" class="fixed bottom-5 left-5 bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 space-x-reverse text-xs opacity-0 pointer-events-none transition-all duration-300 z-50">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toastMsg">تمت العملية بنجاح!</span>
+    </div>
+
+    <!-- Application Script Engine -->
+    <script>
+        // Sidebar Toggle for Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('appSidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // Main Navigation View Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
+            const activeView = document.getElementById(`view-${tabId}`);
+            if (activeView) activeView.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active', 'text-indigo-400', 'bg-indigo-950/60', 'border', 'border-indigo-800/40');
+        // Helper to update link dynamically
+        function updateLinkView(platform) {
+            const input = document.getElementById('generatedLink');
+            if (platform === 'telegram') {
+                input.value = 'https://t.me/+7qI8F19y45EzZjU8';
+            } else {
+                input.value = 'https://omnihub.app/join/whatsapp?ref=vip';
+            }
+        }
+
+        // Modal Controls
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
+        }
+
+        // Group Link Generator
+        function copyGeneratedLink() {
+            const linkInput = document.getElementById('generatedLink');
+            document.execCommand('copy');
+            showToast('تم نسخ رابط الانضمام المخصص للحافظة!');
+        }
+
+        // WhatsApp Messaging Logic
+        function sendWaMessage() {
+            const input = document.getElementById('waInput');
+            const feed = document.getElementById('waMessageFeed');
+            if (!input.value.trim()) return;
+
+            const msgHTML = `
+                <div class="flex items-start space-x-2 space-x-reverse max-w-[75%] mr-auto flex-row-reverse">
+                    <div class="bg-emerald-700 text-white p-3 rounded-2xl rounded-tl-none space-y-1 text-xs">
+                        <p>${input.value}</p>
+                        <span class="text-[9px] text-emerald-200 block text-left">الآن <i class="fa-solid fa-check text-[8px]"></i></span>
+                    </div>
+                </div>
+            `;
+            feed.insertAdjacentHTML('beforeend', msgHTML);
+            feed.scrollTop = feed.scrollHeight;
+            input.value = '';
+        }
+
+        // Telegram Channel Post Logic
+        function postToTelegram() {
+            const input = document.getElementById('telegramInput');
+            const feed = document.getElementById('telegramFeed');
+            if (!input.value.trim()) return;
+
+            const postHTML = `
+                <div class="glass-card max-w-2xl mx-auto rounded-2xl p-4 space-y-3 border border-slate-800">
+                    <div class="flex justify-between items-center text-xs">
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <span class="w-7 h-7 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-xs"><i class="fa-solid fa-shield-halved"></i></span>
+                            <span class="font-bold text-white">المشرف العام (أنت)</span>
+                        </div>
+                        <span class="text-[10px] text-slate-500">الآن</span>
+                    </div>
+                    <p class="text-xs text-slate-200 leading-relaxed">${input.value}</p>
+                    <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-800/60">
+                        <span class="text-[11px]"><i class="fa-solid fa-eye text-sky-400 ml-1"></i> 1</span>
+                    </div>
+                </div>
+            `;
+            feed.insertAdjacentHTML('afterbegin', postHTML);
+            input.value = '';
+            showToast('تم نشر البرودكاست بالقناة!');
+        }
+
+        // TikTok Video Switcher Mockup
+        const tiktokData = [
+            { bg: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800', author: '@TechInnovator', caption: 'تجرية بناء واجهات متطورة تجمع بين جميع شبكات التواصل الاجتماعي! 🚀🔥' },
+            { bg: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=800', author: '@CodeMaster_Ar', caption: 'كيف تجعل أداء تطبيقك أسرع بـ 10 أضعاف؟ الشرح الكامل! 💻✨' }
+        ];
+        let currentTikTokIndex = 0;
+
+        function switchTikTokVideo() {
+            currentTikTokIndex = (currentTikTokIndex + 1) % tiktokData.length;
+            const data = tiktokData[currentTikTokIndex];
+            document.getElementById('tiktokBg').style.backgroundImage = `url('${data.bg}')`;
+            document.getElementById('tiktokAuthor').textContent = data.author;
+            document.getElementById('tiktokCaption').textContent = data.caption;
+            showToast('تم الانتقال للفيديو التالي');
+        }
+
+        function toggleTikTokLike() {
+            const btn = document.getElementById('tiktokLikeBtn');
+            const count = document.getElementById('tiktokLikesCount');
+            if (btn.classList.contains('text-pink-500')) {
+                btn.classList.remove('text-pink-500');
+                count.textContent = '142.5K';
+            } else {
+                btn.classList.add('text-pink-500');
+                count.textContent = '142.6K';
+                showHeartAnimation();
+            }
+        }
+
+        function showHeartAnimation() {
+            const container = document.getElementById('heartAnimationContainer');
+            const heart = document.createElement('i');
+            heart.className = 'fa-solid fa-heart text-6xl text-pink-500 animate-heart drop-shadow-lg';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 800);
+        }
+
+        function shareTikTokToGroup() {
+            showToast('تم مشاركة فيديو TikTok المباشر في مجموعات WhatsApp وتلغرام!');
+        }
+
+        // Filter Table Groups
+        function filterGroups(type) {
+            document.querySelectorAll('.group-row').forEach(row => {
+                if (type === 'all' || row.classList.contains(type)) row.classList.remove('hidden');
+                else row.classList.add('hidden');
+            });
+        }
+
+        function toggleAudioPlay(btn) {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('fa-play')) {
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+                showToast('تشغيل الملاحظة الصوتية...');
+            } else {
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            }
+        }
+
+        function submitNewGroup() {
+            const name = document.getElementById('modalGroupName').value;
+            if (!name) return;
+            showToast(`تم إنشاء "${name}" بنجاح وإضافتها للوحة التحكم!`);
+            closeModal('createGroupModal');
+        }
+    </script>
+</body>
+</html>
 ```
