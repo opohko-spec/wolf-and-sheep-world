@@ -1,218 +1,802 @@
-
+```html
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حكايات الذئب والخروف - مغامرات مضحكة</title>
-    <!-- Tailwind CSS CDN -->
+    <title>عبد السلام | المنصة الشخصية والمتكاملة</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#F59E0B',
+                            goldHover: '#D97706',
+                            cyan: '#06B6D4',
+                            dark: '#0B0F19',
+                            card: '#111827',
+                            cardBorder: '#1F2937'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #f8fafc;
+            background-color: #080B11;
+            color: #F3F4F6;
+            overflow-x: hidden;
         }
-        .story-card {
-            transition: all 0.3s ease;
+        
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .story-card:hover {
-            transform: translateY(-5px);
+
+        .glass-card {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080B11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F59E0B;
+        }
+
+        /* Glowing Effects */
+        .glow-gold {
+            box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.3);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #F59E0B 0%, #06B6D4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 4s infinite ease-in-out;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+<body class="selection:bg-amber-500 selection:text-black min-h-screen flex flex-col justify-between">
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-center md:text-right">
-                <h1 class="text-3xl font-extrabold flex items-center gap-3 justify-center md:justify-start">
-                    <span>🐺 🐑</span>
-                    <span>طرائف الذئب والخروف</span>
-                </h1>
-                <p class="text-amber-100 text-sm mt-1">سلسلة من المغامرات والقصص الكوميدية الساخرة</p>
+    <!-- Glowing Background Orbs -->
+    <div class="fixed top-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+    <div class="fixed bottom-1/3 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" style="animation-delay: 2s;"></div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-gray-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-cyan-500 p-0.5 shadow-lg shadow-amber-500/20">
+                        <div class="w-full h-full bg-gray-950 rounded-[14px] flex items-center justify-center">
+                            <span class="text-xl font-black text-amber-500 font-tajawal">ع.س</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-white tracking-wide">عبد السلام</h1>
+                        <p class="text-xs text-amber-500/80 font-medium">المنصة الشخصية المتكاملة</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-full border border-gray-800">
+                    <a href="#hero" class="px-5 py-2 text-sm font-semibold rounded-full text-white hover:bg-amber-500/10 hover:text-amber-400 transition">الرئيسية</a>
+                    <a href="#stories" class="px-5 py-2 text-sm font-semibold rounded-full text-gray-300 hover:bg-amber-500/10 hover:text-amber-400 transition">القصص والمقالات</a>
+                    <a href="#media" class="px-5 py-2 text-sm font-semibold rounded-full text-gray-300 hover:bg-amber-500/10 hover:text-amber-400 transition">الوسائط والمتعدد</a>
+                    <a href="#publisher" class="px-5 py-2 text-sm font-semibold rounded-full text-gray-300 hover:bg-amber-500/10 hover:text-amber-400 transition">مركز النشر</a>
+                    <a href="#software" class="px-5 py-2 text-sm font-semibold rounded-full text-gray-300 hover:bg-amber-500/10 hover:text-amber-400 transition">البرامج والأدوات</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <a href="#social" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-bold text-sm shadow-lg shadow-amber-500/25 transition transform hover:scale-105">
+                        <i class="fa-solid fa-paper-plane ml-2"></i> تواصل معي
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             </div>
-            <!-- Quick Social Bar -->
-            <div class="flex items-center gap-3 bg-white/10 p-2 rounded-full backdrop-blur-md">
-                <a href="https://x.com/abodmiec" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-black hover:text-white flex items-center justify-center transition" title="X (Twitter)">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-                <a href="https://www.instagram.com/bwda90210?psln=anExem94Y2o4MzFt" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-pink-600 hover:text-white flex items-center justify-center transition" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://www.threads.net/@bwda90210" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-black hover:text-white flex items-center justify-center transition" title="Threads">
-                    <i class="fa-brands fa-threads"></i>
-                </a>
-                <a href="https://www.facebook.com/share/1J5XBMmXfh/" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-blue-600 hover:text-white flex items-center justify-center transition" title="Facebook">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-sky-500 hover:text-white flex items-center justify-center transition" title="Telegram">
-                    <i class="fa-brands fa-telegram"></i>
-                </a>
-                <a href="https://tiktok.com/@abod5_11" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-black hover:text-white flex items-center justify-center transition" title="TikTok">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="https://wa.me/963992508470" target="_blank" class="w-9 h-9 rounded-full bg-white/20 hover:bg-green-500 hover:text-white flex items-center justify-center transition" title="WhatsApp">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-panel border-t border-gray-800 px-4 pt-2 pb-6 space-y-2">
+            <a href="#hero" class="block px-4 py-2.5 rounded-xl text-white hover:bg-amber-500/10 hover:text-amber-400">الرئيسية</a>
+            <a href="#stories" class="block px-4 py-2.5 rounded-xl text-gray-300 hover:bg-amber-500/10 hover:text-amber-400">القصص والمقالات</a>
+            <a href="#media" class="block px-4 py-2.5 rounded-xl text-gray-300 hover:bg-amber-500/10 hover:text-amber-400">الوسائط والمتعدد</a>
+            <a href="#publisher" class="block px-4 py-2.5 rounded-xl text-gray-300 hover:bg-amber-500/10 hover:text-amber-400">مركز النشر</a>
+            <a href="#software" class="block px-4 py-2.5 rounded-xl text-gray-300 hover:bg-amber-500/10 hover:text-amber-400">البرامج والأدوات</a>
+            <a href="#social" class="block text-center mt-4 px-4 py-2.5 rounded-xl bg-amber-500 text-black font-bold">روابط التواصل</a>
         </div>
     </header>
 
     <!-- Main Content Container -->
-    <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full">
-        
-        <!-- Intro Banner -->
-        <div class="bg-orange-100 border-r-4 border-orange-500 p-6 rounded-lg mb-8 shadow-sm">
-            <h2 class="text-xl font-bold text-orange-800 mb-2">مرحباً بكم في عالم الذكاء والغباء الكوميدي!</h2>
-            <p class="text-orange-700">مجموعة مختارة من المواقف الطريفة بين الذئب المفترس (سوء الحظ) والخروف ذكي الحيلة (أو محظوظ الصدفة).</p>
-        </div>
+    <main class="space-y-24 py-12">
 
-        <!-- Stories Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- القصة 1 -->
-            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 1</span>
-                        <span class="text-2xl">🥗</span>
+        <!-- HERO SECTION -->
+        <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden border border-gray-800">
+                <div class="grid md:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="md:col-span-7 space-y-6 text-center md:text-right">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                            أهلاً بكم في عالمي الرقمي
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                            مرحباً بك، أنا <br>
+                            <span class="text-gradient">عبد السلام</span>
+                        </h1>
+                        <p class="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl font-tajawal">
+                            منصة شاملة لاستعراض القصص الملهمة، المقالات، التوثيق البصري بالصور والفيديوهات، بالإضافة إلى مركز مخصص لنشر الوسائط المباشرة وتنزيل التطبيقات والبرامج الحصرية.
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-4">
+                            <a href="#publisher" class="px-7 py-3.5 rounded-xl bg-amber-500 text-gray-950 font-bold text-sm hover:bg-amber-400 transition shadow-lg shadow-amber-500/20 flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> انشر محتوى جديد
+                            </a>
+                            <a href="#social" class="px-7 py-3.5 rounded-xl bg-gray-800 border border-gray-700 hover:border-amber-500/50 text-white font-semibold text-sm transition flex items-center gap-2">
+                                <i class="fa-solid fa-share-nodes"></i> شبكات التواصل
+                            </a>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">الخروف والنظام الغذائي</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        هجم الذئب على الخروف في الغابة وقال بصرامة: "سآكلك الآن!". نُظر الخروف إليه بهدوء وقال: "يا أخي، ألم تسمع عن التغذية الصحية؟ أنصحك بالابتعاد عن الدهون واللحوم الحمراء، كولسترولك سيرتفع!". صدم الذئب واقتنع بكلامه، ومنذ ذلك اليوم وأصبح الذئب نباتياً يأكل الخس والجرجير بفضل الخروف!
-                    </p>
-                </div>
-            </article>
 
-            <!-- القصة 2 -->
-            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 2</span>
-                        <span class="text-2xl">📸</span>
+                    <!-- Profile Avatar & Badge Card -->
+                    <div class="md:col-span-5 flex justify-center">
+                        <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-amber-500 to-cyan-500 rotate-6 opacity-30 blur-lg"></div>
+                            <div class="relative w-full h-full rounded-3xl glass-card p-3 border border-amber-500/30 flex flex-col items-center justify-center text-center">
+                                <img src="https://placehold.co/300x300/1e293b/F59E0B?text=%D8%B9%D8%A8%D8%AF+%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85" alt="عبد السلام" class="w-full h-full object-cover rounded-2xl border border-gray-800 shadow-inner">
+                                <div class="absolute bottom-6 left-6 right-6 p-3 glass-panel rounded-xl text-center border border-amber-500/40">
+                                    <h3 class="text-sm font-bold text-white">صانع محتوى ومطور</h3>
+                                    <p class="text-xs text-amber-400 font-tajawal">abodmiec / bwda90210</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">صورة تذكارية أخيرة</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        حاصر الذئب الخروف وقال له: "حانت نهايتك!". ابتسم الخروف وقال: "موافق، ولكن قبل أن تأكلني دعنا نلتقط صورة سيلفي تذكارية لنرفعها على تيك توك!". انطُليت الحيلة على الذئب وبدأ يضبط تسريحة شعره، وأثناء انشغاله بالوضعية، جاء الراعي وضربه بالعصا وفرّ الخروف ضاحكاً!
-                    </p>
                 </div>
-            </article>
+            </div>
+        </section>
 
-            <!-- القصة 3 -->
-            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 3</span>
-                        <span class="text-2xl">💼</span>
+        <!-- STORIES SECTION (قسم القصص والمقالات) -->
+        <section id="stories" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-amber-500 font-bold text-sm">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>حكايات وتجارب</span>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">خدمة العملاء</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        امسك الذئب بالخروف، فقال له الخروف: "عفواً يا سيد، هل قمت بتقييم تجربتك معنا أولاً؟". تساءل الذئب مستغرباً، فأكمل الخروف: "اضغط 1 لتأكلني فوراً، أو اضغط 2 للاستماع إلى الأغنية المفضلة لديك!". حار الذئب في أمره وأخذ يفكر بالخيارات، حتى غلبه النوم وهرب الخروف بسلام!
-                    </p>
+                    <h2 class="text-3xl font-bold text-white mt-1">قسم القصص والمقالات</h2>
                 </div>
-            </article>
-
-            <!-- القصة 4 -->
-            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 4</span>
-                        <span class="text-2xl">📱</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">الخروف المؤثر</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        اقترب الذئب ليأكل الخروف، فطلع الخروف هاتفه وبدأ بثاً مباشراً قائلاً: "أهلاً يا متابعين، اليوم معنا الذئب في تحدي أكل الخروف مباشر!". خاف الذئب من التعليقات الحاقدة وهبوط عدد المتابعين لديه، فاعتذر من الخروف وانحبس في جحره من الخجل!
-                    </p>
-                </div>
-            </article>
-
-            <!-- القصة 5 -->
-            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 5</span>
-                        <span class="text-2xl">🎧</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">عازف الجيتار</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        عندما حاصر الذئب الخروف، أخرج الخروف مكبر صوت وأخذ يغني بصوت نكير ومزعج جداً. وضع الذئب يديه على أذنيه وسقط أرضاً يرجوه أن يصمت، شرط أن يتركه وشأنه. وافق الخروف واستمر في الغناء وهو عائد إلى الحقل بكل فخر!
-                    </p>
-                </div>
-            </article>
-
-            <!-- القصة 6 -->
-            <article class="story-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-100 flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">القصة 6</span>
-                        <span class="text-2xl">💈</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">صالون الحلاقة</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        التقى الذئب بالخروف في يوم صيف حار، فقال له: "صوفك كثيف جداً وسوف تضايقني أثناء الأكل!". رد الخروف: "إذاً انتظرني حتى أحلق صوفي في الصالون". ذهب الخروف ولم يعد حتى يومنا هذا، وما زال الذئب ينتظره أمام صالون الحلاقة!
-                    </p>
-                </div>
-            </article>
-
-        </div>
-    </main>
-
-    <!-- Social Media Footer Section -->
-    <footer class="bg-slate-900 text-white mt-12 py-10 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h3 class="text-2xl font-bold mb-3 text-amber-400">تابعنا على حساباتنا الرسمية</h3>
-            <p class="text-slate-400 text-sm mb-8">لا تنسَ الاشتراك والتواصل معنا لمزيد من القصص والمحتوى المميز</p>
-            
-            <!-- Social Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-4 max-w-4xl mx-auto mb-8">
-                <!-- Twitter / X -->
-                <a href="https://x.com/abodmiec" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-black transition duration-300">
-                    <i class="fa-brands fa-x-twitter text-2xl mb-2 text-white"></i>
-                    <span class="text-xs">X / Twitter</span>
-                </a>
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/bwda90210?psln=anExem94Y2o4MzFt" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-pink-500 hover:to-purple-600 transition duration-300">
-                    <i class="fa-brands fa-instagram text-2xl mb-2 text-pink-500"></i>
-                    <span class="text-xs">Instagram</span>
-                </a>
-                <!-- Threads -->
-                <a href="https://www.threads.net/@bwda90210" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-slate-700 transition duration-300">
-                    <i class="fa-brands fa-threads text-2xl mb-2 text-white"></i>
-                    <span class="text-xs">Threads</span>
-                </a>
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/share/1J5XBMmXfh/" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-blue-600 transition duration-300">
-                    <i class="fa-brands fa-facebook-f text-2xl mb-2 text-blue-500"></i>
-                    <span class="text-xs">Facebook</span>
-                </a>
-                <!-- Telegram -->
-                <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-sky-500 transition duration-300">
-                    <i class="fa-brands fa-telegram text-2xl mb-2 text-sky-400"></i>
-                    <span class="text-xs">Telegram</span>
-                </a>
-                <!-- TikTok -->
-                <a href="https://tiktok.com/@abod5_11" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-black transition duration-300">
-                    <i class="fa-brands fa-tiktok text-2xl mb-2 text-pink-500"></i>
-                    <span class="text-xs">TikTok</span>
-                </a>
-                <!-- WhatsApp -->
-                <a href="https://wa.me/963992508470" target="_blank" class="flex flex-col items-center p-3 bg-slate-800 rounded-lg hover:bg-green-600 transition duration-300">
-                    <i class="fa-brands fa-whatsapp text-2xl mb-2 text-green-400"></i>
-                    <span class="text-xs">WhatsApp</span>
-                </a>
+                <p class="text-gray-400 text-sm max-w-md font-tajawal">
+                    مجموعة من القصص والمقالات الشيقة التي نقتبسها ونشاركها معكم باحترافية وتأمل.
+                </p>
             </div>
 
-            <div class="text-xs text-slate-500 border-t border-slate-800 pt-6">
-                © 2026 جميع الحقوق محفوظة - تم التصميم خصيصاً لموقعك.
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="storiesGrid">
+                <!-- Story Card 1 -->
+                <article class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://placehold.co/600x400/1e293b/06B6D4?text=%D8%B1%D8%AD%D9%84%D8%A9+%D9%81%D9%8A+%D8%B9%D8%A7%D9%84%D9%85+%D8%A7%D9%84%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A7" class="w-full h-full object-cover transition transform hover:scale-105 duration-500" alt="قصة">
+                            <span class="absolute top-3 right-3 bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-full">تكنولوجيا</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                                <span><i class="fa-regular fa-calendar ml-1 text-amber-400"></i> 26 أكتوبر 2026</span>
+                                <span><i class="fa-regular fa-clock ml-1 text-cyan-400"></i> قراءة 4 دقائق</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 line-clamp-1 hover:text-amber-400 cursor-pointer">بداية الطموح في عالم التقنية</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed line-clamp-3 font-tajawal">
+                                كيف تبدأ رحلتك في صناعة المحتوى وتطوير ذاتك وسط التحديات المستمرة، وأهم المهارات التي يجب أن تكتسبها للوصول للقمة...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-gray-800/50 mt-4 flex items-center justify-between">
+                        <button onclick="openStoryModal('بداية الطموح في عالم التقنية', 'كيف تبدأ رحلتك في صناعة المحتوى وتطوير ذاتك وسط التحديات المستمرة، وأهم المهارات التي يجب أن تكتسبها للوصول للقمة.\n\nالنجاح لا يأتي بالصدفة، بل يتطلب شغفاً واستمراراً يومياً. من خلال تجاربي المتعددة، وجدت أن تنظيم الوقت وتطوير الذات المباشر هما مفتاح الاستمرارية في إنتاج محتوى تقني وأدبي راقٍ.')" class="text-amber-400 text-sm font-bold flex items-center gap-1 hover:text-amber-300">
+                            اقرأ القصة كاملة <i class="fa-solid fa-arrow-left text-xs mr-1"></i>
+                        </button>
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span class="hover:text-rose-500 cursor-pointer transition"><i class="fa-regular fa-heart"></i> 142</span>
+                            <span class="hover:text-cyan-400 cursor-pointer transition"><i class="fa-regular fa-comment"></i> 28</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Story Card 2 -->
+                <article class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://placehold.co/600x400/1e293b/F59E0B?text=%D9%81%D9%86+%D8%A7%D9%84%D8%A5%D9%84%D9%87%D8%A7%D9%85+%D9%88%D8%A7%D9%84%D8%A5%D8%A8%D8%AF%D8%A7%D8%B9" class="w-full h-full object-cover transition transform hover:scale-105 duration-500" alt="قصة">
+                            <span class="absolute top-3 right-3 bg-cyan-500 text-black text-xs font-bold px-3 py-1 rounded-full">إلهام</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                                <span><i class="fa-regular fa-calendar ml-1 text-amber-400"></i> 20 أكتوبر 2026</span>
+                                <span><i class="fa-regular fa-clock ml-1 text-cyan-400"></i> قراءة 3 دقائق</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 line-clamp-1 hover:text-amber-400 cursor-pointer">سر الإلهام اليومي</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed line-clamp-3 font-tajawal">
+                                الإلهام ليس مادة ننتظر سقوطها من السماء، بل هو ممارسة واكتشاف في تفاصيل الحياة اليومية البسيطة واللحظات الصامتة...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-gray-800/50 mt-4 flex items-center justify-between">
+                        <button onclick="openStoryModal('سر الإلهام اليومي', 'الإلهام ليس مادة ننتظر سقوطها من السماء، بل هو ممارسة واكتشاف في تفاصيل الحياة اليومية البسيطة واللحظات الصامتة.\n\nعندما تفتح عينيك على الجمال البسيط حولك وتلاحظ التفاصيل، تتدفق الأفكار بسلاسة. لا تتوقف عن التدوين والملاحظة بشكل مستمر.')" class="text-amber-400 text-sm font-bold flex items-center gap-1 hover:text-amber-300">
+                            اقرأ القصة كاملة <i class="fa-solid fa-arrow-left text-xs mr-1"></i>
+                        </button>
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span class="hover:text-rose-500 cursor-pointer transition"><i class="fa-regular fa-heart"></i> 98</span>
+                            <span class="hover:text-cyan-400 cursor-pointer transition"><i class="fa-regular fa-comment"></i> 15</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Story Card 3 -->
+                <article class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://placehold.co/600x400/1e293b/10B981?text=%D8%B5%D9%86%D8%A7%D8%B9%D8%A9+%D8%A7%D9%84%D9%85%D8%AD%D8%AA%D9%88%D9%89+%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A" class="w-full h-full object-cover transition transform hover:scale-105 duration-500" alt="قصة">
+                            <span class="absolute top-3 right-3 bg-emerald-500 text-black text-xs font-bold px-3 py-1 rounded-full">صناعة المحتوى</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                                <span><i class="fa-regular fa-calendar ml-1 text-amber-400"></i> 15 أكتوبر 2026</span>
+                                <span><i class="fa-regular fa-clock ml-1 text-cyan-400"></i> قراءة 6 دقائق</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2 line-clamp-1 hover:text-amber-400 cursor-pointer">خطوات لنشر محتوى مؤثر</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed line-clamp-3 font-tajawal">
+                                كيف تبني قاعدة جماهيرية محبة ومتابعة لمحتواك على منصات التواصل الاجتماعي بطريقة صادقة ومؤثرة...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-gray-800/50 mt-4 flex items-center justify-between">
+                        <button onclick="openStoryModal('خطوات لنشر محتوى مؤثر', 'صناعة المحتوى المؤثر تتطلب مصداقية قبل كل شيء. لا تجعل الجري خلف الأرقام ينسيك تقديم قيمة حقيقية للجمهور.\n\nاختر التخصص الذي تشغف به، وتواصل باستمرار مع متابعيك، وقدم دائماً جودة بصرية وفكرية تليق بعقول المتابعين.')" class="text-amber-400 text-sm font-bold flex items-center gap-1 hover:text-amber-300">
+                            اقرأ القصة كاملة <i class="fa-solid fa-arrow-left text-xs mr-1"></i>
+                        </button>
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span class="hover:text-rose-500 cursor-pointer transition"><i class="fa-regular fa-heart"></i> 210</span>
+                            <span class="hover:text-cyan-400 cursor-pointer transition"><i class="fa-regular fa-comment"></i> 45</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- MEDIA & GALLERY SECTION (قسم الصور والفيديوهات) -->
+        <section id="media" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-cyan-400 font-bold text-sm">
+                        <i class="fa-solid fa-photo-film"></i>
+                        <span>البوم الصور والفيديوهات</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mt-1">المعرض البصري المتكامل</h2>
+                </div>
+
+                <!-- Media Filter Tabs -->
+                <div class="flex items-center gap-2 bg-gray-900/80 p-1.5 rounded-2xl border border-gray-800">
+                    <button onclick="filterMedia('all')" class="media-tab active text-xs sm:text-sm font-bold px-4 py-2 rounded-xl bg-amber-500 text-black transition">الكل</button>
+                    <button onclick="filterMedia('image')" class="media-tab text-xs sm:text-sm font-bold px-4 py-2 rounded-xl text-gray-400 hover:text-white transition">الصور</button>
+                    <button onclick="filterMedia('video')" class="media-tab text-xs sm:text-sm font-bold px-4 py-2 rounded-xl text-gray-400 hover:text-white transition">الفيديوهات</button>
+                </div>
+            </div>
+
+            <!-- Media Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="mediaGrid">
+                <!-- Image Item 1 -->
+                <div class="media-item image glass-card rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox('image', 'https://placehold.co/800x600/1e293b/F59E0B?text=%D9%84%D9%82%D8%B7%D8%A9+%D9%81%D9%86%D9%8A%D8%A9+1', 'لقطة تصويرية متألقة')">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="https://placehold.co/600x400/1e293b/F59E0B?text=%D9%84%D9%82%D8%B7%D8%A9+%D9%81%D9%86%D9%8A%D8%A9+1" alt="صورة" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                        <span class="text-xs text-amber-400 font-bold"><i class="fa-regular fa-image ml-1"></i> صورة عالية الدقة</span>
+                        <h4 class="text-white font-bold text-base mt-1">لقطة تصويرية متألقة</h4>
+                    </div>
+                </div>
+
+                <!-- Video Item 1 -->
+                <div class="media-item video glass-card rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'عرض فيديو تجريبي سينمائي')">
+                    <div class="aspect-video overflow-hidden relative">
+                        <img src="https://placehold.co/600x400/0f172a/06B6D4?text=%D9%81%D9%8A%D8%AF%D9%8A%D9%88+%D8%B3%D9%8A%D9%86%D9%85%D8%A7%D8%A6%D9%8A" alt="فيديو" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-14 h-14 rounded-full bg-amber-500/90 text-black flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play text-xl mr-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                        <span class="text-xs text-cyan-400 font-bold"><i class="fa-solid fa-video ml-1"></i> فيديو حائل HD</span>
+                        <h4 class="text-white font-bold text-base mt-1">عرض فيديو تجريبي سينمائي</h4>
+                    </div>
+                </div>
+
+                <!-- Image Item 2 -->
+                <div class="media-item image glass-card rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox('image', 'https://placehold.co/800x600/1e293b/10B981?text=%D8%AA%D8%B5%D9%85%D9%8A%D9%85+%D8%A5%D8%A8%D8%AF%D8%A7%D8%B9%D9%8A', 'تصميم إبداعي متكامل')">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="https://placehold.co/600x400/1e293b/10B981?text=%D8%AA%D8%B5%D9%85%D9%8A%D9%85+%D8%A5%D8%A8%D8%AF%D8%A7%D8%B9%D9%8A" alt="صورة" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                        <span class="text-xs text-emerald-400 font-bold"><i class="fa-regular fa-image ml-1"></i> خلفية جرافيك</span>
+                        <h4 class="text-white font-bold text-base mt-1">تصميم إبداعي متكامل</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PUBLISHER SECTION (مركز رفع ونشر وسائط مجهز للعمل من الموقع) -->
+        <section id="publisher" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel rounded-3xl p-8 border border-amber-500/30 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-amber-500 font-bold text-sm mb-1">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>خاصية النشر المباشر</span>
+                        </div>
+                        <h2 class="text-3xl font-bold text-white">مركز رفع ونشر الصور والفيديوهات</h2>
+                        <p class="text-gray-400 text-sm mt-1 font-tajawal">يمكنك رفع الصور والفيديوهات مباشرة من جهازك وإضافتها إلى المعرض التفاعلي بضغطة زر!</p>
+                    </div>
+                    <span class="px-4 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold">
+                        <i class="fa-solid fa-bolt ml-1"></i> جاهز للنشر والمشاركة
+                    </span>
+                </div>
+
+                <!-- Form & Preview Container -->
+                <div class="grid md:grid-cols-12 gap-8">
+                    <!-- Dropzone & Inputs -->
+                    <div class="md:col-span-7 space-y-4">
+                        <!-- Drop Area -->
+                        <div id="dropZone" class="border-2 border-dashed border-gray-700 hover:border-amber-500 rounded-2xl p-8 text-center cursor-pointer transition bg-gray-900/40 hover:bg-amber-500/5 relative">
+                            <input type="file" id="mediaFileInput" accept="image/*,video/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleFileSelect(event)">
+                            <div class="space-y-3">
+                                <div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center mx-auto text-amber-500 text-2xl">
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                </div>
+                                <h4 class="text-white font-bold">اسحب الصور أو الفيديوهات هنا أو اضغط للاختيار</h4>
+                                <p class="text-gray-400 text-xs">يدعم كافة صيغ الصور (JPG, PNG) والفيديوهات (MP4, WEBM)</p>
+                            </div>
+                        </div>
+
+                        <!-- Content Details -->
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1">عنوان الملف / المنشور</label>
+                                <input type="text" id="mediaTitleInput" placeholder="أدخل عنواناً جذاباً لمحتواك..." class="w-full bg-gray-900/90 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1">نوع المحتوى</label>
+                                <select id="mediaTypeInput" class="w-full bg-gray-900/90 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
+                                    <option value="image">صورة ضوئية / جرافيك</option>
+                                    <option value="video">مقطع فيديو</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="publishMedia()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-gray-950 font-bold text-sm hover:from-amber-400 hover:to-amber-500 transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> نشر مباشر في الموقع الان
+                        </button>
+                    </div>
+
+                    <!-- Instant Preview Window -->
+                    <div class="md:col-span-5 flex flex-col justify-between glass-card p-6 rounded-2xl border border-gray-800">
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-300 mb-3 flex items-center justify-between">
+                                <span><i class="fa-regular fa-eye ml-1 text-amber-500"></i> المعاينة الحية</span>
+                                <span class="text-xs text-emerald-400 font-normal">جاهز للمعالجة</span>
+                            </h4>
+                            <div id="previewContainer" class="w-full aspect-video rounded-xl bg-gray-900/80 border border-gray-800 overflow-hidden flex items-center justify-center text-gray-500 text-xs">
+                                لا يوجد ملف محدد للمعاينة حالياً
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-800 text-xs text-gray-400 font-tajawal">
+                            * يتم حفظ الملفات وتحديث المعرض فوراً في استعراض المكان الخاص بالوسائط.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOFTWARE & APPS SECTION (قسم البرامج والتطبيقات) -->
+        <section id="software" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-amber-500 font-bold text-sm">
+                        <i class="fa-solid fa-code"></i>
+                        <span>أدوات وتطبيقات حصرية</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mt-1">قسم البرامج والتطبيقات</h2>
+                </div>
+                <p class="text-gray-400 text-sm max-w-md font-tajawal">
+                    برامج وأدوات مفيدة تم إعدادها وتطويرها لتسهيل مهام اليومية وتجربة الاستخدام.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- App Card 1 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-gray-800">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 text-xl">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <span class="text-xs bg-gray-800 text-amber-400 font-bold px-3 py-1 rounded-full border border-gray-700">v1.0.4</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">تطبيق المحرر الذكي</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4 font-tajawal">
+                            أداة سريعة لتنسيق النصوص والأشعار واستخراج الروابط بكفاءة عالية وبدون إعلانات.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs bg-gray-900 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800"><i class="fa-brands fa-windows ml-1"></i> Windows</span>
+                            <span class="text-xs bg-gray-900 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800"><i class="fa-brands fa-android ml-1"></i> Android</span>
+                        </div>
+                    </div>
+                    <button onclick="downloadApp('تطبيق المحرر الذكي')" class="w-full py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-black border border-amber-500/30 font-bold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> تحميل البرنامج مجاناً
+                    </button>
+                </div>
+
+                <!-- App Card 2 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-gray-800">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl">
+                                <i class="fa-solid fa-photo-film"></i>
+                            </div>
+                            <span class="text-xs bg-gray-800 text-cyan-400 font-bold px-3 py-1 rounded-full border border-gray-700">v2.1.0</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">أداة ضغط الصور والفيديو</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4 font-tajawal">
+                            برنامج خفيف لتقليل حجم الصور والمقاطع المرئية مع الحفاظ على أعلى جودة ممكنة.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs bg-gray-900 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800"><i class="fa-solid fa-globe ml-1"></i> أونلاين</span>
+                            <span class="text-xs bg-gray-900 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800"><i class="fa-brands fa-windows ml-1"></i> Windows</span>
+                        </div>
+                    </div>
+                    <button onclick="downloadApp('أداة ضغط الصور والفيديو')" class="w-full py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-black border border-cyan-500/30 font-bold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> تنزيل البرنامج
+                    </button>
+                </div>
+
+                <!-- App Card 3 -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between border border-gray-800">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl">
+                                <i class="fa-solid fa-share-nodes"></i>
+                            </div>
+                            <span class="text-xs bg-gray-800 text-emerald-400 font-bold px-3 py-1 rounded-full border border-gray-700">v1.5.0</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">مدير الروابط السريع</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4 font-tajawal">
+                            إضافة حصرية لحفظ وتنظيم حسابات التواصل والروابط الرقمية بسهولة وسرعة.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="text-xs bg-gray-900 text-gray-300 px-2.5 py-1 rounded-lg border border-gray-800"><i class="fa-brands fa-chrome ml-1"></i> Chrome</span>
+                        </div>
+                    </div>
+                    <button onclick="downloadApp('مدير الروابط السريع')" class="w-full py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black border border-emerald-500/30 font-bold text-sm transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> تحميل الإضافة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIAL MEDIA & CONTACT HUB (روابط التواصل والتفاعل الرسمية) -->
+        <section id="social" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 border border-gray-800 text-center relative overflow-hidden">
+                <div class="max-w-2xl mx-auto space-y-4 mb-10">
+                    <span class="text-xs font-bold px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                        شبكات التواصل الرسمية
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white">تواصل وتفاعل معي مباشرة</h2>
+                    <p class="text-gray-400 text-sm font-tajawal">
+                        تابع منصاتي وحساباتي الرسمية للحصول على أحدث القصص، الصور، والبرامج الحصرية.
+                    </p>
+                </div>
+
+                <!-- Social Links Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <!-- X / Twitter -->
+                    <a href="https://x.com/abodmiec" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-amber-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">منصة X</span>
+                        <span class="text-[11px] text-gray-400">@abodmiec</span>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/bwda90210?psln=anExem94Y2o4MzFt" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-pink-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">إنستغرام</span>
+                        <span class="text-[11px] text-gray-400">@bwda90210</span>
+                    </a>
+
+                    <!-- Threads -->
+                    <a href="https://www.threads.com/@bwda90210" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-white transition">
+                        <div class="w-12 h-12 rounded-xl bg-gray-900 text-white border border-gray-700 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-threads"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">ثريدز</span>
+                        <span class="text-[11px] text-gray-400">@bwda90210</span>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/share/1J5XBMmXfh/" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-blue-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">فيسبوك</span>
+                        <span class="text-[11px] text-gray-400">الصفحة الشخصية</span>
+                    </a>
+
+                    <!-- Telegram -->
+                    <a href="https://t.me/+7qI8F19y45EzZjU8" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-cyan-400 transition">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500 text-black flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-telegram"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">تلغرام</span>
+                        <span class="text-[11px] text-gray-400">القناة الرسمية</span>
+                    </a>
+
+                    <!-- TikTok -->
+                    <a href="https://tiktok.com/@abod5_11" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-rose-400 transition">
+                        <div class="w-12 h-12 rounded-xl bg-black text-rose-500 border border-gray-800 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">تيك توك</span>
+                        <span class="text-[11px] text-gray-400">@abod5_11</span>
+                    </a>
+
+                    <!-- Snapchat -->
+                    <a href="https://www.snapchat.com/add/k_f3103?share_id=SIvP9NzuMq8&locale=ar-EG" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-yellow-400 transition">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-400 text-black flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-snapchat"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">سناب شات</span>
+                        <span class="text-[11px] text-gray-400">k_f3103</span>
+                    </a>
+
+                    <!-- WhatsApp / Phone -->
+                    <a href="https://wa.me/963992508470" target="_blank" class="glass-card p-4 rounded-2xl flex flex-col items-center gap-2 group hover:border-emerald-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-200">واتساب / هاتف</span>
+                        <span class="text-[11px] text-gray-400">00963992508470</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-gray-800 mt-20 py-8 text-center text-xs text-gray-500 font-tajawal">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>جميع الحقوق محفوظة © 2026 لـ <span class="text-amber-500 font-bold">عبد السلام</span></p>
+            <div class="flex items-center gap-4 text-gray-400">
+                <a href="#hero" class="hover:text-amber-400 transition">الأعلى <i class="fa-solid fa-arrow-up ml-1"></i></a>
             </div>
         </div>
     </footer>
 
+    <!-- STORY MODAL -->
+    <div id="storyModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel max-w-2xl w-full rounded-3xl p-6 md:p-8 border border-amber-500/40 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                <h3 id="storyModalTitle" class="text-2xl font-bold text-white">عنوان القصة</h3>
+                <button onclick="closeStoryModal()" class="w-8 h-8 rounded-full bg-gray-800 text-gray-400 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="storyModalContent" class="text-gray-300 text-sm sm:text-base leading-relaxed whitespace-pre-line font-tajawal">
+                تفاصيل القصة والمقال...
+            </div>
+            <div class="pt-4 border-t border-gray-800 flex justify-end">
+                <button onclick="closeStoryModal()" class="px-6 py-2 rounded-xl bg-amber-500 text-black font-bold text-sm">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-gray-800/80 text-white hover:bg-amber-500 hover:text-black flex items-center justify-center text-xl z-50 transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-4xl w-full flex flex-col items-center">
+            <div id="lightboxMediaContainer" class="w-full max-h-[75vh] flex items-center justify-center rounded-2xl overflow-hidden border border-gray-800">
+                <!-- Dynamic Content injected by JS -->
+            </div>
+            <h3 id="lightboxCaption" class="text-white font-bold text-lg mt-4 text-center"></h3>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Story Modal Functions
+        function openStoryModal(title, content) {
+            document.getElementById('storyModalTitle').innerText = title;
+            document.getElementById('storyModalContent').innerText = content;
+            document.getElementById('storyModal').classList.remove('hidden');
+        }
+        function closeStoryModal() {
+            document.getElementById('storyModal').classList.add('hidden');
+        }
+
+        // Media Gallery Filtering
+        function filterMedia(type) {
+            const items = document.querySelectorAll('.media-item');
+            const tabs = document.querySelectorAll('.media-tab');
+
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-amber-500', 'text-black', 'active');
+                tab.classList.add('text-gray-400');
+            });
+
+            event.target.classList.add('bg-amber-500', 'text-black', 'active');
+            event.target.classList.remove('text-gray-400');
+
+            items.forEach(item => {
+                if (type === 'all' || item.classList.contains(type)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Lightbox Preview
+        function openLightbox(type, url, caption) {
+            const container = document.getElementById('lightboxMediaContainer');
+            document.getElementById('lightboxCaption').innerText = caption;
+
+            if (type === 'image') {
+                container.innerHTML = `<img src="${url}" class="max-w-full max-h-[75vh] object-contain rounded-xl">`;
+            } else if (type === 'video') {
+                container.innerHTML = `<video src="${url}" controls autoplay class="w-full max-h-[75vh] rounded-xl"></video>`;
+            }
+
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+        function closeLightbox() {
+            const container = document.getElementById('lightboxMediaContainer');
+            container.innerHTML = '';
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        // Interactive File Upload & Direct Publisher
+        let currentFileUrl = '';
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            currentFileUrl = URL.createObjectURL(file);
+            const type = file.type.startsWith('video') ? 'video' : 'image';
+            document.getElementById('mediaTypeInput').value = type;
+
+            const previewContainer = document.getElementById('previewContainer');
+            if (type === 'image') {
+                previewContainer.innerHTML = `<img src="${currentFileUrl}" class="w-full h-full object-cover">`;
+            } else {
+                previewContainer.innerHTML = `<video src="${currentFileUrl}" controls class="w-full h-full object-cover"></video>`;
+            }
+        }
+
+        function publishMedia() {
+            const title = document.getElementById('mediaTitleInput').value.trim() || 'وسائط جديدة تم نشرها';
+            const type = document.getElementById('mediaTypeInput').value;
+
+            if (!currentFileUrl) {
+                // Default fallback placeholder if no file selected
+                currentFileUrl = type === 'image' 
+                    ? 'https://placehold.co/800x600/1e293b/F59E0B?text=%D9%85%D9%86%D8%B4%D9%88%D8%B1+%D8%AC%D8%AF%D9%8A%D8%AF'
+                    : 'https://www.w3schools.com/html/mov_bbb.mp4';
+            }
+
+            const mediaGrid = document.getElementById('mediaGrid');
+            const newCard = document.createElement('div');
+            newCard.className = `media-item ${type} glass-card rounded-2xl overflow-hidden group relative cursor-pointer`;
+            newCard.onclick = () => openLightbox(type, currentFileUrl, title);
+
+            if (type === 'image') {
+                newCard.innerHTML = `
+                    <div class="aspect-video overflow-hidden">
+                        <img src="${currentFileUrl}" alt="صورة" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                        <span class="text-xs text-amber-400 font-bold"><i class="fa-regular fa-image ml-1"></i> صورة مضافة حديثاً</span>
+                        <h4 class="text-white font-bold text-base mt-1">${title}</h4>
+                    </div>
+                `;
+            } else {
+                newCard.innerHTML = `
+                    <div class="aspect-video overflow-hidden relative">
+                        <video src="${currentFileUrl}" class="w-full h-full object-cover"></video>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-14 h-14 rounded-full bg-amber-500/90 text-black flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                <i class="fa-solid fa-play text-xl mr-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                        <span class="text-xs text-cyan-400 font-bold"><i class="fa-solid fa-video ml-1"></i> فيديو مضاف حديثاً</span>
+                        <h4 class="text-white font-bold text-base mt-1">${title}</h4>
+                    </div>
+                `;
+            }
+
+            mediaGrid.prepend(newCard);
+            alert('تم نشر المحتوى بنجاح وإضافته إلى المعرض!');
+            document.getElementById('mediaTitleInput').value = '';
+        }
+
+        // App Download Notice
+        function downloadApp(appName) {
+            alert(`جاري تجهيز رابط التنزيل لـ (${appName})... شكراً لاهتمامك!`);
+        }
+    </script>
 </body>
 </html>
 ```
