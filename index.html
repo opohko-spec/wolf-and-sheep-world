@@ -1,108 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="عالم الذيب والخروف — صور، حوارات شامية سورية، وقصص كوميدية.">
-  <title>عالم الذيب والخروف 🐺🐑</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عالم الذيب والخروف</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="الصفحة الرئيسية">🐺🐑 <span>عالم الذيب والخروف</span></a>
-    <nav>
-      <a href="#stories">الحوارات</a>
-      <a href="#gallery">الصور</a>
-      <a href="#about">عن الموقع</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <span class="eyebrow">ضحك • مغامرات • صداقة</span>
-        <h1>يا هلا بعالم<br><span>الذيب والخروف!</span></h1>
-        <p>قصص طريفة وحوارات شامية سورية… مين رح يضحك على التاني هالمرة؟</p>
-        <a class="button" href="#stories">يلا نضحك 😄</a>
-      </div>
-      <div class="hero-art" aria-label="الذيب والخروف">🐺 <span>🤝</span> 🐑</div>
+    <header>
+        <div class="header-content">
+            <h1>🐺🐑 عالم الذيب والخروف</h1>
+        </div>
+    </header>
+
+    <main>
+        <!-- القسم الرئيسي -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <span class="eyebrow">صداقة • مغامرات • ضحك</span>
+                <h1>عالم الذيب والخروف<br><span>رفقات... ولو واحد ذيب والتاني خروف!</span></h1>
+                <p>موقع خفيف ولطيف لعشاق القصص الكوميدية والشخصيات الطريفة. هون بتلتقي المغامرات مع اللهجة الشامية السورية، وكل يوم في حكاية جديدة.</p>
+                <a class="button" href="#stories">اكتشف الحكايات وضحك</a>
+            </div>
+            <div class="hero-art" aria-label="رسمة تعبيرية للذيب والخروف"></div>
+        </section>
+
+        <!-- قسم الحكايات -->
+        <section class="section" id="stories">
+            <div class="section-heading">
+                <p class="eyebrow">قصتنا</p>
+                <h2>حوارات بتضحك 🎭</h2>
+                <p>اختر حوار واقرأ شو عم بخطط الذيب هلمرة</p>
+            </div>
+            <div class="cards">
+                <article class="card">
+                    <div class="card-emoji">🍉</div>
+                    <span class="tag">لعبة ورق</span>
+                    <h3>الذيب ع طاولة البوكر</h3>
+                    <p><b>🐺 الذيب:</b> مرة رح أربح كل المصاري!</p>
+                    <p><b>🐑 الخروف:</b> بس لا تبكي لما تخسر...</p>
+                    <p><b>🐺 الذيب:</b> أنا ما بخسر أبداً!</p>
+                    <p><b>🐑 الخروف:</b> حضر حالك تدفع الحساب.</p>
+                </article>
+
+                <article class="card">
+                    <div class="card-emoji">📸</div>
+                    <span class="tag">سيلفي</span>
+                    <h3>الصورة التذكارية</h3>
+                    <p><b>🐺 الذيب:</b> تعال لهون، بدنا ناخد سيلفي!</p>
+                    <p><b>🐑 الخروف:</b> ولك، مو خايف تقعد جنبي؟</p>
+                    <p><b>🐺 الذيب:</b> ليش خاف؟ إنت رفيقي!</p>
+                    <p><b>🐑 الخروف:</b> بصراحة كنت جوعان شوي وعم بفكر فيك، بس إباك تفكر فيني!</p>
+                </article>
+
+                <article class="card">
+                    <div class="card-emoji">☕</div>
+                    <span class="tag">فنجان قهوة</span>
+                    <h3>فنجان قهوة الصباح</h3>
+                    <p><b>🐺 الذيب:</b> صب لي قهوة يا خروف.</p>
+                    <p><b>🐑 الخروف:</b> إشمعنى أنا اللي بصب كل يوم؟</p>
+                    <p><b>🐺 الذيب:</b> لأنك ذكي وبتعرف تعدها صح.</p>
+                    <p><b>🐑 الخروف:</b> ماشي، بس هالمرة السكر زيادة عشان تسنانك!</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- قسم المعرض -->
+        <section class="gallery section" id="gallery">
+            <div class="section-heading">
+                <p class="eyebrow">ذكريات ومغامرات</p>
+                <h2>معرض الصور 📸</h2>
+                <p>ضيف صور الذيب والخروف الخاصة فيك لتظهر هون.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-placeholder"><span>🐺</span></div>
+                <div class="gallery-placeholder"><span>🐑</span></div>
+                <div class="gallery-placeholder"><span>🌳</span></div>
+            </div>
+        </section>
+
+        <!-- قسم من نحن -->
+        <section class="about section" id="about">
+            <div>
+                <p class="eyebrow">قصتنا</p>
+                <h2>رفقات... ولو واحد ذيب والتاني خروف!</h2>
+            </div>
+            <p>المغامرات مع اللهجة الشامية السورية، وكل يوم في حكاية جديدة.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>🐺🐑 عالم الذيب والخروف – الضحكة أحلى لما نتشاركها</p>
+    </footer>
+
+    <!-- قسم الانتقال إلى تيك توك -->
+    <section id="videos-section" style="padding: 30px 20px; text-align: center; background-color: #f4f6f7; font-family: Tahoma, sans-serif; margin-top: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 15px; box-shadow: 0 6px 15px rgba(0,0,0,0.08);">
+            
+            <h2 style="color: #1b4332; margin-bottom: 15px; font-size: 24px;">🎬 فيديوهات عالم الذيب والخروف</h2>
+            <p style="color: #6c757d; margin-bottom: 25px; font-size: 15px;">تابعونا على تيك توك للمزيد من القصص والمقاطع المضحكة!</p>
+            
+            <!-- زر التوجيه لتيك توك -->
+            <a href="https://www.tiktok.com/@abod5_11" target="_blank" style="display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 30px; font-size: 18px; font-weight: bold; text-decoration: none; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;">
+                🎵 شاهد الفيديوهات على تيك توك
+            </a>
+            
+            <p style="margin-top: 20px; color: #2d3748; font-size: 15px; font-weight: bold;">لا تنسَ تشارك الضحكة مع أصحابك! 🐺🐑</p>
+        </div>
     </section>
-
-    <section class="section" id="stories">
-      <div class="section-heading">
-        <p class="eyebrow">أحدث الحكايات</p>
-        <h2>حوارات بتضحّك 😂</h2>
-        <p>اختار حوار واقرأ شو عم يخطط الذيب هالمرة.</p>
-      </div>
-      <div class="cards">
-        <article class="card">
-          <div class="card-emoji">🃏</div>
-          <span class="tag">لعبة ورق</span>
-          <h3>الذيب ع طاولة البوكر</h3>
-          <p><b>🐺 الذيب:</b> ولك يا خروف، هالمرة رح أربحك كل المصاري!</p>
-          <p><b>🐑 الخروف:</b> إي جرّب حظك… بس لا تبكي لما تخسر!</p>
-          <p><b>🐺 الذيب:</b> أنا ما بخسر أبداً!</p>
-          <p><b>🐑 الخروف:</b> طيب حضّر حالك تدفع الحساب 😂</p>
-        </article>
-        <article class="card">
-          <div class="card-emoji">🍉</div>
-          <span class="tag">بالحديقة</span>
-          <h3>قطعة بطيخ</h3>
-          <p><b>🐺 الذيب:</b> ولك، مو خايف تقعد جنبي؟</p>
-          <p><b>🐑 الخروف:</b> ليش خاف؟ إنت رفيقي!</p>
-          <p><b>🐺 الذيب:</b> بصراحة كنت جوعان شوي…</p>
-          <p><b>🐑 الخروف:</b> خُد بطيخ، بس إياك تفكر فيني! 😂</p>
-        </article>
-        <article class="card">
-          <div class="card-emoji">📸</div>
-          <span class="tag">سيلفي</span>
-          <h3>الصورة التذكارية</h3>
-          <p><b>🐺 الذيب:</b> تعا لهون، بدنا ناخد سيلفي!</p>
-          <p><b>🐑 الخروف:</b> بس لا تطلعني أزعر متلك!</p>
-          <p><b>🐺 الذيب:</b> ولك أنا هيبة!</p>
-          <p><b>🐑 الخروف:</b> إي، هيبة… بس ابتسم شوي 😂</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="gallery section" id="gallery">
-      <div class="section-heading">
-        <p class="eyebrow">ذكريات ومغامرات</p>
-        <h2>معرض الصور 📷</h2>
-        <p>ضيف صور الذيب والخروف الخاصة فيك لتظهر هون.</p>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-placeholder"><span>🐺</span><b>الذيب</b><small>ضيف صورتك باسم wolf.jpg</small></div>
-        <div class="gallery-placeholder"><span>🐑</span><b>الخروف</b><small>ضيف صورتك باسم sheep.jpg</small></div>
-        <div class="gallery-placeholder"><span>🌳</span><b>مغامرات الرفقات</b><small>ضيف صورة باسم adventure.jpg</small></div>
-      </div>
-    </section>
-
-    <section class="about section" id="about">
-      <div>
-        <p class="eyebrow">قصتنا</p>
-        <h2>رفقات… ولو واحد ذيب والتاني خروف!</h2>
-      </div>
-      <p>موقع خفيف ولطيف لعشّاق القصص الكوميدية والشخصيات الطريفة. هون بتلتقي المغامرات مع اللهجة الشامية السورية، وكل يوم في حكاية جديدة.</p>
-    </section>
-  </main>
-
-</footer>
-  <!-- قسم الانتقال إلى تيك توك -->
-<section id="videos-section" style="padding: 30px 20px; text-align: center; background-color: #f4f6f7; font-family: Tahoma, sans-serif; margin-top: 20px;">
-    <div style="max-width: 600px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 15px; box-shadow: 0 6px 15px rgba(0,0,0,0.08);">
-        
-        <h2 style="color: #1b4332; margin-bottom: 15px; font-size: 24px;">🎬 فيديوهات عالم الذيب والخروف</h2>
-        <p style="color: #6c757d; margin-bottom: 25px; font-size: 15px;">تابعونا على تيك توك للمزيد من القصص والمقاطع المضحكة!</p>
-        
-        <!-- زر التوجيه لتيك توك -->
-        <a href="https://www.tiktok.com/@abod5_11" target="_blank" style="display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 30px; font-size: 18px; font-weight: bold; text-decoration: none; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;">
-            🎵 شاهد الفيديوهات على تيك توك
-        </a>
-        
-        <p style="margin-top: 20px; color: #2d3748; font-size: 15px; font-weight: bold;">لا تنسَ تشارك الضحكة مع أصحابك! 🐺🐑</p>
-    </div>
-</section>
 
 </body>
 </html>
